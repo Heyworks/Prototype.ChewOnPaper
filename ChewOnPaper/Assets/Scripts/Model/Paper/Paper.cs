@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Represents paper class.
+/// </summary>
 public class Paper : MonoBehaviour
 {
     [SerializeField]
