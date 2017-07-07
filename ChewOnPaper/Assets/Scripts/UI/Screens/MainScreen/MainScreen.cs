@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Represents main screen for room setup and select.
@@ -7,21 +6,18 @@ using UnityEngine.UI;
 public class MainScreen : MonoBehaviour
 {
     [SerializeField]
-    private Button test;
+    private MainScreenView view;
 
-    [SerializeField] private SettingsView settingsView;
+    private MainScreenPresenter presenter;
 
     private void Start()
     {
-        test.onClick.AddListener(OnClick);
-        var defSettings = new RoomSettings();
-        defSettings.MaxPlayers = 4;
-        settingsView.WriteSettings(defSettings);
+        presenter = new MainScreenPresenter(view);
+        presenter.Activate();
     }
 
-    private void OnClick()
+    private void OnDestroy()
     {
-        var settings = settingsView.ReadSettings();
-        Debug.Log("settings.MaxPlayers " + settings.MaxPlayers);
+        presenter.Deactivate();
     }
 }

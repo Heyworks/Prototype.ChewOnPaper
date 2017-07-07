@@ -15,6 +15,8 @@ public class SettingsView : MonoBehaviour
     private Text rightAnswerScoreText;
     [SerializeField]
     private Text lastTurnScoreText;
+    [SerializeField]
+    private Text roomName;
 
     /// <summary>
     /// Write settings to view.

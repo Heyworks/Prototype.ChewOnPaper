@@ -35,7 +35,6 @@ public interface IRoomsProvider
     /// <summary>
     /// Creates the room.
     /// </summary>
-    /// <param name="name">The name.</param>
     /// <param name="settings">The settings.</param>
-    void CreateRoom(string name, RoomSettings settings);
+    void CreateRoom(RoomSettings settings);
 }
