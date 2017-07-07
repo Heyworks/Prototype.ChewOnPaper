@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// Represents information about network rooms.
@@ -16,7 +15,12 @@ public interface IRoomsProvider
     /// Occurs when room has been joined.
     /// </summary>
     event Action<RoomData> RoomJoined;
-    
+
+    /// <summary>
+    /// Occurs when error has been occured.
+    /// </summary>
+    event Action ErrorOccured;
+
     /// <summary>
     /// Gets the existing rooms.
     /// </summary>
@@ -34,5 +38,4 @@ public interface IRoomsProvider
     /// <param name="name">The name.</param>
     /// <param name="settings">The settings.</param>
     void CreateRoom(string name, RoomSettings settings);
-   
 }

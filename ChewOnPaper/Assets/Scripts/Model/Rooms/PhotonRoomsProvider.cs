@@ -3,14 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Represents rooms provider for photon network.
 /// </summary>
 public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
 {
+    #region [IRoomsProvider Members]
+
+    /// <summary>
+    /// Occurs when error has been occured.
+    /// </summary>
+    public event Action ErrorOccured;
+
+    /// <summary>
+    /// Occurs when room has been created.
+    /// </summary>
     public event Action<RoomData> RoomCreated;
+
+    /// <summary>
+    /// Occurs when room has been joined.
+    /// </summary>
     public event Action<RoomData> RoomJoined;
+
+    /// <summary>
+    /// Creates the room.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    /// <param name="settings">The settings.</param>
+    public void CreateRoom(string name, RoomSettings settings)
+    {
+        var customOptions = new Hashtable();
+        customOptions.Add("LastTurnScore", settings.LastTurnScore);
+        customOptions.Add("RightAnswerScore", settings.RightAnswerScore);
+        customOptions.Add("TurnTime", settings.TurnTime);
+        PhotonNetwork.CreateRoom(name, new RoomOptions() { MaxPlayers = (byte)settings.MaxPlayers, CustomRoomProperties = customOptions }, null);
+    }
 
     /// <summary>
     /// Gets the existing rooms.
@@ -30,18 +59,44 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
         PhotonNetwork.JoinRoom(name);
     }
 
-    /// <summary>
-    /// Creates the room.
-    /// </summary>
-    /// <param name="name">The name.</param>
-    /// <param name="settings">The settings.</param>
-    public void CreateRoom(string name, RoomSettings settings)
+    #endregion
+
+    #region [Unity events]
+
+    public void Awake()
     {
-        var customOptions = new Hashtable();
-        customOptions.Add("LastTurnScore", settings.LastTurnScore);
-        customOptions.Add("RightAnswerScore", settings.RightAnswerScore);
-        customOptions.Add("TurnTime", settings.TurnTime);
-        PhotonNetwork.CreateRoom(name, new RoomOptions() { MaxPlayers = (byte)settings.MaxPlayers, CustomRoomProperties = customOptions }, null);
+        // the following line checks if this client was just created (and not yet online). if so, we connect
+        if (PhotonNetwork.connectionStateDetailed == ClientState.PeerCreated)
+        {
+            // Connect to the photon master-server. We use the settings saved in PhotonServerSettings (a .asset file in this project)
+            PhotonNetwork.ConnectUsingSettings("0.9");
+        }
+
+        // generate a name for this player, if none is assigned yet
+        if (String.IsNullOrEmpty(PhotonNetwork.playerName))
+        {
+            PhotonNetwork.playerName = "Guest" + Random.Range(1, 9999);
+        }
+    }
+
+    #endregion
+
+    #region [Photon callbacks]
+
+    /// <summary>
+    /// Photon connect to master feedback.
+    /// </summary>
+    public void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    /// <summary>
+    /// Photon create room feedback.
+    /// </summary>
+    public void OnCreatedRoom()
+    {
+        OnRoomCreated(ConvertToRoomData(PhotonNetwork.room));
     }
 
     /// <summary>
@@ -53,11 +108,57 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
     }
 
     /// <summary>
-    /// Photon create room feedback.
+    /// Called when failed to connect to photon.
     /// </summary>
-    public void OnCreatedRoom()
+    /// <param name="parameters">The parameters.</param>
+    public void OnFailedToConnectToPhoton(object parameters)
     {
-        OnRoomCreated(ConvertToRoomData(PhotonNetwork.room));
+        OnErrorOccured();
+    }
+
+    /// <summary>
+    /// Called when disconnected from photon.
+    /// </summary>
+    public void OnDisconnectedFromPhoton()
+    {
+        OnErrorOccured();
+    }
+
+    /// <summary>
+    /// Called when photon join room failed.
+    /// </summary>
+    /// <param name="cause">The cause.</param>
+    public void OnPhotonJoinRoomFailed(object[] cause)
+    {
+        OnErrorOccured();
+    }
+
+    /// <summary>
+    /// Called when photon create room failed.
+    /// </summary>
+    public void OnPhotonCreateRoomFailed()
+    {
+        OnErrorOccured();
+    }
+
+    #endregion
+
+    #region [Private methods]
+
+    private RoomData ConvertToRoomData(RoomInfo photonData)
+    {
+        var roomData = new RoomData();
+        roomData.Name = photonData.Name;
+        roomData.MaxPlayers = photonData.MaxPlayers;
+        roomData.PlayerCount = photonData.PlayerCount;
+
+        return roomData;
+    }
+
+    private void OnErrorOccured()
+    {
+        Action handler = ErrorOccured;
+        if (handler != null) handler();
     }
 
     private void OnRoomCreated(RoomData roomData)
@@ -72,13 +173,5 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
         if (handler != null) handler(roomData);
     }
 
-    private RoomData ConvertToRoomData(RoomInfo photonData)
-    {
-        var roomData = new RoomData();
-        roomData.Name = photonData.Name;
-        roomData.MaxPlayers = photonData.MaxPlayers;
-        roomData.PlayerCount = photonData.PlayerCount;
-
-        return roomData;
-    }
+    #endregion
 }
