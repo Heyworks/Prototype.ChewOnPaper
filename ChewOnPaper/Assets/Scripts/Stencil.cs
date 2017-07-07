@@ -6,10 +6,10 @@ using UnityEngine.UI;
 /// </summary>
 public class Stencil : MonoBehaviour
 {
+    private const float chewAnimationTime = 1.0f;
+
     [SerializeField]
     private int id;
-
-    private Image image;
 
     /// <summary>
     /// Gets the identifier.
@@ -22,16 +22,31 @@ public class Stencil : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        image = GetComponent<Image>();
-    }
-
     /// <summary>
     /// Fixes the stencil on the paper.
     /// </summary>
-    public void Chew()
+    public void Chew(Vector3 position, float rotation, bool instant)
     {
-        //image.color.
+        transform.localPosition = position;
+        transform.localRotation = Quaternion.Euler(0, 0, rotation);
+
+        if (instant)
+        {
+            GetComponent<Image>().color = Color.black;
+        }
+        else
+        {
+            gameObject.ColorTo(Color.black, chewAnimationTime, 0);
+        }
     }
+
+    #region Tests
+
+    [ContextMenu("TestChew")]
+    private void TestChew()
+    {
+        Chew(Vector3.zero, 20, false);
+    }
+
+    #endregion
 }
