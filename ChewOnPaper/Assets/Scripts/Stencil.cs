@@ -30,7 +30,7 @@ public class Stencil : MonoBehaviour
     /// <summary>
     /// Fixes the stencil on the paper.
     /// </summary>
-    public void CutPaper()
+    public void Chew()
     {
         //image.color.
     }
