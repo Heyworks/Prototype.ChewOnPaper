@@ -52,10 +52,10 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
     /// <summary>
     /// Joins the room.
     /// </summary>
-    /// <param name="name">The name.</param>
-    public void JoinRoom(string name)
+    /// <param name="roomName">The room name.</param>
+    public void JoinRoom(string roomName)
     {
-        PhotonNetwork.JoinRoom(name);
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     #endregion

@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Interfaces;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -24,6 +23,10 @@ public class SettingsView : MonoBehaviour
     public void WriteSettings(RoomSettings settings)
     {
         maxPlayersText.text = settings.MaxPlayers.ToString();
+        turnTimeText.text = settings.TurnTime.ToString();
+        rightAnswerScoreText.text = settings.RightAnswerScore.ToString();
+        lastTurnScoreText.text = settings.LastTurnScore.ToString();
+        roomName.text = settings.Name;
     }
 
     /// <summary>
@@ -34,7 +37,11 @@ public class SettingsView : MonoBehaviour
     {
         var settings = new RoomSettings();
         settings.MaxPlayers = int.Parse(maxPlayersText.text);
-       
+        settings.LastTurnScore = int.Parse(lastTurnScoreText.text);
+        settings.Name = roomName.text;
+        settings.RightAnswerScore = int.Parse(rightAnswerScoreText.text);
+        settings.TurnTime = int.Parse(turnTimeText.text);
+
         return settings;
     }
 
