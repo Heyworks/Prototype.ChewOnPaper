@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Factory for room providers.
 /// </summary>
-public static class RoomProvidersFactory
+public class RoomProvidersFactory : IFactory<IRoomsProvider>
 {
     /// <summary>
-    /// Creates the room provider.
+    /// Creates this instance.
     /// </summary>
-    public static IRoomsProvider CreateRoomProvider()
+    public IRoomsProvider Create()
     {
         return CreatePhotonProvider();
     }
