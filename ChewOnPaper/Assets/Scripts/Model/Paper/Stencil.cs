@@ -26,11 +26,23 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     /// <summary>
     /// Fixes the stencil on the paper.
     /// </summary>
+    /// <param name="position">The position of chew.</param>
+    /// <param name="rotation">The rotation of chew.</param>
+    /// <param name="instant">if set to <c>true</c> no animation is played.</param>
     public void Chew(Vector3 position, float rotation, bool instant)
     {
         transform.localPosition = position;
         transform.localRotation = Quaternion.Euler(0, 0, rotation);
 
+        Chew(instant);
+    }
+
+    /// <summary>
+    /// Fixes the stencil on the paper.
+    /// </summary>
+    /// <param name="instant">if set to <c>true</c> no animation is played.</param>
+    public void Chew(bool instant)
+    {
         if (instant)
         {
             GetComponent<Image>().color = Color.black;
