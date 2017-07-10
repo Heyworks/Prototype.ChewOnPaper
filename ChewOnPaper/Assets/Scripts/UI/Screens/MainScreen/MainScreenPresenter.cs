@@ -1,4 +1,7 @@
-﻿/// <summary>
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
+/// <summary>
 /// Represents presenter of main screen presenter.
 /// </summary>
 public class MainScreenPresenter
@@ -7,6 +10,7 @@ public class MainScreenPresenter
 
     private readonly IRoomsProvider roomsProvider;
     private readonly MainScreenView view;
+    private ExistingRoomsRefresher roomsRefresher;
 
     #endregion
 
@@ -20,6 +24,7 @@ public class MainScreenPresenter
     {
         roomsProvider = RoomProvidersFactory.CreateRoomProvider();
         this.view = view;
+        roomsRefresher = new ExistingRoomsRefresher(view, roomsProvider);
         AddPermanentEventHandlers();
     }
 
@@ -33,8 +38,7 @@ public class MainScreenPresenter
     public void Activate()
     {
         AddEventHandlers();
-       var exisingRooms = roomsProvider.GetExistingRooms();
-        view.ShowAvailableRooms(exisingRooms);
+        roomsRefresher.StartRefresh(2f);
     }
 
     /// <summary>
@@ -43,6 +47,7 @@ public class MainScreenPresenter
     public void Deactivate()
     {
         RemoveEventHandlers();
+        roomsRefresher.StopRefresh();
     }
 
     #endregion
@@ -51,17 +56,17 @@ public class MainScreenPresenter
 
     private void RoomsProvider_ErrorOccured()
     {
-        throw new System.NotImplementedException();
+        Debug.LogError("Rooms provider. Error occured.");
     }
 
     private void RoomsProvider_RoomCreated(RoomData roomData)
     {
-        throw new System.NotImplementedException();
+        ShowPaper();
     }
 
     private void RoomsProvider_RoomJoined(RoomData roomData)
     {
-        throw new System.NotImplementedException();
+        ShowPaper();
     }
 
     private void View_CreateRoomButtonClicked(RoomSettings roomSettings)
@@ -77,6 +82,12 @@ public class MainScreenPresenter
     #endregion
 
     #region [Private methods]
+
+    private void ShowPaper()
+    {
+        Deactivate();
+        SceneManager.LoadScene("Paper");
+    }
 
     private void AddEventHandlers()
     {
