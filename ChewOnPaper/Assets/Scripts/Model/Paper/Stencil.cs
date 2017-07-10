@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
 /// Represents stencil object.
 /// </summary>
-public class Stencil : MonoBehaviour
+public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
 {
     private const float chewAnimationTime = 1.0f;
 
@@ -38,6 +39,28 @@ public class Stencil : MonoBehaviour
         {
             gameObject.ColorTo(Color.black, chewAnimationTime, 0);
         }
+    }
+
+    /// <summary>
+    /// When draging is occuring this will be called every time the cursor is moved.
+    /// </summary>
+    /// <param name="eventData">Current event data.</param>
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position += new Vector3(eventData.delta.x, eventData.delta.y);
+    }
+
+    /// <summary>
+    /// Called when rotating the object.
+    /// </summary>
+    /// <param name="eventData">The event data.</param>
+    public void OnRotate(PointerEventData eventData)
+    {
+        var to = eventData.position - new Vector2(transform.position.x, transform.position.y);
+        var from = to - eventData.delta;
+        var sign = Mathf.Sign(from.x * to.y - from.y * to.x);
+        var rotation = Vector2.Angle(from, to) * sign;
+        transform.Rotate(0, 0, rotation);
     }
 
     #region Tests
