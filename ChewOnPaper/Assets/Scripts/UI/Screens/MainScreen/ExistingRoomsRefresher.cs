@@ -23,10 +23,10 @@ public class ExistingRoomsRefresher
     /// <summary>
     /// Starts to refresh.
     /// </summary>
-    /// <param name="rate">The delay between updates in seconds.</param>
-    public void StartRefresh(float delay)
+    /// <param name="refreshRate">The delay between updates in seconds.</param>
+    public void StartRefresh(float refreshRate)
     {
-        var wait = new WaitForSeconds(delay);
+        var wait = new WaitForSeconds(refreshRate);
         view.StartCoroutine(RefreshCoroutine(wait));
     }
     
