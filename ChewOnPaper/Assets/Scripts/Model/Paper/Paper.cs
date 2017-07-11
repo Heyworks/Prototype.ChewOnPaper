@@ -1,33 +1,42 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Represents paper class.
 /// </summary>
 public class Paper : MonoBehaviour
 {
-    [SerializeField]
-    private StencilCollection stencils;
+    /// <summary>
+    /// Occurs when paper was chopped.
+    /// </summary>
+    public event Action<ChewEventArgs> Chewed;
 
     /// <summary>
     /// Chews with the specified stencil.
     /// </summary>
-    /// <param name="stencilId">The stencil identifier.</param>
-    /// <param name="position">The position.</param>
-    /// <param name="rotation">The rotation.</param>
-    /// <param name="instant">If chew is instant or with animation.</param>
-    public void Chew(int stencilId, Vector3 position, float rotation, bool instant)
+    /// <param name="stencil">The stencil.</param>
+    /// <param name="silent">if set to <c>true</c> no event will be rised.</param>
+    public void Chew(Stencil stencil, bool silent = false)
     {
-        var stencil = stencils.InstantiateStencil(stencilId);
-        stencil.Chew(position, rotation, instant);
+        stencil.transform.SetParent(transform);
+        stencil.Animate();
+        stencil.IsActive = false;
+        stencil.enabled = false;
+
+        if (!silent)
+        {
+            var args = new ChewEventArgs(stencil.Id, stencil.transform.localPosition, stencil.transform.localRotation.z);
+            OnChewed(args);
+        }
     }
 
-    #region Tests
-
-    [ContextMenu("TestChew")]
-    private void TestChew()
+    private void OnChewed(ChewEventArgs args)
     {
-        Chew(0, new Vector3(100, 100, 0), 70, false);
+        var handler = Chewed;
+        if (handler != null)
+        {
+            handler(args);
+        }
     }
-
-    #endregion
 }

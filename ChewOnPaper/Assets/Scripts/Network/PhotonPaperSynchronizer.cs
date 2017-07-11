@@ -6,10 +6,10 @@ using UnityEngine;
 /// </summary>
 public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour, IPaperSynchronizer
 {
-    /// <summary>
-    /// Occurs when paper was chopped.
-    /// </summary>
-    public event Action<ChewEventArgs> PaperChewed;
+    [SerializeField]
+    private Paper paper;
+    [SerializeField]
+    private Toolbox toolbox;
 
     /// <summary>
     /// Notifies all clients about chewing the paper.
@@ -24,15 +24,12 @@ public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour, IPaperSynchr
 
     private void RPC_NotifyAboutPaperChewed(int stencilId, Vector3 position, float rotation)
     {
-        OnPaperChewed(new ChewEventArgs(stencilId, position, rotation));
+        ChewPaper(stencilId, position, rotation);
     }
 
-    private void OnPaperChewed(ChewEventArgs args)
+    private void ChewPaper(int stencilId, Vector3 position, float rotation)
     {
-        var handler = PaperChewed;
-        if (handler != null)
-        {
-            handler(args);
-        }
+        var stencil = toolbox.CreateStencil(stencilId, position, rotation);
+        paper.Chew(stencil, true);
     }
 }

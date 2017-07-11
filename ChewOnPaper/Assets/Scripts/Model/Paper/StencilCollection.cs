@@ -11,6 +11,16 @@ public class StencilCollection : MonoBehaviour
     private Stencil[] stencils;
 
     /// <summary>
+    /// Instantiates random the stencil.
+    /// </summary>
+    public Stencil InstantiateRandomStencil()
+    {
+        var randomIndex = UnityEngine.Random.Range(0, stencils.Length);
+
+        return Instantiate(stencils[randomIndex], transform);
+    }
+
+    /// <summary>
     /// Instantiates the stencil by id.
     /// </summary>
     /// <param name="id">The identifier.</param>

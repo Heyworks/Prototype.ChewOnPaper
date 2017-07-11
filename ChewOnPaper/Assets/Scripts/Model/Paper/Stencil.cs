@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /// <summary>
 /// Represents stencil object.
@@ -24,33 +23,20 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     }
 
     /// <summary>
-    /// Fixes the stencil on the paper.
+    /// Gets or sets a value indicating whether this instance is active.
     /// </summary>
-    /// <param name="position">The position of chew.</param>
-    /// <param name="rotation">The rotation of chew.</param>
-    /// <param name="instant">if set to <c>true</c> no animation is played.</param>
-    public void Chew(Vector3 position, float rotation, bool instant)
+    public bool IsActive
     {
-        transform.localPosition = position;
-        transform.localRotation = Quaternion.Euler(0, 0, rotation);
-
-        Chew(instant);
+        get;
+        set;
     }
 
     /// <summary>
-    /// Fixes the stencil on the paper.
+    /// Animates chewing the paper.
     /// </summary>
-    /// <param name="instant">if set to <c>true</c> no animation is played.</param>
-    public void Chew(bool instant)
+    public void Animate()
     {
-        if (instant)
-        {
-            GetComponent<Image>().color = Color.black;
-        }
-        else
-        {
-            gameObject.ColorTo(Color.black, chewAnimationTime, 0);
-        }
+        gameObject.ColorTo(Color.black, chewAnimationTime, 0);
     }
 
     /// <summary>
@@ -59,6 +45,11 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     /// <param name="eventData">Current event data.</param>
     public void OnDrag(PointerEventData eventData)
     {
+        if (!IsActive)
+        {
+            return;
+        }
+
         transform.position += new Vector3(eventData.delta.x, eventData.delta.y);
     }
 
@@ -68,6 +59,11 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     /// <param name="eventData">The event data.</param>
     public void OnRotate(PointerEventData eventData)
     {
+        if (!IsActive)
+        {
+            return;
+        }
+
         var to = eventData.position - new Vector2(transform.position.x, transform.position.y);
         var from = to - eventData.delta;
         var sign = Mathf.Sign(from.x * to.y - from.y * to.x);
@@ -77,10 +73,10 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
 
     #region Tests
 
-    [ContextMenu("TestChew")]
-    private void TestChew()
+    [ContextMenu("Test_Animate")]
+    private void Test_Animate()
     {
-        Chew(Vector3.zero, 20, false);
+        Animate();
     }
 
     #endregion

@@ -4,11 +4,6 @@ using UnityEngine;
 public interface IPaperSynchronizer
 {
     /// <summary>
-    /// Occurs when paper was chopped.
-    /// </summary>
-    event Action<ChewEventArgs> PaperChewed;
-
-    /// <summary>
     /// Notifies all clients about chewing the paper.
     /// </summary>
     /// <param name="stencilId">The stencil identifier.</param>

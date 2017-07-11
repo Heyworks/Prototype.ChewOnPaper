@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-public class RoomsInitializer : MonoInstaller
+public class RoomsInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {

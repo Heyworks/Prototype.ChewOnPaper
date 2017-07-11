@@ -88,7 +88,7 @@ public class MainScreenPresenter
     private void ShowPaper()
     {
         Deactivate();
-        SceneManager.LoadScene("Paper");
+        SceneManager.LoadScene("InGame");
     }
 
     private void AddEventHandlers()
