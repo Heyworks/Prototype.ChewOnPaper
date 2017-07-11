@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Represents game controller.
 /// </summary>
-public class GameController : MonoBehaviour
+public class TempGameController : MonoBehaviour
 {
-    [SerializeField]
+    [Inject]
     private Toolbox toolbox;
-    [SerializeField]
+    [Inject]
     private Paper paper;
-
-    private void Start()
-    {
-        toolbox.FillPalette();
-    }
 
     /// <summary>
     /// Chews this instance.
@@ -22,5 +18,10 @@ public class GameController : MonoBehaviour
     {
         paper.Chew(toolbox.CurrentStencil);
         toolbox.NextStencil();
+    }
+
+    private void Start()
+    {
+        toolbox.FillPalette();
     }
 }

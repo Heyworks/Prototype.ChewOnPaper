@@ -1,14 +1,15 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 /// <summary>
 /// Photon implementation of paper synchronizer.
 /// </summary>
 public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour
 {
-    [SerializeField]
+    [Inject]
     private Paper paper;
-    [SerializeField]
+    [Inject]
     private Toolbox toolbox;
 
     private void Start()
