@@ -19,7 +19,7 @@ public class Paper : MonoBehaviour
     public void Chew(Stencil stencil, bool silent = false)
     {
         var position = stencil.transform.localPosition;
-        var rotation = stencil.transform.localRotation.z;
+        var rotation = stencil.transform.localRotation.eulerAngles.z;
 
         stencil.transform.SetParent(transform);
         stencil.Animate();
