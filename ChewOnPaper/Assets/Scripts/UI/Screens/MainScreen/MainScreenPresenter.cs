@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 /// <summary>
 /// Represents presenter of main screen presenter.
@@ -7,23 +8,24 @@ using UnityEngine.SceneManagement;
 public class MainScreenPresenter
 {
     #region [Private fields]
-
-    private readonly IRoomsProvider roomsProvider;
+    
     private readonly MainScreenView view;
-    private ExistingRoomsRefresher roomsRefresher;
-
+    private readonly ExistingRoomsRefresher roomsRefresher;
+    private readonly IRoomsProvider roomsProvider;
+    
     #endregion
 
     #region [Construction and initialization]
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MainScreenPresenter"/> class.
+    /// Initializes a new instance of the <see cref="MainScreenPresenter" /> class.
     /// </summary>
     /// <param name="view">The view.</param>
-    public MainScreenPresenter(MainScreenView view)
+    /// <param name="roomsProvider">The rooms provider.</param>
+    public MainScreenPresenter(MainScreenView view, IRoomsProvider roomsProvider)
     {
-        roomsProvider = RoomProvidersFactory.CreateRoomProvider();
         this.view = view;
+        this.roomsProvider = roomsProvider;
         roomsRefresher = new ExistingRoomsRefresher(view, roomsProvider);
         AddPermanentEventHandlers();
     }
