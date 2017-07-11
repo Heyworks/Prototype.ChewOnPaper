@@ -26,7 +26,7 @@ public class Paper : MonoBehaviour
 
         if (!silent)
         {
-            var args = new ChewEventArgs(stencil.Id, stencil.transform.localPosition, stencil.transform.localRotation.z);
+            var args = new ChewEventArgs(stencil.Id, stencil.transform.position, stencil.transform.rotation.z);
             OnChewed(args);
         }
     }
