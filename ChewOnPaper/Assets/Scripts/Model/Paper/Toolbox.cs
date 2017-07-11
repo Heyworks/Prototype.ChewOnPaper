@@ -66,8 +66,8 @@ public class Toolbox: MonoBehaviour
     public Stencil CreateStencil(int id, Vector3 position, float rotation)
     {
         var stencil = stencilCollection.InstantiateStencil(id);
-        stencil.transform.position = position;
-        stencil.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        stencil.transform.localPosition = position;
+        stencil.transform.localRotation = Quaternion.Euler(0, 0, rotation);
         return stencil;
     }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +18,9 @@ public class Paper : MonoBehaviour
     /// <param name="silent">if set to <c>true</c> no event will be rised.</param>
     public void Chew(Stencil stencil, bool silent = false)
     {
+        var position = stencil.transform.localPosition;
+        var rotation = stencil.transform.localRotation.z;
+
         stencil.transform.SetParent(transform);
         stencil.Animate();
         stencil.IsActive = false;
@@ -26,11 +28,11 @@ public class Paper : MonoBehaviour
 
         if (!silent)
         {
-            var args = new ChewEventArgs(stencil.Id, stencil.transform.position, stencil.transform.rotation.z);
+            var args = new ChewEventArgs(stencil.Id, position, rotation);
             OnChewed(args);
         }
     }
-
+    
     private void OnChewed(ChewEventArgs args)
     {
         var handler = Chewed;
