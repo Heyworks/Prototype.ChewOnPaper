@@ -4,24 +4,19 @@ using UnityEngine;
 /// <summary>
 /// Photon implementation of paper synchronizer.
 /// </summary>
-public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour, IPaperSynchronizer
+public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour
 {
     [SerializeField]
     private Paper paper;
     [SerializeField]
     private Toolbox toolbox;
 
-    /// <summary>
-    /// Notifies all clients about chewing the paper.
-    /// </summary>
-    /// <param name="stencilId">The stencil identifier.</param>
-    /// <param name="position">The position.</param>
-    /// <param name="rotation">The rotation.</param>
-    public void NotifyAboutPaperChewed(int stencilId, Vector3 position, float rotation)
+    private void Start()
     {
-        photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, stencilId, position, rotation);
+        paper.Chewed += Paper_Chewed;
     }
 
+    [PunRPC]
     private void RPC_NotifyAboutPaperChewed(int stencilId, Vector3 position, float rotation)
     {
         ChewPaper(stencilId, position, rotation);
@@ -31,5 +26,9 @@ public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour, IPaperSynchr
     {
         var stencil = toolbox.CreateStencil(stencilId, position, rotation);
         paper.Chew(stencil, true);
+    }
+    private void Paper_Chewed(ChewEventArgs args)
+    {
+        photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation);
     }
 }
