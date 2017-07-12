@@ -11,6 +11,9 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     [SerializeField]
     private int id;
 
+    private Vector2 initialSize;
+    private RectTransform rectTransform;
+
     /// <summary>
     /// Gets the identifier.
     /// </summary>
@@ -31,12 +34,27 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
         set;
     }
 
+    private void Awake()
+    {
+        rectTransform = (RectTransform)transform;
+        initialSize = rectTransform.sizeDelta;
+    }
+
     /// <summary>
     /// Animates chewing the paper.
     /// </summary>
-    public void Animate()
+    public void AnimateChewing()
     {
         gameObject.ColorTo(Color.black, chewAnimationTime, 0);
+    }
+
+    /// <summary>
+    /// Rescale image to fit the height.
+    /// </summary>
+    public void FitHeight(float height)
+    {
+        var x = height / initialSize.y * initialSize.x;
+        rectTransform.sizeDelta = new Vector2(x, height);
     }
 
     /// <summary>
@@ -48,6 +66,11 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
         if (!IsActive)
         {
             return;
+        }
+
+        if (rectTransform.sizeDelta != initialSize)
+        {
+            ResetSize();
         }
 
         transform.position += new Vector3(eventData.delta.x, eventData.delta.y);
@@ -71,12 +94,17 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
         transform.Rotate(0, 0, rotation);
     }
 
+    private void ResetSize()
+    {
+        rectTransform.sizeDelta = initialSize;
+    }
+
     #region Tests
 
     [ContextMenu("Test_Animate")]
     private void Test_Animate()
     {
-        Animate();
+        AnimateChewing();
     }
 
     #endregion

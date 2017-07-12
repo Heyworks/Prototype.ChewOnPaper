@@ -9,11 +9,13 @@ public class Toolbox: MonoBehaviour
     [SerializeField]
     private StencilCollection stencilCollection;
     [SerializeField]
-    private Vector3 paleteOffset;
+    private Vector3 paletteOffset;
     [SerializeField]
     private Vector3 initialPositionInPallete;
     [SerializeField]
     private int numberOfStencilesInPalette = 3;
+    [SerializeField]
+    private float stencilHeight = 80;
 
     private readonly Queue<Stencil> palette =  new Queue<Stencil>();
 
@@ -37,7 +39,7 @@ public class Toolbox: MonoBehaviour
 
         for (int i= 0; i < numberOfStencilesInPalette; i++)
         {
-            palette.Enqueue(stencilCollection.InstantiateRandomStencil());
+            LoadRandomStencilInPalette();
         }
 
         palette.Peek().IsActive = true;
@@ -51,7 +53,7 @@ public class Toolbox: MonoBehaviour
     public void NextStencil()
     {
         palette.Dequeue();
-        palette.Enqueue(stencilCollection.InstantiateRandomStencil());
+        LoadRandomStencilInPalette();
         palette.Peek().IsActive = true;
 
         AlignStencils();
@@ -71,6 +73,13 @@ public class Toolbox: MonoBehaviour
         return stencil;
     }
 
+    private void LoadRandomStencilInPalette()
+    {
+        var stencil = stencilCollection.InstantiateRandomStencil();
+        stencil.FitHeight(stencilHeight);
+        palette.Enqueue(stencil);
+    }
+
     private void AlignStencils()
     {
         var offset = initialPositionInPallete;
@@ -80,7 +89,7 @@ public class Toolbox: MonoBehaviour
         {
             stencil.transform.SetSiblingIndex(--siblingIndex);
             stencil.transform.localPosition = offset;
-            offset += paleteOffset;
+            offset += paletteOffset;
         }
     }
 

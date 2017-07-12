@@ -22,7 +22,7 @@ public class Paper : MonoBehaviour
         var rotation = stencil.transform.localRotation.eulerAngles.z;
 
         stencil.transform.SetParent(transform);
-        stencil.Animate();
+        stencil.AnimateChewing();
         stencil.IsActive = false;
         stencil.enabled = false;
 
