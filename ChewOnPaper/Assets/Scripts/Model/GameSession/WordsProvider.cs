@@ -7,6 +7,7 @@ using Random = System.Random;
 /// </summary>
 public class WordsProvider
 {
+    private const string TEXT_FILE_NAME = "words";
     private readonly Random randomizer;
     private string[] words;
 
@@ -30,8 +31,7 @@ public class WordsProvider
 
     private void LoadWordsBase()
     {
-        var textAsset = Resources.Load<TextAsset>("words");
-        Debug.Log(textAsset.text);
+        var textAsset = Resources.Load<TextAsset>(TEXT_FILE_NAME);
         words = textAsset.text.Split('\n', ' ');
     }
 }
