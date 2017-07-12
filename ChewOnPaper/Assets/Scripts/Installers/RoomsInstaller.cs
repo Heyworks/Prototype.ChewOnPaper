@@ -1,5 +1,8 @@
 ﻿using Zenject;
 
+/// <summary>
+/// Represents DI installer for rooms.
+/// </summary>
 public class RoomsInstaller : MonoInstaller
 {
     public override void InstallBindings()

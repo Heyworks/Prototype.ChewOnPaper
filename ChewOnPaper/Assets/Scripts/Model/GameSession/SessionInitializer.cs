@@ -6,8 +6,7 @@
 public class SessionInitializer 
 {
     private readonly Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>(); 
-
-    private WordsProvider wordsProvider = new WordsProvider();
+    private readonly WordsProvider wordsProvider = new WordsProvider();
 
     /// <summary>
     /// Gets the guessed word.
@@ -42,7 +41,7 @@ public class SessionInitializer
 
     private void AddChewers(string[] playerIds)
     {
-        //Temp impl.
+        //TODO: Temp impl.
         for (int i = 0; i < 2 && i < playerRoles.Count; i++)
         {
             playerRoles[playerIds[i]] = PlayerRole.Guesser;
