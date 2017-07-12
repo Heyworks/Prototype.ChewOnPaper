@@ -3,33 +3,23 @@
 /// <summary>
 /// Represents session initializer which works on master client.
 /// </summary>
-public class SessionInitializer 
+public class SessionInitializer
 {
-    private readonly Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>(); 
+    private readonly Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>();
     private readonly WordsProvider wordsProvider = new WordsProvider();
-
-    /// <summary>
-    /// Gets the guessed word.
-    /// </summary>
-    public string GuessedWord { get; private set; }
     
     /// <summary>
     /// Initialize a new session.
     /// </summary>
     /// <param name="playerIds">The player identifiers.</param>
-    public void InitializeSession(string[] playerIds)
+    /// <returns>Createt game session</returns>
+    public GameSession InitializeSession(string[] playerIds)
     {
-        GuessedWord = ChooseWord();
+        var guessedWord = ChooseWord();
         RefreshRoles(playerIds);
-    }
+        var gameSession = new GameSession(guessedWord, playerRoles);
 
-    /// <summary>
-    /// Processes the new player join.
-    /// </summary>
-    /// <param name="playerId">The player identifier.</param>
-    public void ProcessPlayerJoin(string playerId)
-    {
-        playerRoles.Add(playerId, PlayerRole.Guesser);
+        return gameSession;
     }
 
     private void RefreshRoles(string[] playerIds)
