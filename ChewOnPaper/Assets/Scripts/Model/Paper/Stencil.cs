@@ -4,15 +4,17 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// Represents stencil object.
 /// </summary>
-public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
+public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDownHandler
 {
-    private const float chewAnimationTime = 1.0f;
+    private const float ChewAnimationTime = 1.0f;
+    private const float ResetSizeTime = 0.1f;
 
     [SerializeField]
     private int id;
 
     private Vector2 initialSize;
     private RectTransform rectTransform;
+    private bool isInitialSize = true;
 
     /// <summary>
     /// Gets the identifier.
@@ -45,7 +47,7 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     /// </summary>
     public void AnimateChewing()
     {
-        gameObject.ColorTo(Color.black, chewAnimationTime, 0);
+        gameObject.ColorTo(Color.black, ChewAnimationTime, 0);
     }
 
     /// <summary>
@@ -53,6 +55,8 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
     /// </summary>
     public void FitHeight(float height)
     {
+        isInitialSize = false;
+
         var x = height / initialSize.y * initialSize.x;
         rectTransform.sizeDelta = new Vector2(x, height);
     }
@@ -66,11 +70,6 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
         if (!IsActive)
         {
             return;
-        }
-
-        if (rectTransform.sizeDelta != initialSize)
-        {
-            ResetSize();
         }
 
         transform.position += new Vector3(eventData.delta.x, eventData.delta.y);
@@ -94,9 +93,38 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler
         transform.Rotate(0, 0, rotation);
     }
 
+    /// <summary>
+    /// Called when a pointer is pressed on the object 
+    /// </summary>
+    /// <param name="eventData">Current event data.</param>
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (!IsActive)
+        {
+            return;
+        }
+
+        if (!isInitialSize)
+        {
+            ResetSize();
+        }
+    }
+
     private void ResetSize()
     {
-        rectTransform.sizeDelta = initialSize;
+        isInitialSize = true;
+
+        iTween.ValueTo(gameObject, iTween.Hash(
+               iT.ValueTo.from, rectTransform.sizeDelta,
+               iT.ValueTo.to, initialSize,
+               iT.ValueTo.time, ResetSizeTime,
+               iT.ValueTo.easetype, iTween.EaseType.linear,
+               iT.ValueTo.onupdate, "SetSizeDelta"));
+    }
+
+    private void SetSizeDelta(Vector2 sizeDelta)
+    {
+        rectTransform.sizeDelta = sizeDelta;
     }
 
     #region Tests
