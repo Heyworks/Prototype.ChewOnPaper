@@ -5,13 +5,15 @@
 /// </summary>
 public class SessionInitializer 
 {
+    private readonly Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>(); 
+
+    private WordsProvider wordsProvider = new WordsProvider();
+
     /// <summary>
     /// Gets the guessed word.
     /// </summary>
     public string GuessedWord { get; private set; }
-
-    private Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>(); 
-
+    
     /// <summary>
     /// Initialize a new session.
     /// </summary>
@@ -57,7 +59,6 @@ public class SessionInitializer
 
     private string ChooseWord()
     {
-        //TODO
-        return string.Empty;
+        return wordsProvider.GetRandomWord();
     }
 }
