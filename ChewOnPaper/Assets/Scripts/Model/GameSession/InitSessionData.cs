@@ -13,14 +13,14 @@ public class InitSessionData
     /// <summary>
     /// Gets the roles for every player.
     /// </summary>
-    public Dictionary<string, PlayerRole> PlayerRoles { get; private set; }
+    public Dictionary<int, PlayerRole> PlayerRoles { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="InitSessionData"/> class.
     /// </summary>
     /// <param name="guessedWord">The guessed word.</param>
     /// <param name="playerRoles">The player roles.</param>
-    public InitSessionData(string guessedWord, Dictionary<string, PlayerRole> playerRoles)
+    public InitSessionData(string guessedWord, Dictionary<int, PlayerRole> playerRoles)
     {
         GuessedWord = guessedWord;
         PlayerRoles = playerRoles;

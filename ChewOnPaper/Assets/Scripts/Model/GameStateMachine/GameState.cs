@@ -8,6 +8,17 @@ public abstract class GameState
     /// </summary>
     protected bool IsActive { get; private set; }
 
+    private readonly GameStateMachine gameStateMachine;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GameState"/> class.
+    /// </summary>
+    /// <param name="gameStateMachine">The game state machine.</param>
+    protected GameState(GameStateMachine gameStateMachine)
+    {
+        this.gameStateMachine = gameStateMachine;
+    }
+
     /// <summary>
     /// Acticates this state.
     /// </summary>
@@ -22,5 +33,14 @@ public abstract class GameState
     public void Deactivate()
     {
         IsActive = false;
+    }
+
+    /// <summary>
+    /// Switches to state.
+    /// </summary>
+    /// <param name="nextState">State of the next.</param>
+    protected void SwitchToState(GameState nextState)
+    {
+        gameStateMachine.SwitchToState(nextState);
     }
 }

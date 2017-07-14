@@ -21,6 +21,17 @@ public class GameStateMachine
         currentState.Acticate();
     }
 
+    /// <summary>
+    /// Switches to state.
+    /// </summary>
+    /// <param name="nextState">State of the next.</param>
+    public void SwitchToState(GameState nextState)
+    {
+        currentState.Deactivate();
+        nextState.Acticate();
+        currentState = nextState;
+    }
+
     private void CreateStates()
     {
         

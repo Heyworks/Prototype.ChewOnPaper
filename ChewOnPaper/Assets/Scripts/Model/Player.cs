@@ -6,7 +6,7 @@ public class Player
     /// <summary>
     /// Gets the identifier.
     /// </summary>
-    public string Id { get; private set; }
+    public int Id { get; private set; }
 
     /// <summary>
     /// Gets the name.
@@ -23,7 +23,7 @@ public class Player
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <param name="name">The name.</param>
-    public Player(string id, string name)
+    public Player(int id, string name)
     {
         Id = id;
         Name = name;

@@ -1,48 +1,60 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Represents session initializer which works on master client.
 /// </summary>
 public class SessionInitializer
 {
-    private readonly Dictionary<string, PlayerRole> playerRoles = new Dictionary<string, PlayerRole>();
     private readonly WordsProvider wordsProvider = new WordsProvider();
-    
+
     /// <summary>
     /// Initialize a new session.
     /// </summary>
-    /// <param name="players">The players.</param>
-    /// <returns>Createt game session</returns>
-    public InitSessionData InitializeSession(IList<Player> players)
+    /// <param name="game">The game.</param>
+    public InitSessionData InitializeSession(Game game)
     {
         var guessedWord = ChooseWord();
-        RefreshRoles(players);
-        var gameSession = new InitSessionData(guessedWord, playerRoles);
+        var roles = CreateRoles(game);
+        var initSessionData = new InitSessionData(guessedWord, roles);
 
-        return gameSession;
+        return initSessionData;
     }
 
-    private void RefreshRoles(IList<Player> players)
+    private Dictionary<int, PlayerRole> CreateRoles(Game game)
     {
-        playerRoles.Clear();
-        //AddGuessers(playerIds);
-        //AddChewers(playerIds);
+        var playerRoles = new Dictionary<int, PlayerRole>();
+        FillChewers(game, playerRoles, 2);
+        FillGuessers(game, playerRoles);
+
+        return playerRoles;
     }
 
-    private void AddChewers(string[] playerIds)
+    private void FillGuessers(Game game, Dictionary<int, PlayerRole> playerRoles)
     {
-        //TODO: Temp impl.
-        for (int i = 0; i < 2 && i < playerRoles.Count; i++)
+        foreach (var player in game.Players)
         {
-            playerRoles[playerIds[i]] = PlayerRole.Guesser;
+            if (!playerRoles.ContainsKey(player.Id))
+            {
+                playerRoles.Add(player.Id, PlayerRole.Guesser);
+            }
         }
     }
 
-    private void AddGuessers(string[] playerIds)
+    private void FillChewers(Game game, Dictionary<int, PlayerRole> playerRoles, int chewersCount)
     {
-        foreach (var playerId in playerIds)
+        if (game.PreviousSessionWinner.HasValue)
         {
-            playerRoles.Add(playerId, PlayerRole.Guesser);
+            playerRoles.Add(game.PreviousSessionWinner.Value, PlayerRole.Chewer);
+        }
+
+        var sortedPlayers = game.Players.OrderBy(item => item.Score).ToArray();
+        var index = 0;
+        while (playerRoles.Count < chewersCount && index < sortedPlayers.Length)
+        {
+            var player = sortedPlayers[index];
+            playerRoles.Add(player.Id, PlayerRole.Chewer);
+            index++;
         }
     }
 

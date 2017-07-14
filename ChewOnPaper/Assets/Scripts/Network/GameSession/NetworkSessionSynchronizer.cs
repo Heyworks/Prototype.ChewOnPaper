@@ -1,7 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
-using Zenject;
 
 /// <summary>
 /// Photon implementation of network session synchronize.
@@ -9,12 +8,9 @@ using Zenject;
 public class NetworkSessionSynchronizer : Photon.MonoBehaviour
 {
     /// <summary>
-    /// Occurs when session has been created.
+    /// Occurs when session has been initialized.
     /// </summary>
-    public event Action<InitSessionData> SessionCreated;
-
-    [Inject]
-    private SessionInitializer sessionInitializer;
+    public event Action<SessionInitTransferData> SessionInitialized;
 
     private JsonSerializerSettings serializerSettings;
 
@@ -31,13 +27,29 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     {
         if (PhotonNetwork.isMasterClient)
         {
-            var serializedSession = Serialize(sessionData);
-            photonView.RPC("RPC_NotifySessionInitialized", PhotonTargets.OthersBuffered, serializedSession);
-            OnSessionCreated(sessionData);
+            SendInitSessionData(sessionData);
         }
     }
 
+    private void SendInitSessionData(InitSessionData sessionData)
+    {
+        var isYourTurn = true;
+        string serializedData;
+        foreach (var item in sessionData.PlayerRoles)
+        {
+            if (item.Value == PlayerRole.Guesser)
+            {
+                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Guesser));
+            }
+            else
+            {
+                serializedData = Serialize(new ChewerSessionInitTransferData(PlayerRole.Chewer, sessionData.GuessedWord, isYourTurn));
+                isYourTurn = false;
+            }
 
+            photonView.RPC("RPC_NotifySessionInitialized", PhotonPlayer.Find(item.Key), serializedData);
+        }
+    }
 
     [PunRPC]
     private void RPC_NotifySessionInitialized(string serializedSession)
@@ -45,30 +57,30 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         OnSessionCreated(Deserialize(serializedSession));
     }
 
-    private InitSessionData Deserialize(string serializedData)
+    private SessionInitTransferData Deserialize(string serializedData)
     {
-        return JsonConvert.DeserializeObject(serializedData, typeof (InitSessionData), serializerSettings) as InitSessionData;
+        return JsonConvert.DeserializeObject(serializedData, serializerSettings) as SessionInitTransferData;
     }
 
-    private string Serialize(InitSessionData sessionData)
+    private string Serialize(SessionInitTransferData sessionData)
     {
         return JsonConvert.SerializeObject(sessionData, Formatting.None, serializerSettings);
     }
 
     private static JsonSerializerSettings CreateSerializerSettings()
     {
-        return new JsonSerializerSettings()
-        {
-            TypeNameHandling = TypeNameHandling.Auto,
-            NullValueHandling = NullValueHandling.Ignore,
-            ContractResolver = new DefaultContractResolver(),
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-        };
+        return new JsonSerializerSettings
+               {
+                   TypeNameHandling = TypeNameHandling.Auto,
+                   NullValueHandling = NullValueHandling.Ignore,
+                   ContractResolver = new DefaultContractResolver(),
+                   ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+               };
     }
 
-    private void OnSessionCreated(InitSessionData initSessionData)
+    private void OnSessionCreated(SessionInitTransferData initSessionData)
     {
-        var handler = SessionCreated;
+        var handler = SessionInitialized;
         if (handler != null) handler(initSessionData);
     }
 }
