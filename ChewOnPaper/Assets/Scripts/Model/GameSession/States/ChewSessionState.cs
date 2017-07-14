@@ -1,12 +1,22 @@
 ﻿public class ChewSessionState : GameSessionState
 {
+    private readonly Paper paper;
+    private readonly Toolbox tolbox;
+
+    public ChewSessionState(Paper paper, Toolbox tolbox)
+    {
+        this.paper = paper;
+        this.tolbox = tolbox;
+    }
+
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
+        tolbox.gameObject.SetActive(true);
     }
 
     public void Chew()
     {
-        throw new System.NotImplementedException();
+        paper.Chew(tolbox.CurrentStencil);
+        tolbox.NextStencil();
     }
 }
