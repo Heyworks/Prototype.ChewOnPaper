@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 using Zenject;
 
 /// <summary>
-/// Photon implementation of network session initializer.
+/// Photon implementation of network session synchronize.
 /// </summary>
-public class NetworkSessionInitializer : Photon.MonoBehaviour
+public class NetworkSessionSynchronizer : Photon.MonoBehaviour
 {
     /// <summary>
     /// Occurs when session has been created.
