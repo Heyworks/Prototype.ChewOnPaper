@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents game session.
 /// </summary>
-public class GameSession
+public class InitSessionData
 {
     /// <summary>
     /// Gets the guessed word.
@@ -16,11 +16,11 @@ public class GameSession
     public Dictionary<string, PlayerRole> PlayerRoles { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GameSession"/> class.
+    /// Initializes a new instance of the <see cref="InitSessionData"/> class.
     /// </summary>
     /// <param name="guessedWord">The guessed word.</param>
     /// <param name="playerRoles">The player roles.</param>
-    public GameSession(string guessedWord, Dictionary<string, PlayerRole> playerRoles)
+    public InitSessionData(string guessedWord, Dictionary<string, PlayerRole> playerRoles)
     {
         GuessedWord = guessedWord;
         PlayerRoles = playerRoles;

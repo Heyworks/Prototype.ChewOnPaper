@@ -11,22 +11,22 @@ public class SessionInitializer
     /// <summary>
     /// Initialize a new session.
     /// </summary>
-    /// <param name="playerIds">The player identifiers.</param>
+    /// <param name="players">The players.</param>
     /// <returns>Createt game session</returns>
-    public GameSession InitializeSession(string[] playerIds)
+    public InitSessionData InitializeSession(IList<Player> players)
     {
         var guessedWord = ChooseWord();
-        RefreshRoles(playerIds);
-        var gameSession = new GameSession(guessedWord, playerRoles);
+        RefreshRoles(players);
+        var gameSession = new InitSessionData(guessedWord, playerRoles);
 
         return gameSession;
     }
 
-    private void RefreshRoles(string[] playerIds)
+    private void RefreshRoles(IList<Player> players)
     {
         playerRoles.Clear();
-        AddGuessers(playerIds);
-        AddChewers(playerIds);
+        //AddGuessers(playerIds);
+        //AddChewers(playerIds);
     }
 
     private void AddChewers(string[] playerIds)

@@ -14,14 +14,9 @@ public class Player
     public string Name { get; private set; }
 
     /// <summary>
-    /// Gets or sets the session role.
-    /// </summary>
-    public PlayerRole Role { get; set; }
-
-    /// <summary>
     /// Gets or sets the score.
     /// </summary>
-    public int Score { get; set; }
+    public int Score { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Player"/> class.
@@ -32,5 +27,14 @@ public class Player
     {
         Id = id;
         Name = name;
+    }
+
+    /// <summary>
+    /// Updates the score.
+    /// </summary>
+    /// <param name="currentScore">The current score.</param>
+    public void UpdateScore(int currentScore)
+    {
+        Score = currentScore;
     }
 }

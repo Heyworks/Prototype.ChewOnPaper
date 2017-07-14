@@ -11,7 +11,7 @@ public abstract class GameState
     /// <summary>
     /// Acticates this state.
     /// </summary>
-    public void Acticate()
+    public virtual void Acticate()
     {
         IsActive = true;
     }

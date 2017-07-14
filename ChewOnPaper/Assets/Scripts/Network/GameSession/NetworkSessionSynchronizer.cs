@@ -11,7 +11,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <summary>
     /// Occurs when session has been created.
     /// </summary>
-    public event Action<GameSession> SessionCreated;
+    public event Action<InitSessionData> SessionCreated;
 
     [Inject]
     private SessionInitializer sessionInitializer;
@@ -26,17 +26,18 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <summary>
     /// Initialize a new session.
     /// </summary>
-    /// <param name="playerIds">The player identifiers.</param>
-    public void InitializeSession(string[] playerIds)
+    /// <param name="sessionData">The session.</param>
+    public void InitializeSession(InitSessionData sessionData)
     {
         if (PhotonNetwork.isMasterClient)
         {
-            var session = sessionInitializer.InitializeSession(playerIds);
-            var serializedSession = Serialize(session);
+            var serializedSession = Serialize(sessionData);
             photonView.RPC("RPC_NotifySessionInitialized", PhotonTargets.OthersBuffered, serializedSession);
-            OnSessionCreated(session);
+            OnSessionCreated(sessionData);
         }
     }
+
+
 
     [PunRPC]
     private void RPC_NotifySessionInitialized(string serializedSession)
@@ -44,14 +45,14 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         OnSessionCreated(Deserialize(serializedSession));
     }
 
-    private GameSession Deserialize(string serializedData)
+    private InitSessionData Deserialize(string serializedData)
     {
-        return JsonConvert.DeserializeObject(serializedData, typeof (GameSession), serializerSettings) as GameSession;
+        return JsonConvert.DeserializeObject(serializedData, typeof (InitSessionData), serializerSettings) as InitSessionData;
     }
 
-    private string Serialize(GameSession session)
+    private string Serialize(InitSessionData sessionData)
     {
-        return JsonConvert.SerializeObject(session, Formatting.None, serializerSettings);
+        return JsonConvert.SerializeObject(sessionData, Formatting.None, serializerSettings);
     }
 
     private static JsonSerializerSettings CreateSerializerSettings()
@@ -65,9 +66,9 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         };
     }
 
-    private void OnSessionCreated(GameSession gameSession)
+    private void OnSessionCreated(InitSessionData initSessionData)
     {
         var handler = SessionCreated;
-        if (handler != null) handler(gameSession);
+        if (handler != null) handler(initSessionData);
     }
 }
