@@ -8,7 +8,13 @@ public class Game
     /// <summary>
     /// Gets the current player identifier.
     /// </summary>
-    public int CurrentPlayerId { get; private set; }
+    public int CurrentPlayerId
+    {
+        get
+        {
+            return PhotonNetwork.player.ID;
+        }
+    }
 
     /// <summary>
     /// Gets the previous session winner.
@@ -21,14 +27,20 @@ public class Game
     public List<Player> Players { get; private set; }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="Game"/> class.
+    /// </summary>
+    public Game()
+    {
+        Players = new List<Player>();
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Game" /> class.
     /// </summary>
-    /// <param name="currentPlayerId">The current player identifier.</param>
     /// <param name="previousSessionWinner">The previous session winner.</param>
     /// <param name="players">The players.</param>
-    public Game(int currentPlayerId, int? previousSessionWinner, List<Player> players)
+    public void UpdateGameData(int? previousSessionWinner, List<Player> players)
     {
-        CurrentPlayerId = currentPlayerId;
         Players = players;
         PreviousSessionWinner = previousSessionWinner;
     }

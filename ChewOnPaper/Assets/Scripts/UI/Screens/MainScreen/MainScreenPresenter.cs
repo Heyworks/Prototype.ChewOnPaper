@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 /// <summary>
 /// Represents presenter of main screen presenter.

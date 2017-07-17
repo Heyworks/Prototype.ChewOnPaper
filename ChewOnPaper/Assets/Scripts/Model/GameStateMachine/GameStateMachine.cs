@@ -4,13 +4,15 @@
 public class GameStateMachine
 {
     private GameState currentState;
+    private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GameStateMachine"/> class.
+    /// Initializes a new instance of the <see cref="GameStateMachine" /> class.
     /// </summary>
-    public GameStateMachine()
+    /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
+    public GameStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer)
     {
-        CreateStates();
+        this.networkSessionSynchronizer = networkSessionSynchronizer;
     }
 
     /// <summary>
@@ -18,6 +20,7 @@ public class GameStateMachine
     /// </summary>
     public void Start()
     {
+        CreateStates();
         currentState.Acticate();
     }
 
@@ -28,12 +31,15 @@ public class GameStateMachine
     public void SwitchToState(GameState nextState)
     {
         currentState.Deactivate();
-        nextState.Acticate();
-        currentState = nextState;
+        if (nextState != null)
+        {
+            nextState.Acticate();
+            currentState = nextState;
+        }
     }
 
     private void CreateStates()
     {
-        
+        currentState = new GameInitState(this, null, networkSessionSynchronizer);
     }
 }

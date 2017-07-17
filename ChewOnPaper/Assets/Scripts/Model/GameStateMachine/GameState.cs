@@ -8,15 +8,22 @@ public abstract class GameState
     /// </summary>
     protected bool IsActive { get; private set; }
 
+    /// <summary>
+    /// Gets the network session synchronizer.
+    /// </summary>
+    protected NetworkSessionSynchronizer NetworkSessionSynchronizer { get; private set; }
+
     private readonly GameStateMachine gameStateMachine;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GameState"/> class.
+    /// Initializes a new instance of the <see cref="GameState" /> class.
     /// </summary>
     /// <param name="gameStateMachine">The game state machine.</param>
-    protected GameState(GameStateMachine gameStateMachine)
+    /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
+    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer)
     {
         this.gameStateMachine = gameStateMachine;
+        NetworkSessionSynchronizer = networkSessionSynchronizer;
     }
 
     /// <summary>

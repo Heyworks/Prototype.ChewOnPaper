@@ -14,7 +14,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
 
     private JsonSerializerSettings serializerSettings;
 
-    private void Start()
+    private void Awake()
     {
         serializerSettings = CreateSerializerSettings();
     }
@@ -39,11 +39,11 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         {
             if (item.Value == PlayerRole.Guesser)
             {
-                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Guesser));
+                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Guesser, sessionData.GuessedWord, false));
             }
             else
             {
-                serializedData = Serialize(new ChewerSessionInitTransferData(PlayerRole.Chewer, sessionData.GuessedWord, isYourTurn));
+                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Chewer, sessionData.GuessedWord, isYourTurn));
                 isYourTurn = false;
             }
 
@@ -59,7 +59,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
 
     private SessionInitTransferData Deserialize(string serializedData)
     {
-        return JsonConvert.DeserializeObject(serializedData, serializerSettings) as SessionInitTransferData;
+        return JsonConvert.DeserializeObject(serializedData, typeof(SessionInitTransferData), serializerSettings) as SessionInitTransferData;
     }
 
     private string Serialize(SessionInitTransferData sessionData)
