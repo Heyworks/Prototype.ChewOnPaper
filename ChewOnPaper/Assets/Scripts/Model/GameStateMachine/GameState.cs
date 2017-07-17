@@ -13,6 +13,11 @@ public abstract class GameState
     /// </summary>
     protected NetworkSessionSynchronizer NetworkSessionSynchronizer { get; private set; }
 
+    /// <summary>
+    /// Gets the game.
+    /// </summary>
+    protected Game Game { get; private set; }
+
     private readonly GameStateMachine gameStateMachine;
 
     /// <summary>
@@ -20,12 +25,14 @@ public abstract class GameState
     /// </summary>
     /// <param name="gameStateMachine">The game state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
-    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer)
+    /// <param name="game">The game.</param>
+    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
     {
         this.gameStateMachine = gameStateMachine;
         NetworkSessionSynchronizer = networkSessionSynchronizer;
+        Game = game;
     }
-
+    
     /// <summary>
     /// Acticates this state.
     /// </summary>

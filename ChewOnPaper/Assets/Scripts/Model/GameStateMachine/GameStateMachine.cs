@@ -5,14 +5,17 @@ public class GameStateMachine
 {
     private GameState currentState;
     private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
+    private Game game;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GameStateMachine" /> class.
     /// </summary>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
-    public GameStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer)
+    /// <param name="game">The game.</param>
+    public GameStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
     {
         this.networkSessionSynchronizer = networkSessionSynchronizer;
+        this.game = game;
     }
 
     /// <summary>
@@ -40,6 +43,6 @@ public class GameStateMachine
 
     private void CreateStates()
     {
-        currentState = new GameInitState(this, null, networkSessionSynchronizer);
+        currentState = new GameInitState(this, null, networkSessionSynchronizer, game);
     }
 }

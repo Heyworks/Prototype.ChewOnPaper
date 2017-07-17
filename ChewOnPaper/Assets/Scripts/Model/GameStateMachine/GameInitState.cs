@@ -6,7 +6,6 @@
 public class GameInitState : GameState
 {
     private readonly SessionInitializer sessionInitializer;
-    private Game game;
     private readonly GameState nextState;
 
     /// <summary>
@@ -15,12 +14,12 @@ public class GameInitState : GameState
     /// <param name="gameStateMachine">The game state machine.</param>
     /// <param name="nextState">State of the next.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
-    public GameInitState(GameStateMachine gameStateMachine, GameState nextState, NetworkSessionSynchronizer networkSessionSynchronizer)
-        : base(gameStateMachine, networkSessionSynchronizer)
+    /// <param name="game">The game.</param>
+    public GameInitState(GameStateMachine gameStateMachine, GameState nextState, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+        : base(gameStateMachine, networkSessionSynchronizer, game)
     {
         this.nextState = nextState;
         sessionInitializer = new SessionInitializer();
-        game = new Game();
     }
 
     /// <summary>
@@ -33,9 +32,9 @@ public class GameInitState : GameState
         //TODO Temp impl.
         var players = new List<Player>();
         players.Add(new Player(PhotonNetwork.player.ID, "Test"));
-        game.UpdateGameData(null, players);
+        Game.UpdateGameData(null, players);
 
-        var sessionData = sessionInitializer.InitializeSession(game);
+        var sessionData = sessionInitializer.InitializeSession(Game);
         NetworkSessionSynchronizer.InitializeSession(sessionData);
         SwitchToState(nextState);
     }
