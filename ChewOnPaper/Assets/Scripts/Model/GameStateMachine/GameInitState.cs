@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-/// <summary>
+﻿/// <summary>
 /// Represents init state of game state machine.
 /// </summary>
 public class GameInitState : GameState
@@ -26,12 +24,7 @@ public class GameInitState : GameState
     public override void Acticate()
     {
         base.Acticate();
-
-        //TODO Temp impl.
-        var players = new List<Player>();
-        players.Add(new Player(PhotonNetwork.player.ID, "Test"));
-        Game.UpdateGameData(null, players);
-
+        
         var sessionData = sessionInitializer.InitializeSession(Game);
         NetworkSessionSynchronizer.InitializeSession(sessionData);
         SwitchToState(NextState);
