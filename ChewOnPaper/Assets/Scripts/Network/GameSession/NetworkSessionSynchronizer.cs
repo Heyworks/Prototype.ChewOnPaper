@@ -38,7 +38,8 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <param name="gameDto">The game dto.</param>
     public void InitializeGame(GameDTO gameDto)
     {
-        photonView.RPC("RPC_NotifyGameInitialized", PhotonTargets.OthersBuffered, gameDto);
+        var serializedData = JsonSerializer.SerializeGameDto(gameDto);
+        photonView.RPC("RPC_NotifyGameInitialized", PhotonTargets.OthersBuffered, serializedData);
     }
 
     private void SendInitSessionData(InitSessionData sessionData)
