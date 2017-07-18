@@ -1,7 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using UnityEngine;
 
 /// <summary>
 /// Photon implementation of network session synchronize.
@@ -11,20 +8,18 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <summary>
     /// Occurs when session has been initialized.
     /// </summary>
-    public event Action<SessionInitTransferData> SessionInitialized;
+    public event Action<SessionInitDTO> SessionInitialized;
+
+    /// <summary>
+    /// Occurs when game dto has been received.
+    /// </summary>
+    public event Action<GameDTO> GameDTOReceived;
 
     /// <summary>
     /// Occurs when player joined game room.
     /// </summary>
     public event Action PlayerJoined;
     
-    private JsonSerializerSettings serializerSettings;
-
-    private void Awake()
-    {
-        serializerSettings = CreateSerializerSettings();
-    }
-
     /// <summary>
     /// Initialize a new session.
     /// </summary>
@@ -40,10 +35,10 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <summary>
     /// Initializes the game.
     /// </summary>
-    /// <param name="game">The game.</param>
-    public void InitializeGame(Game game)
+    /// <param name="gameDto">The game dto.</param>
+    public void InitializeGame(GameDTO gameDto)
     {
-        Debug.Log("InitializeGame");
+        photonView.RPC("RPC_NotifyGameInitialized", PhotonTargets.OthersBuffered, gameDto);
     }
 
     private void SendInitSessionData(InitSessionData sessionData)
@@ -54,11 +49,11 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         {
             if (item.Value == PlayerRole.Guesser)
             {
-                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Guesser, sessionData.GuessedWord, false));
+                serializedData = JsonSerializer.SerializeSessionInitDto(new SessionInitDTO(PlayerRole.Guesser, sessionData.GuessedWord, false));
             }
             else
             {
-                serializedData = Serialize(new SessionInitTransferData(PlayerRole.Chewer, sessionData.GuessedWord, isYourTurn));
+                serializedData = JsonSerializer.SerializeSessionInitDto(new SessionInitDTO(PlayerRole.Chewer, sessionData.GuessedWord, isYourTurn));
                 isYourTurn = false;
             }
 
@@ -69,28 +64,13 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     [PunRPC]
     private void RPC_NotifySessionInitialized(string serializedSession)
     {
-        OnSessionCreated(Deserialize(serializedSession));
+        OnSessionCreated(JsonSerializer.DeserializeSessionInitDto(serializedSession));
     }
 
-    private SessionInitTransferData Deserialize(string serializedData)
+    [PunRPC]
+    private void RPC_NotifyGameInitialized(string serializedGame)
     {
-        return JsonConvert.DeserializeObject(serializedData, typeof(SessionInitTransferData), serializerSettings) as SessionInitTransferData;
-    }
-
-    private string Serialize(SessionInitTransferData sessionData)
-    {
-        return JsonConvert.SerializeObject(sessionData, Formatting.None, serializerSettings);
-    }
-
-    private static JsonSerializerSettings CreateSerializerSettings()
-    {
-        return new JsonSerializerSettings
-               {
-                   TypeNameHandling = TypeNameHandling.Auto,
-                   NullValueHandling = NullValueHandling.Ignore,
-                   ContractResolver = new DefaultContractResolver(),
-                   ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
-               };
+        OnGameDtoReceived(JsonSerializer.DeserializeGameDto(serializedGame));
     }
 
     /// <summary>
@@ -110,7 +90,16 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         }
     }
 
-    private void OnSessionCreated(SessionInitTransferData initSessionData)
+    private void OnGameDtoReceived(GameDTO dto)
+    {
+        var handler = GameDTOReceived;
+        if (handler != null)
+        {
+            handler(dto);
+        }
+    }
+
+    private void OnSessionCreated(SessionInitDTO initSessionData)
     {
         var handler = SessionInitialized;
         if (handler != null) handler(initSessionData);

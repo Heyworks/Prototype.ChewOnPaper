@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Represents data about session init result. 
 /// </summary>
-public class SessionInitTransferData
+public class SessionInitDTO
 {
     /// <summary>
     /// Gets the current player role.
@@ -19,12 +19,12 @@ public class SessionInitTransferData
     public bool IsYourTurnFirst { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="SessionInitTransferData"/> class.
+    /// Initializes a new instance of the <see cref="SessionInitDTO"/> class.
     /// </summary>
     /// <param name="currentPlayerRole">The current player role.</param>
     /// <param name="guessedWord">The guessed word.</param>
     /// <param name="isYourTurnFirst">A value indicating whether your turn is the first.</param>
-    public SessionInitTransferData(PlayerRole currentPlayerRole, string guessedWord, bool isYourTurnFirst)
+    public SessionInitDTO(PlayerRole currentPlayerRole, string guessedWord, bool isYourTurnFirst)
     {
         GuessedWord = guessedWord;
         IsYourTurnFirst = isYourTurnFirst;

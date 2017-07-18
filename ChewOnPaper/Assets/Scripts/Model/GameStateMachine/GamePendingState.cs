@@ -48,13 +48,14 @@ public class GamePendingState : GameState
         {
             var players = CreatePlayers();
             Game.UpdateGameData(null, players);
-            NetworkSessionSynchronizer.InitializeGame(Game);
+            NetworkSessionSynchronizer.InitializeGame(Game.ConverToDto());
             SwitchToState(NextState);
         }
     }
 
     private List<Player> CreatePlayers()
     {
+        //TODO: Move Photon communication to another place.
         var photonPlayers = PhotonNetwork.playerList;
         var players = photonPlayers.Select(photonPlayer => new Player(photonPlayer.ID, photonPlayer.NickName)).ToList();
         return players;

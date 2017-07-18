@@ -3,6 +3,7 @@
 /// <summary>
 /// Represents Game model presentation.
 /// </summary>
+//TODO: Move Photon communication to another place.
 public class Game
 {
     /// <summary>
@@ -24,7 +25,7 @@ public class Game
     /// <summary>
     /// Gets the previous session winner.
     /// </summary>
-    public int?PreviousSessionWinner { get; private set; }
+    public int? PreviousSessionWinner { get; private set; }
 
     /// <summary>
     /// Gets the players.
@@ -40,14 +41,8 @@ public class Game
         GameRoomSettings = CreateRoomSettings();
     }
 
-    private RoomSettings CreateRoomSettings()
-    {
-        var currentRoom = PhotonNetwork.room;
-        return RoomSettings.ConvertFromPhotonRoom(currentRoom);
-    }
-
     /// <summary>
-    /// Initializes a new instance of the <see cref="Game" /> class.
+    /// Updates the game data.
     /// </summary>
     /// <param name="previousSessionWinner">The previous session winner.</param>
     /// <param name="players">The players.</param>
@@ -56,4 +51,34 @@ public class Game
         Players = players;
         PreviousSessionWinner = previousSessionWinner;
     }
+
+    /// <summary>
+    /// Updates the game data.
+    /// </summary>
+    /// <param name="gameDto">The game dto.</param>
+    public void UpdateGameData(GameDTO gameDto)
+    {
+        Players = gameDto.Players;
+        PreviousSessionWinner = gameDto.PreviousSessionWinner;
+    }
+
+    /// <summary>
+    /// Convers to dto.
+    /// </summary>
+    public GameDTO ConverToDto()
+    {
+        var dto = new GameDTO();
+        dto.Players = Players;
+        dto.PreviousSessionWinner = PreviousSessionWinner;
+
+        return dto;
+    }
+    
+    private RoomSettings CreateRoomSettings()
+    {
+        var currentRoom = PhotonNetwork.room;
+        return RoomSettings.ConvertFromPhotonRoom(currentRoom);
+    }
+
+
 }
