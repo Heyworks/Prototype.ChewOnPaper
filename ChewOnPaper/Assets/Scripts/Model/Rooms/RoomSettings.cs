@@ -38,4 +38,24 @@ public class RoomSettings
             return !string.IsNullOrEmpty(Name);
         }
     }
+
+    /// <summary>
+    /// Converts from photon room.
+    /// </summary>
+    /// <param name="photonRoom">The photon room.</param>
+    public static RoomSettings ConvertFromPhotonRoom(Room photonRoom)
+    {
+        var roomSettings = new RoomSettings();
+        roomSettings.MaxPlayers = photonRoom.MaxPlayers;
+        roomSettings.Name = photonRoom.Name;
+        object hashTableOut;
+        photonRoom.CustomProperties.TryGetValue("LastTurnScore", out hashTableOut);
+        roomSettings.LastTurnScore = (int) hashTableOut;
+        photonRoom.CustomProperties.TryGetValue("RightAnswerScore", out hashTableOut);
+        roomSettings.RightAnswerScore = (int)hashTableOut;
+        photonRoom.CustomProperties.TryGetValue("TurnTime", out hashTableOut);
+        roomSettings.TurnTime = (int)hashTableOut;
+
+        return roomSettings;
+    }
 }

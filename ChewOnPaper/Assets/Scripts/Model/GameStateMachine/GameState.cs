@@ -18,6 +18,11 @@ public abstract class GameState
     /// </summary>
     protected Game Game { get; private set; }
 
+    /// <summary>
+    /// Gets the next state.
+    /// </summary>
+    protected GameState NextState { get; private set; }
+
     private readonly GameStateMachine gameStateMachine;
 
     /// <summary>
@@ -26,11 +31,13 @@ public abstract class GameState
     /// <param name="gameStateMachine">The game state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+    /// <param name="nextState">State of the next.</param>
+    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GameState nextState)
     {
         this.gameStateMachine = gameStateMachine;
         NetworkSessionSynchronizer = networkSessionSynchronizer;
         Game = game;
+        NextState = nextState;
     }
     
     /// <summary>
@@ -44,7 +51,7 @@ public abstract class GameState
     /// <summary>
     /// Deactivates this State.
     /// </summary>
-    public void Deactivate()
+    public virtual void Deactivate()
     {
         IsActive = false;
     }

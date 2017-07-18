@@ -43,6 +43,8 @@ public class GameStateMachine
 
     private void CreateStates()
     {
-        currentState = new GameInitState(this, null, networkSessionSynchronizer, game);
+        var initState = new GameInitState(this, null, networkSessionSynchronizer, game);
+        var pendingState = new GamePendingState(this, networkSessionSynchronizer, game, initState);
+        currentState = pendingState;
     }
 }

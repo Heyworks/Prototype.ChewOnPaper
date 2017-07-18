@@ -27,6 +27,7 @@ public class Player
     {
         Id = id;
         Name = name;
+        Score = 0;
     }
 
     /// <summary>
