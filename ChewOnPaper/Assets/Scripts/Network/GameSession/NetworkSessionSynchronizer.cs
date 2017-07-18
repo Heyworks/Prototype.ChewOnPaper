@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using UnityEngine;
 
 /// <summary>
 /// Photon implementation of network session synchronize.
@@ -12,6 +13,11 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// </summary>
     public event Action<SessionInitTransferData> SessionInitialized;
 
+    /// <summary>
+    /// Occurs when player joined game room.
+    /// </summary>
+    public event Action PlayerJoined;
+    
     private JsonSerializerSettings serializerSettings;
 
     private void Awake()
@@ -29,6 +35,15 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
         {
             SendInitSessionData(sessionData);
         }
+    }
+
+    /// <summary>
+    /// Initializes the game.
+    /// </summary>
+    /// <param name="game">The game.</param>
+    public void InitializeGame(Game game)
+    {
+        Debug.Log("InitializeGame");
     }
 
     private void SendInitSessionData(InitSessionData sessionData)
@@ -76,6 +91,23 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
                    ContractResolver = new DefaultContractResolver(),
                    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
                };
+    }
+
+    /// <summary>
+    /// Photon Room join feedback.
+    /// </summary>
+    private void OnJoinedRoom()
+    {
+        OnPlayerJoined();
+    }
+
+    private void OnPlayerJoined()
+    {
+        var handler = PlayerJoined;
+        if (handler != null)
+        {
+            handler();
+        }
     }
 
     private void OnSessionCreated(SessionInitTransferData initSessionData)

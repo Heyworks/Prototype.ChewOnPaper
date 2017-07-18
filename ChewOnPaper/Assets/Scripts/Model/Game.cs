@@ -17,6 +17,11 @@ public class Game
     }
 
     /// <summary>
+    /// Gets the game room settings.
+    /// </summary>
+    public RoomSettings GameRoomSettings { get; private set; }
+
+    /// <summary>
     /// Gets the previous session winner.
     /// </summary>
     public int?PreviousSessionWinner { get; private set; }
@@ -32,6 +37,13 @@ public class Game
     public Game()
     {
         Players = new List<Player>();
+        GameRoomSettings = CreateRoomSettings();
+    }
+
+    private RoomSettings CreateRoomSettings()
+    {
+        var currentRoom = PhotonNetwork.room;
+        return RoomSettings.ConvertFromPhotonRoom(currentRoom);
     }
 
     /// <summary>

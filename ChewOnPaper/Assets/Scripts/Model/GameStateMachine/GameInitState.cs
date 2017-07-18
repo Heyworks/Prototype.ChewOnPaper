@@ -6,7 +6,6 @@
 public class GameInitState : GameState
 {
     private readonly SessionInitializer sessionInitializer;
-    private readonly GameState nextState;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GameInitState" /> class.
@@ -16,9 +15,8 @@ public class GameInitState : GameState
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     public GameInitState(GameStateMachine gameStateMachine, GameState nextState, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
-        : base(gameStateMachine, networkSessionSynchronizer, game)
+        : base(gameStateMachine, networkSessionSynchronizer, game, nextState)
     {
-        this.nextState = nextState;
         sessionInitializer = new SessionInitializer();
     }
 
@@ -36,6 +34,6 @@ public class GameInitState : GameState
 
         var sessionData = sessionInitializer.InitializeSession(Game);
         NetworkSessionSynchronizer.InitializeSession(sessionData);
-        SwitchToState(nextState);
+        SwitchToState(NextState);
     }
 }
