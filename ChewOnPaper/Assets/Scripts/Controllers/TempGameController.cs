@@ -10,18 +10,14 @@ public class TempGameController : MonoBehaviour
     private Toolbox toolbox;
     [Inject]
     private Paper paper;
+    [Inject]
+    private GameSession gameSession;
 
     /// <summary>
     /// Chews this instance.
     /// </summary>
     public void Chew()
     {
-        paper.Chew(toolbox.CurrentStencil);
-        toolbox.NextStencil();
-    }
-
-    private void Start()
-    {
-        toolbox.FillPalette();
+        ((ChewSessionState) gameSession.CurrentState).Chew();
     }
 }

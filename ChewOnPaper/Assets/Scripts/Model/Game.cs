@@ -19,7 +19,7 @@ public class Game
     /// <summary>
     /// Gets the previous session winner.
     /// </summary>
-    public int?PreviousSessionWinner { get; private set; }
+    public int? PreviousSessionWinner { get; private set; }
 
     /// <summary>
     /// Gets the players.

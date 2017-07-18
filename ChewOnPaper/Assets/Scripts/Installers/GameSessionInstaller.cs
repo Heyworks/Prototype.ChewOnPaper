@@ -9,5 +9,8 @@ public class GameSessionInstaller : MonoInstaller
     {
         Container.Bind<GameStateMachine>().AsSingle();
         Container.Bind<Game>().AsSingle();
+        Container.Bind<GameSession>().AsSingle();
+        Container.BindFactory<SessionStateData, GameSessionState, GameSessionStateFactory>()
+            .FromFactory<CustomGameSessionStateFactory>();
     }
 }
