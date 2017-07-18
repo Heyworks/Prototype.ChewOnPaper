@@ -7,17 +7,13 @@ using Zenject;
 public class TempGameController : MonoBehaviour
 {
     [Inject]
-    private Toolbox toolbox;
-    [Inject]
-    private Paper paper;
-    [Inject]
-    private GameSession gameSession;
+    private Game game;
 
     /// <summary>
     /// Chews this instance.
     /// </summary>
     public void Chew()
     {
-        ((ChewState) gameSession.CurrentState).Chew();
+        ((ChewState)game.CurrentState).Chew();
     }
 }

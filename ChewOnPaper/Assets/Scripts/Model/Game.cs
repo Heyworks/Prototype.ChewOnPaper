@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Zenject;
 
 /// <summary>
 /// Represents Game model presentation.
@@ -6,6 +7,17 @@
 //TODO: Move Photon communication to another place.
 public class Game
 {
+    private readonly GameState.GameStateFactory stateFactory;
+
+    /// <summary>
+    /// Gets the state of the current session.
+    /// </summary>
+    public GameState CurrentState
+    {
+        get;
+        private set;
+    }
+
     /// <summary>
     /// Gets the current player identifier.
     /// </summary>
@@ -35,10 +47,22 @@ public class Game
     /// <summary>
     /// Initializes a new instance of the <see cref="Game"/> class.
     /// </summary>
-    public Game()
+    public Game(GameState.GameStateFactory stateFactory)
     {
+        this.stateFactory = stateFactory;
+
         Players = new List<Player>();
         GameRoomSettings = CreateRoomSettings();
+        CurrentState = stateFactory.Create(new StateParameters(typeof(LobbyState)));
+    }
+
+    /// <summary>
+    /// Changes the state.
+    /// </summary>
+    public void ChangeState(StateParameters parameters)
+    {
+        CurrentState = stateFactory.Create(parameters);
+        CurrentState.Initialize();
     }
 
     /// <summary>
@@ -63,8 +87,9 @@ public class Game
     }
 
     /// <summary>
-    /// Convers to dto.
+    /// Converts to dto.
     /// </summary>
+    /// TODO: Move to extension method.
     public GameDTO ConverToDto()
     {
         var dto = new GameDTO();
@@ -73,7 +98,7 @@ public class Game
 
         return dto;
     }
-    
+
     private RoomSettings CreateRoomSettings()
     {
         var currentRoom = PhotonNetwork.room;

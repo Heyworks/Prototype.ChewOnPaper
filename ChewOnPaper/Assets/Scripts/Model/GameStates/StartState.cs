@@ -26,5 +26,6 @@ public class StartState: GameState
     public override void Initialize()
     {
         tolbox.FillPalette();
+        paper.Clear();
     }
 }

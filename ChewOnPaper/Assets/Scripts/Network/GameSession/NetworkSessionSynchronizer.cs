@@ -1,10 +1,14 @@
 ﻿using System;
+using Zenject;
 
 /// <summary>
 /// Photon implementation of network session synchronize.
 /// </summary>
 public class NetworkSessionSynchronizer : Photon.MonoBehaviour
 {
+    [Inject]
+    private Game game;
+
     /// <summary>
     /// Occurs when session has been initialized.
     /// </summary>
@@ -63,12 +67,16 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     private void RPC_NotifySessionInitialized(string serializedSession)
     {
         OnSessionCreated(JsonSerializer.DeserializeSessionInitDto(serializedSession));
+
+        game.ChangeState(new StateParameters(typeof(StartState)));
     }
 
     [PunRPC]
     private void RPC_NotifyGameInitialized(string serializedGame)
     {
         OnGameDtoReceived(JsonSerializer.DeserializeGameDto(serializedGame));
+
+        game.ChangeState(new StateParameters(typeof(ChewState)));
     }
 
     /// <summary>

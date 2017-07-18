@@ -32,7 +32,15 @@ public class Paper : MonoBehaviour
             OnChewed(args);
         }
     }
-    
+
+    /// <summary>
+    /// Clears this paper.
+    /// </summary>
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
     private void OnChewed(ChewEventArgs args)
     {
         var handler = Chewed;
