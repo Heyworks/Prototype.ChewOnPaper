@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents custom game session state factory.
 /// </summary>
-public class CustomGameSessionStateFactory : IFactory<SessionStateData, GameSessionState>
+public class CustomGameStateFactory : IFactory<SessionStateData, GameState>
 {
     private readonly DiContainer container;
 
@@ -11,7 +11,7 @@ public class CustomGameSessionStateFactory : IFactory<SessionStateData, GameSess
     /// Initializes a new instance of the <see cref="GameSessionStateFactory"/> class.
     /// </summary>
     /// <param name="container">The container.</param>
-    public CustomGameSessionStateFactory(DiContainer container)
+    public CustomGameStateFactory(DiContainer container)
     {
         this.container = container;
     }
@@ -20,16 +20,16 @@ public class CustomGameSessionStateFactory : IFactory<SessionStateData, GameSess
     /// Creates game session on the base of session state data.
     /// </summary>
     /// <param name="data">The data.</param>
-    public GameSessionState Create(SessionStateData data)
+    public GameState Create(SessionStateData data)
     {
-        return container.Instantiate<ChewSessionState>();
+        return container.Instantiate<ChewState>();
     }
 }
 
 /// <summary>
 /// Represents session state factory.
 /// </summary>
-public class GameSessionStateFactory : Factory<SessionStateData, GameSessionState>
+public class GameSessionStateFactory : Factory<SessionStateData, GameState>
 {
 }
 

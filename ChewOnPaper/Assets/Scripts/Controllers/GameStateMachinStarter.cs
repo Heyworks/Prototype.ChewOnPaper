@@ -7,13 +7,13 @@ using Zenject;
 public class GameStateMachinStarter : MonoBehaviour
 {
     [Inject]
-    private GameStateMachine gameStateMachine;
+    private MasterStateMachine masterStateMachine;
 
     private void Start()
     {
         if (PhotonNetwork.isMasterClient)
         {
-            gameStateMachine.Start();
+            masterStateMachine.Start();
         }
     }
 }

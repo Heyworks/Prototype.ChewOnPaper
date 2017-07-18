@@ -5,13 +5,13 @@
 /// </summary>
 public class GameSession
 {
-    private readonly Factory<SessionStateData, GameSessionState> stateFactory;
+    private readonly Factory<SessionStateData, GameState> stateFactory;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GameSession"/> class.
     /// </summary>
     /// <param name="stateFactory">The state factory.</param>
-    public GameSession(Factory<SessionStateData, GameSessionState> stateFactory)
+    public GameSession(Factory<SessionStateData, GameState> stateFactory)
     {
         this.stateFactory = stateFactory;
     }
@@ -19,7 +19,7 @@ public class GameSession
     /// <summary>
     /// Gets the state of the current session.
     /// </summary>
-    public GameSessionState CurrentState
+    public GameState CurrentState
     {
         get;
         private set;

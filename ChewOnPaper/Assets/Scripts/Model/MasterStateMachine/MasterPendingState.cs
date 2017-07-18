@@ -4,17 +4,17 @@ using System.Linq;
 /// <summary>
 /// Represents pending all players state of game state machine.
 /// </summary>
-public class GamePendingState : GameState
+public class MasterPendingState : MasterState
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="GamePendingState" /> class.
+    /// Initializes a new instance of the <see cref="MasterPendingState" /> class.
     /// </summary>
-    /// <param name="gameStateMachine">The game state machine.</param>
+    /// <param name="masterStateMachine">The game state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     /// <param name="nextState">State of the next.</param>
-    public GamePendingState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GameState nextState)
-        : base(gameStateMachine, networkSessionSynchronizer, game, nextState)
+    public MasterPendingState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, MasterState nextState)
+        : base(masterStateMachine, networkSessionSynchronizer, game, nextState)
     {
     }
 

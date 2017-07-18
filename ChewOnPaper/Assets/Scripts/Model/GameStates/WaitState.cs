@@ -1,15 +1,15 @@
 ﻿/// <summary>
 /// Wate session state.
 /// </summary>
-public class WaitSessionState : GameSessionState
+public class WaitState : GameState
 {
     private readonly Toolbox tolbox;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WaitSessionState"/> class.
+    /// Initializes a new instance of the <see cref="WaitState"/> class.
     /// </summary>
     /// <param name="tolbox">The tolbox.</param>
-    public WaitSessionState(Toolbox tolbox)
+    public WaitState(Toolbox tolbox)
     {
         this.tolbox = tolbox;
     }

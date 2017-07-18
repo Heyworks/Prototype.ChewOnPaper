@@ -1,17 +1,17 @@
 ﻿/// <summary>
 /// Chew session state.
 /// </summary>
-public class ChewSessionState : GameSessionState
+public class ChewState : GameState
 {
     private readonly Paper paper;
     private readonly Toolbox tolbox;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChewSessionState"/> class.
+    /// Initializes a new instance of the <see cref="ChewState"/> class.
     /// </summary>
     /// <param name="paper">The paper.</param>
     /// <param name="tolbox">The tolbox.</param>
-    public ChewSessionState(Paper paper, Toolbox tolbox)
+    public ChewState(Paper paper, Toolbox tolbox)
     {
         this.paper = paper;
         this.tolbox = tolbox;

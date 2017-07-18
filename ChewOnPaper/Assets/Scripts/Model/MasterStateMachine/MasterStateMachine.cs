@@ -1,18 +1,18 @@
 ﻿/// <summary>
 /// Represents game state machine.
 /// </summary>
-public class GameStateMachine
+public class MasterStateMachine
 {
-    private GameState currentState;
+    private MasterState currentState;
     private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
     private Game game;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GameStateMachine" /> class.
+    /// Initializes a new instance of the <see cref="MasterStateMachine" /> class.
     /// </summary>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    public GameStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+    public MasterStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
     {
         this.networkSessionSynchronizer = networkSessionSynchronizer;
         this.game = game;
@@ -31,7 +31,7 @@ public class GameStateMachine
     /// Switches to state.
     /// </summary>
     /// <param name="nextState">State of the next.</param>
-    public void SwitchToState(GameState nextState)
+    public void SwitchToState(MasterState nextState)
     {
         currentState.Deactivate();
         if (nextState != null)
@@ -43,8 +43,8 @@ public class GameStateMachine
 
     private void CreateStates()
     {
-        var initState = new GameInitState(this, null, networkSessionSynchronizer, game);
-        var pendingState = new GamePendingState(this, networkSessionSynchronizer, game, initState);
+        var initState = new MasterInitState(this, null, networkSessionSynchronizer, game);
+        var pendingState = new MasterPendingState(this, networkSessionSynchronizer, game, initState);
         currentState = pendingState;
     }
 }

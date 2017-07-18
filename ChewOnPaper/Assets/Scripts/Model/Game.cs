@@ -79,6 +79,4 @@ public class Game
         var currentRoom = PhotonNetwork.room;
         return RoomSettings.ConvertFromPhotonRoom(currentRoom);
     }
-
-
 }

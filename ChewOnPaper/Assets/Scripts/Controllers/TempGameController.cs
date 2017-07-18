@@ -18,6 +18,6 @@ public class TempGameController : MonoBehaviour
     /// </summary>
     public void Chew()
     {
-        ((ChewSessionState) gameSession.CurrentState).Chew();
+        ((ChewState) gameSession.CurrentState).Chew();
     }
 }

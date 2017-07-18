@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Represents base class for all game states.
 /// </summary>
-public abstract class GameState
+public abstract class MasterState
 {
     /// <summary>
     /// Gets a value indicating whether this state is active.
@@ -21,20 +21,20 @@ public abstract class GameState
     /// <summary>
     /// Gets the next state.
     /// </summary>
-    protected GameState NextState { get; private set; }
+    protected MasterState NextState { get; private set; }
 
-    private readonly GameStateMachine gameStateMachine;
+    private readonly MasterStateMachine masterStateMachine;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GameState" /> class.
+    /// Initializes a new instance of the <see cref="MasterState" /> class.
     /// </summary>
-    /// <param name="gameStateMachine">The game state machine.</param>
+    /// <param name="masterStateMachine">The game state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     /// <param name="nextState">State of the next.</param>
-    protected GameState(GameStateMachine gameStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GameState nextState)
+    protected MasterState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, MasterState nextState)
     {
-        this.gameStateMachine = gameStateMachine;
+        this.masterStateMachine = masterStateMachine;
         NetworkSessionSynchronizer = networkSessionSynchronizer;
         Game = game;
         NextState = nextState;
@@ -60,8 +60,8 @@ public abstract class GameState
     /// Switches to state.
     /// </summary>
     /// <param name="nextState">State of the next.</param>
-    protected void SwitchToState(GameState nextState)
+    protected void SwitchToState(MasterState nextState)
     {
-        gameStateMachine.SwitchToState(nextState);
+        masterStateMachine.SwitchToState(nextState);
     }
 }

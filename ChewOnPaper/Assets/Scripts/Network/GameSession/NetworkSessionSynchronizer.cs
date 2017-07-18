@@ -19,17 +19,14 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// Occurs when player joined game room.
     /// </summary>
     public event Action PlayerJoined;
-    
+
     /// <summary>
     /// Initialize a new session.
     /// </summary>
     /// <param name="sessionData">The session.</param>
     public void InitializeSession(InitSessionData sessionData)
     {
-        if (PhotonNetwork.isMasterClient)
-        {
-            SendInitSessionData(sessionData);
-        }
+        SendInitSessionData(sessionData);
     }
 
     /// <summary>

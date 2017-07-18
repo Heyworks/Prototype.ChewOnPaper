@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Finish session state.
 /// </summary>
-public class FinishSessionState: GameSessionState
+public class FinishState: GameState
 {
     /// <summary>
     /// Initializes this instance.

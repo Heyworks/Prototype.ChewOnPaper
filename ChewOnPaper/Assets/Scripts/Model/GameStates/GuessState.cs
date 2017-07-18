@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// Guess session state.
 /// </summary>
-public class GuessSessionState : GameSessionState
+public class GuessState : GameState
 {
     /// <summary>
     /// Initializes this instance.
