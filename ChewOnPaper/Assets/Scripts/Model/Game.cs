@@ -53,7 +53,7 @@ public class Game
 
         Players = new List<Player>();
         GameRoomSettings = CreateRoomSettings();
-        CurrentState = stateFactory.Create(new StateParameters(typeof(LobbyState)));
+        ChangeState(new StateParameters(typeof (LobbyState)));
     }
 
     /// <summary>
