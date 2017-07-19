@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 using Zenject;
 
 /// <summary>
@@ -43,6 +45,25 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         photonView.RPC("RPC_NotifyGameInitialized", PhotonTargets.All, serializedData);
     }
 
+    /// <summary>
+    /// Starts the chewing.
+    /// </summary>
+    /// <param name="chewerIndex">Index of the chewer.</param>
+    public void StartChewing(int chewerIndex)
+    {
+        photonView.RPC("RPC_NotifyStartChewing", PhotonTargets.All, chewerIndex);
+    }
+
+    public void FinishChewing(int chewerIndex)
+    {
+        photonView.RPC("RPC_NotifyFinishChewing", PhotonTargets.All, chewerIndex);
+    }
+
+    public void FinishSession(int winnerId, string answer)
+    {
+        photonView.RPC("RPC_NotifyFinishSession", PhotonTargets.All, winnerId, answer);
+    }
+
     private void SendInitSessionData(InitSessionData sessionData)
     {
         var isYourTurn = true;
@@ -64,6 +85,24 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     }
 
     [PunRPC]
+    private void RPC_NotifyFinishSession(int winnerId, string answer)
+    {
+        Debug.Log("RPC_NotifyFinishSession");
+    }
+
+    [PunRPC]
+    private void RPC_NotifyStartChewing(int chewerIndex)
+    {
+        Debug.Log("RPC_NotifyStartChewing");
+    }
+
+    [PunRPC]
+    private void RPC_NotifyFinishChewing(int chewerIndex)
+    {
+        Debug.Log("RPC_NotifyFinishChewing");
+    }
+
+    [PunRPC]
     private void RPC_NotifySessionInitialized(string serializedSession)
     {
         OnSessionCreated(JsonSerializer.DeserializeSessionInitDto(serializedSession));
@@ -80,10 +119,16 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     }
 
     /// <summary>
-    /// Photon Room join feedback.
+    /// Called when a remote player entered the room. This PhotonPlayer is already added to the playerlist at this time.
     /// </summary>
-    public override void OnJoinedRoom()
+    /// <param name="newPlayer"></param>
+    /// <remarks>
+    /// If your game starts with a certain number of players, this callback can be useful to check the
+    /// Room.playerCount and find out if you can start.
+    /// </remarks>
+    public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
+        base.OnPhotonPlayerConnected(newPlayer);
         OnPlayerJoined();
     }
 

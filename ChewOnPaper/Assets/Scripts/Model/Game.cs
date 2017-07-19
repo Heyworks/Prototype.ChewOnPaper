@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Zenject;
 
 /// <summary>
@@ -99,9 +100,27 @@ public class Game
         return dto;
     }
 
+    /// <summary>
+    /// Processes the session end.
+    /// </summary>
+    /// <param name="winnerId">The winner identifier.</param>
+    /// <param name="lastChewerId">The last chewer identifier.</param>
+    public void ProcessSessionEnd(int winnerId, int lastChewerId)
+    {
+        GetPlayer(winnerId).AddScore(GameRoomSettings.RightAnswerScore);
+        GetPlayer(lastChewerId).AddScore(GameRoomSettings.LastTurnScore);
+        PreviousSessionWinner = winnerId;
+    }
+
     private RoomSettings CreateRoomSettings()
     {
         var currentRoom = PhotonNetwork.room;
         return RoomSettings.ConvertFromPhotonRoom(currentRoom);
     }
+
+    private Player GetPlayer(int playerId)
+    {
+        return Players.FirstOrDefault(item => item.Id == playerId);
+    }
+   
 }

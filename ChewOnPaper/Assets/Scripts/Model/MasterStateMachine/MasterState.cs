@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using UnityEngine;
+
+/// <summary>
 /// Represents base class for all game states.
 /// </summary>
 public abstract class MasterState
@@ -23,6 +25,28 @@ public abstract class MasterState
     /// </summary>
     protected MasterState NextState { get; private set; }
 
+    /// <summary>
+    /// Gets the context.
+    /// </summary>
+    protected MasterStateMachineContext StateMachineContext
+    {
+        get
+        {
+            return masterStateMachine.Context;
+        }
+    }
+
+    /// <summary>
+    /// Gets the context behaviour.
+    /// </summary>
+    protected MonoBehaviour ContextBehaviour
+    {
+        get
+        {
+            return NetworkSessionSynchronizer;
+        }
+    }
+
     private readonly MasterStateMachine masterStateMachine;
 
     /// <summary>
@@ -32,14 +56,22 @@ public abstract class MasterState
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     /// <param name="nextState">State of the next.</param>
-    protected MasterState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, MasterState nextState)
+    protected MasterState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
     {
         this.masterStateMachine = masterStateMachine;
         NetworkSessionSynchronizer = networkSessionSynchronizer;
         Game = game;
+    }
+
+    /// <summary>
+    /// Sets the state of the next.
+    /// </summary>
+    /// <param name="nextState">State of the next.</param>
+    public void SetNextState(MasterState nextState)
+    {
         NextState = nextState;
     }
-    
+
     /// <summary>
     /// Acticates this state.
     /// </summary>
