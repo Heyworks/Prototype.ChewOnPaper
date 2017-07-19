@@ -4,7 +4,7 @@ using Zenject;
 /// <summary>
 /// Photon implementation of network session synchronize.
 /// </summary>
-public class NetworkSessionSynchronizer : Photon.MonoBehaviour
+public class NetworkSessionSynchronizer : Photon.PunBehaviour
 {
     [Inject]
     private Game game;
@@ -80,10 +80,16 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     }
 
     /// <summary>
-    /// Photon Room join feedback.
+    /// Called when a remote player entered the room. This PhotonPlayer is already added to the playerlist at this time.
     /// </summary>
-    private void OnJoinedRoom()
+    /// <param name="newPlayer"></param>
+    /// <remarks>
+    /// If your game starts with a certain number of players, this callback can be useful to check the
+    /// Room.playerCount and find out if you can start.
+    /// </remarks>
+    public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
+        base.OnPhotonPlayerConnected(newPlayer);
         OnPlayerJoined();
     }
 
