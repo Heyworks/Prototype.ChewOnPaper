@@ -38,7 +38,8 @@ public class Paper : MonoBehaviour
     /// </summary>
     public void Clear()
     {
-        throw new NotImplementedException();
+        // TODO:
+        // throw new NotImplementedException();
     }
 
     private void OnChewed(ChewEventArgs args)

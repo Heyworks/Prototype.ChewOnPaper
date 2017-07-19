@@ -53,7 +53,7 @@ public class Game
 
         Players = new List<Player>();
         GameRoomSettings = CreateRoomSettings();
-        ChangeState(new StateParameters(typeof (LobbyState)));
+        ChangeState(new StateParameters(typeof(LobbyState)));
     }
 
     /// <summary>

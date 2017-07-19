@@ -68,7 +68,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     {
         OnSessionCreated(JsonSerializer.DeserializeSessionInitDto(serializedSession));
 
-        game.ChangeState(new StateParameters(typeof(StartState)));
+        game.ChangeState(new StateParameters(typeof(ChewState)));
     }
 
     [PunRPC]
@@ -76,7 +76,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     {
         OnGameDtoReceived(JsonSerializer.DeserializeGameDto(serializedGame));
 
-        game.ChangeState(new StateParameters(typeof(ChewState)));
+        game.ChangeState(new StateParameters(typeof(StartState)));
     }
 
     /// <summary>
