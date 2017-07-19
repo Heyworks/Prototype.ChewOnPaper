@@ -4,7 +4,7 @@ using Zenject;
 /// <summary>
 /// Photon implementation of network session synchronize.
 /// </summary>
-public class NetworkSessionSynchronizer : Photon.MonoBehaviour
+public class NetworkSessionSynchronizer : Photon.PunBehaviour
 {
     [Inject]
     private Game game;
@@ -82,7 +82,7 @@ public class NetworkSessionSynchronizer : Photon.MonoBehaviour
     /// <summary>
     /// Photon Room join feedback.
     /// </summary>
-    private void OnJoinedRoom()
+    public override void OnJoinedRoom()
     {
         OnPlayerJoined();
     }
