@@ -44,4 +44,5 @@ MonoBehaviour:
   - TaggedPlayer
   - RPC_NotifyAboutPaperChewed
   - RPC_NotifySessionInitialized
+  - RPC_NotifyGameInitialized
   DisableAutoOpenWizard: 1
