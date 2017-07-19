@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Zenject;
 
 /// <summary>
@@ -115,5 +116,20 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     {
         var handler = SessionInitialized;
         if (handler != null) handler(initSessionData);
+    }
+
+    public void StartChewing(int chewerIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FinishChewing(int chewerIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void FinishSession(int winnerId, string answer)
+    {
+        throw new NotImplementedException();
     }
 }

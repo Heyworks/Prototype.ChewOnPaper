@@ -12,9 +12,8 @@ public class MasterPendingState : MasterState
     /// <param name="masterStateMachine">The game state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    /// <param name="nextState">State of the next.</param>
-    public MasterPendingState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, MasterState nextState)
-        : base(masterStateMachine, networkSessionSynchronizer, game, nextState)
+    public MasterPendingState(MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+        : base(masterStateMachine, networkSessionSynchronizer, game)
     {
     }
 

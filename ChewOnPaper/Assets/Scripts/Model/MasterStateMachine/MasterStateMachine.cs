@@ -3,9 +3,14 @@
 /// </summary>
 public class MasterStateMachine
 {
-    private MasterState currentState;
     private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
-    private Game game;
+    private readonly Game game;
+    private MasterState currentState;
+
+    /// <summary>
+    /// Gets the state machine context.
+    /// </summary>
+    public MasterStateMachineContext Context { get; private set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MasterStateMachine" /> class.
@@ -16,6 +21,7 @@ public class MasterStateMachine
     {
         this.networkSessionSynchronizer = networkSessionSynchronizer;
         this.game = game;
+        Context = new MasterStateMachineContext();
     }
 
     /// <summary>
@@ -43,8 +49,14 @@ public class MasterStateMachine
 
     private void CreateStates()
     {
-        var initState = new MasterInitState(this, null, networkSessionSynchronizer, game);
-        var pendingState = new MasterPendingState(this, networkSessionSynchronizer, game, initState);
+        var initState = new MasterInitState(this, networkSessionSynchronizer, game);
+        var chewer0State = new MasterChewingState(0, initState, this, networkSessionSynchronizer, game);
+        var chewer1State = new MasterChewingState(1, initState, this, networkSessionSynchronizer, game);
+        chewer0State.SetNextState(chewer1State);
+        chewer1State.SetNextState(chewer0State);
+        initState.SetNextState(chewer0State);
+        var pendingState = new MasterPendingState(this, networkSessionSynchronizer, game);
+        pendingState.SetNextState(initState);
         currentState = pendingState;
     }
 }

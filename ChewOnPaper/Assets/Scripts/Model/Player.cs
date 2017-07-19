@@ -33,9 +33,9 @@ public class Player
     /// <summary>
     /// Updates the score.
     /// </summary>
-    /// <param name="currentScore">The current score.</param>
-    public void UpdateScore(int currentScore)
+    /// <param name="additionalScore">The additional score.</param>
+    public void AddScore(int additionalScore)
     {
-        Score = currentScore;
+        Score += additionalScore;
     }
 }
