@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UnityEngine;
 using Zenject;
 
 /// <summary>
@@ -44,6 +45,25 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         photonView.RPC("RPC_NotifyGameInitialized", PhotonTargets.All, serializedData);
     }
 
+    /// <summary>
+    /// Starts the chewing.
+    /// </summary>
+    /// <param name="chewerIndex">Index of the chewer.</param>
+    public void StartChewing(int chewerIndex)
+    {
+        photonView.RPC("RPC_NotifyStartChewing", PhotonTargets.All, chewerIndex);
+    }
+
+    public void FinishChewing(int chewerIndex)
+    {
+        photonView.RPC("RPC_NotifyFinishChewing", PhotonTargets.All, chewerIndex);
+    }
+
+    public void FinishSession(int winnerId, string answer)
+    {
+        photonView.RPC("RPC_NotifyFinishSession", PhotonTargets.All, winnerId, answer);
+    }
+
     private void SendInitSessionData(InitSessionData sessionData)
     {
         var isYourTurn = true;
@@ -62,6 +82,24 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
 
             photonView.RPC("RPC_NotifySessionInitialized", PhotonPlayer.Find(item.Key), serializedData);
         }
+    }
+
+    [PunRPC]
+    private void RPC_NotifyFinishSession(int winnerId, string answer)
+    {
+        Debug.Log("RPC_NotifyFinishSession");
+    }
+
+    [PunRPC]
+    private void RPC_NotifyStartChewing(int chewerIndex)
+    {
+        Debug.Log("RPC_NotifyStartChewing");
+    }
+
+    [PunRPC]
+    private void RPC_NotifyFinishChewing(int chewerIndex)
+    {
+        Debug.Log("RPC_NotifyFinishChewing");
     }
 
     [PunRPC]
@@ -116,20 +154,5 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     {
         var handler = SessionInitialized;
         if (handler != null) handler(initSessionData);
-    }
-
-    public void StartChewing(int chewerIndex)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void FinishChewing(int chewerIndex)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void FinishSession(int winnerId, string answer)
-    {
-        throw new NotImplementedException();
     }
 }

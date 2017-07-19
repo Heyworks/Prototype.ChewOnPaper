@@ -45,4 +45,7 @@ MonoBehaviour:
   - RPC_NotifyAboutPaperChewed
   - RPC_NotifySessionInitialized
   - RPC_NotifyGameInitialized
+  - RPC_NotifyFinishChewing
+  - RPC_NotifyFinishSession
+  - RPC_NotifyStartChewing
   DisableAutoOpenWizard: 1
