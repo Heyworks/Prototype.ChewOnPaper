@@ -112,15 +112,21 @@ public class Game
         PreviousSessionWinner = winnerId;
     }
 
+    /// <summary>
+    /// Gets the player.
+    /// </summary>
+    /// <param name="playerId">The player identifier.</param>
+    public Player GetPlayer(int playerId)
+    {
+        return Players.FirstOrDefault(item => item.Id == playerId);
+    }
+
     private RoomSettings CreateRoomSettings()
     {
         var currentRoom = PhotonNetwork.room;
         return RoomSettings.ConvertFromPhotonRoom(currentRoom);
     }
 
-    private Player GetPlayer(int playerId)
-    {
-        return Players.FirstOrDefault(item => item.Id == playerId);
-    }
+   
    
 }
