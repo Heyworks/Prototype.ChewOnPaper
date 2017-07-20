@@ -37,4 +37,10 @@ public interface IRoomsProvider
     /// </summary>
     /// <param name="settings">The settings.</param>
     void CreateRoom(RoomSettings settings);
+
+    /// <summary>
+    /// Updates the name of the player.
+    /// </summary>
+    /// <param name="playerName">Name of the player.</param>
+    void UpdatePlayerName(string playerName);
 }

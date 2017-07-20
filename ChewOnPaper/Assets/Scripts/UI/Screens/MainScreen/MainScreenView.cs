@@ -14,6 +14,8 @@ public class MainScreenView : MonoBehaviour
     private Button createRoomButton;
     [SerializeField]
     private ExistingRoomsView existingRoomsView;
+    [SerializeField]
+    private InputField playerNameField;
     
     /// <summary>
     /// Occurs when Create room button has been clicked.
@@ -25,12 +27,28 @@ public class MainScreenView : MonoBehaviour
     /// </summary>
     public event Action<RoomData> JoinRoomButtonClicked;
 
+    /// <summary>
+    /// Gets or sets the name of the player.
+    /// </summary>
+    public string PlayerName
+    {
+        get
+        {
+            return playerNameField.text;
+        }
+
+        set
+        {
+            playerNameField.text = value;
+        }
+    }
+
     private void Awake()
     {
         createRoomButton.onClick.AddListener(OnCreateButtonClick);
         existingRoomsView.JoinButtonClicked += ExistingRoomsView_JoinButtonClicked;
     }
-    
+
     private void OnCreateButtonClick()
     {
         var settings = settingsView.ReadSettings();
@@ -56,7 +74,7 @@ public class MainScreenView : MonoBehaviour
     {
         OnJoinRoomButtonClicked(roomData);
     }
-    
+
     private void OnCreateRoomButtonClicked(RoomSettings roomData)
     {
         var handler = CreateRoomButtonClicked;

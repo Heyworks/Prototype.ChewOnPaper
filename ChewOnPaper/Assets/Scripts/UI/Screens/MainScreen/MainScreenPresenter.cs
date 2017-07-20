@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class MainScreenPresenter
 {
     #region [Private fields]
-    
+
     private readonly MainScreenView view;
     private readonly ExistingRoomsRefresher roomsRefresher;
     private readonly IRoomsProvider roomsProvider;
-    
+
     #endregion
 
     #region [Construction and initialization]
@@ -40,6 +40,7 @@ public class MainScreenPresenter
     {
         AddEventHandlers();
         roomsRefresher.StartRefresh(2f);
+        SetPlayerName();
     }
 
     /// <summary>
@@ -72,17 +73,31 @@ public class MainScreenPresenter
 
     private void View_CreateRoomButtonClicked(RoomSettings roomSettings)
     {
+        SavePlayerName();
         CreateRoom(roomSettings);
     }
 
     private void View_JoinRoomButtonClicked(RoomData roomData)
     {
+        SavePlayerName();
         roomsProvider.JoinRoom(roomData.Name);
     }
 
     #endregion
 
     #region [Private methods]
+    
+    private void SetPlayerName()
+    {
+        var name = PlayerPrefs.GetString("PlayerName", "Guest" + Random.Range(1, 9999));
+        view.PlayerName = name;
+    }
+
+    private void SavePlayerName()
+    {
+        PlayerPrefs.SetString("PlayerName", view.PlayerName);
+        roomsProvider.UpdatePlayerName(view.PlayerName);
+    }
 
     private void ShowPaper()
     {
