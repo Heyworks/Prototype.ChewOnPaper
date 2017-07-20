@@ -9,6 +9,7 @@ public class MasterChewingState : MasterState
 {
     private readonly int chewerIndex;
     private readonly MasterState initState;
+    private readonly GuessChat chat;    
     private Coroutine coroutine;
     private int[] chewerIds;
 
@@ -20,11 +21,13 @@ public class MasterChewingState : MasterState
     /// <param name="masterStateMachine">The master state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+    /// <param name="chat"></param>
+    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat)
         : base(masterStateMachine, networkSessionSynchronizer, game)
     {
         this.chewerIndex = chewerIndex;
         this.initState = initState;
+        this.chat = chat;
     }
 
     /// <summary>
@@ -35,15 +38,24 @@ public class MasterChewingState : MasterState
         base.Acticate();
         chewerIds = StateMachineContext.SessionData.PlayerRoles.Where(item => item.Value == PlayerRole.Chewer).Select(item => item.Key).ToArray();
         NetworkSessionSynchronizer.StartChewing(chewerIds[chewerIndex]);
+        chat.NewGuessArrived += Chat_NewGuessArrived;
         coroutine = ContextBehaviour.StartCoroutine(ChewingCoroutine());
     }
 
-    //TODO: Inject chat.
-    private void ChatAnswerRecieved(int senderId, string answer)
+    /// <summary>
+    /// Deactivates this State.
+    /// </summary>
+    public override void Deactivate()
     {
-        CheckAnswer(senderId, answer);
+        base.Deactivate();
+        chat.NewGuessArrived -= Chat_NewGuessArrived;
     }
 
+    private void Chat_NewGuessArrived(Guess guess)
+    {
+        CheckAnswer(guess.PlayerId, guess.Word);
+    }
+    
     private void CheckAnswer(int senderId, string answer)
     {
         if (string.Equals(answer, StateMachineContext.SessionData.GuessedWord))
