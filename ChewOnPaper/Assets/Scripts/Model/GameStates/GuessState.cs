@@ -20,7 +20,7 @@ public class GuessState : GameState
     /// <exception cref="System.NotImplementedException"></exception>
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     /// <summary>

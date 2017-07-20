@@ -101,6 +101,8 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         var sessionData = JsonSerializer.DeserializeSessionInitDto(serializedSession);
         var session = new Session(sessionData.CurrentPlayerRole, sessionData.GuessedWord, game);
         game.StartNewSession(session);
+
+        Debug.Log("WORD: " + sessionData.GuessedWord);
     }
 
     [PunRPC]
