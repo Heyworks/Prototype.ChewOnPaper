@@ -58,7 +58,7 @@ public class MasterChewingState : MasterState
     
     private void CheckAnswer(int senderId, string answer)
     {
-        if (string.Equals(answer, StateMachineContext.SessionData.GuessedWord))
+        if (string.Equals(answer.Trim().ToUpper(), StateMachineContext.SessionData.GuessedWord.Trim().ToUpper()))
         {
             Game.ProcessSessionEnd(senderId, GetPrevChewerId());
             ContextBehaviour.StopCoroutine(coroutine);
