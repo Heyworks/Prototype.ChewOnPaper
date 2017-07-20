@@ -50,6 +50,7 @@ public class GuessChat
         guesses.Enqueue(guess);
 
         synchronizer.Guess(guess);
+        OnNewGuessArrived(guess);
     }
 
     private void Synchronizer_NewGuessArrived(Guess guess)

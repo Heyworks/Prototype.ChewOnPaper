@@ -123,6 +123,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224331033608763630}
+  - component: {fileID: 114135697605339648}
   m_Layer: 5
   m_Name: Chat
   m_TagString: Untagged
@@ -210,6 +211,20 @@ MonoBehaviour:
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
+--- !u!114 &114135697605339648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1934257837890892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3aac53b6de84bf49918af3b9ea159be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guessInputField: {fileID: 114055583817595432}
+  messagesText: {fileID: 114686717850121532}
+  guessButton: {fileID: 114310295821430582}
 --- !u!114 &114162424619099602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -281,7 +296,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114668549672050702}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114135697605339648}
+        m_MethodName: GuessButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114408757115518322
@@ -432,7 +458,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Guess
+  m_Text: '
 
 '
 --- !u!114 &114940141952869570
