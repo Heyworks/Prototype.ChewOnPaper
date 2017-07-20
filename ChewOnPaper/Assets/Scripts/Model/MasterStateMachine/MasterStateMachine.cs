@@ -6,6 +6,7 @@ public class MasterStateMachine
     private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
     private readonly Game game;
     private MasterState currentState;
+    private GuessChat chat;
 
     /// <summary>
     /// Gets the state machine context.
@@ -17,10 +18,12 @@ public class MasterStateMachine
     /// </summary>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    public MasterStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game)
+    /// <param name="chat">The chat.</param>
+    public MasterStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat)
     {
         this.networkSessionSynchronizer = networkSessionSynchronizer;
         this.game = game;
+        this.chat = chat;
         Context = new MasterStateMachineContext();
     }
 
@@ -47,11 +50,12 @@ public class MasterStateMachine
         }
     }
 
+    //TODO: Create states in DI.
     private void CreateStates()
     {
         var initState = new MasterInitState(this, networkSessionSynchronizer, game);
-        var chewer0State = new MasterChewingState(0, initState, this, networkSessionSynchronizer, game);
-        var chewer1State = new MasterChewingState(1, initState, this, networkSessionSynchronizer, game);
+        var chewer0State = new MasterChewingState(0, initState, this, networkSessionSynchronizer, game, chat);
+        var chewer1State = new MasterChewingState(1, initState, this, networkSessionSynchronizer, game, chat);
         chewer0State.SetNextState(chewer1State);
         chewer1State.SetNextState(chewer0State);
         initState.SetNextState(chewer0State);
