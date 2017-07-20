@@ -3,6 +3,17 @@
 /// </summary>
 public class GuessState : GameState
 {
+    private readonly GuessChat guessChat;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="GuessState"/> class.
+    /// </summary>
+    /// <param name="guessChat">The guess chat.</param>
+    public GuessState(GuessChat guessChat)
+    {
+        this.guessChat = guessChat;
+    }
+
     /// <summary>
     /// Initializes this instance.
     /// </summary>
@@ -19,6 +30,6 @@ public class GuessState : GameState
     /// <exception cref="System.NotImplementedException"></exception>
     public void Guess(string word)
     {
-        throw new System.NotImplementedException();
+        guessChat.Guess(word);
     }
 }

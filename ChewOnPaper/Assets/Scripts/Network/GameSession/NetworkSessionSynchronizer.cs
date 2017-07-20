@@ -91,13 +91,13 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     }
 
     [PunRPC]
-    private void RPC_NotifyStartChewing(int chewerIndex)
+    private void RPC_NotifyStartChewing(int chewerId)
     {
         Debug.Log("RPC_NotifyStartChewing");
     }
 
     [PunRPC]
-    private void RPC_NotifyFinishChewing(int chewerIndex)
+    private void RPC_NotifyFinishChewing(int chewerId)
     {
         Debug.Log("RPC_NotifyFinishChewing");
     }
