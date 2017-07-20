@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Zenject;
 
 /// <summary>
@@ -180,6 +181,8 @@ public class Game
     {
         CurrentState = stateFactory.Create(parameters);
         CurrentState.Initialize();
+
+        Debug.Log("Changing state to " + CurrentState.GetType());
     }
 
     private RoomSettings CreateRoomSettings()
