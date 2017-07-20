@@ -167,6 +167,15 @@ public class Game
         PreviousSessionWinner = winnerId;
     }
 
+    /// <summary>
+    /// Gets the player.
+    /// </summary>
+    /// <param name="playerId">The player identifier.</param>
+    public Player GetPlayer(int playerId)
+    {
+        return Players.FirstOrDefault(item => item.Id == playerId);
+    }
+
     private void ChangeState(StateParameters parameters)
     {
         CurrentState = stateFactory.Create(parameters);
@@ -179,9 +188,6 @@ public class Game
         return RoomSettings.ConvertFromPhotonRoom(currentRoom);
     }
 
-    private Player GetPlayer(int playerId)
-    {
-        return Players.FirstOrDefault(item => item.Id == playerId);
-    }
 
+   
 }

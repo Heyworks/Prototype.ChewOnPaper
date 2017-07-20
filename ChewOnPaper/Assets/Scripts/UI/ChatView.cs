@@ -9,7 +9,9 @@ public class ChatView : MonoBehaviour
 {
     [Inject]
     private GuessChat chat;
-
+    [Inject]
+    private Game game;
+    
     [SerializeField]
     private InputField guessInputField;
     [SerializeField]
@@ -42,11 +44,12 @@ public class ChatView : MonoBehaviour
 
     private void Chat_NewGuessArrived(Guess guess)
     {
-        messagesText.text += CreateNewGuessText(guess);
+        messagesText.text = CreateNewGuessText(guess) + messagesText.text;
     }
 
     private string CreateNewGuessText(Guess guess)
     {
-        return guess.Word + '\n';
+        var playerName = game.GetPlayer(guess.PlayerId).Name;
+        return string.Format("{0} : {1}\n", playerName, guess.Word);
     }
 }

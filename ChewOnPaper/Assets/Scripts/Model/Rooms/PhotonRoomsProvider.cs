@@ -41,6 +41,15 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
     }
 
     /// <summary>
+    /// Updates the name of the player.
+    /// </summary>
+    /// <param name="playerName">Name of the player.</param>
+    public void UpdatePlayerName(string playerName)
+    {
+        PhotonNetwork.playerName = playerName;
+    }
+
+    /// <summary>
     /// Gets the existing rooms.
     /// </summary>
     public IList<RoomData> GetExistingRooms()
@@ -70,12 +79,6 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
             // Connect to the photon master-server. We use the settings saved in PhotonServerSettings (a .asset file in this project)
             PhotonNetwork.ConnectUsingSettings("0.9");
         }
-
-        // generate a name for this player, if none is assigned yet
-        if (String.IsNullOrEmpty(PhotonNetwork.playerName))
-        {
-            PhotonNetwork.playerName = "Guest" + Random.Range(1, 9999);
-        }
     }
 
     #endregion
@@ -97,7 +100,7 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
     {
         OnRoomCreated(ConvertToRoomData(PhotonNetwork.room));
     }
-
+    
     /// <summary>
     /// Photon Room join feedback.
     /// </summary>
@@ -153,7 +156,7 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
 
         return roomData;
     }
-
+    
     private void OnErrorOccured()
     {
         Action handler = ErrorOccured;
