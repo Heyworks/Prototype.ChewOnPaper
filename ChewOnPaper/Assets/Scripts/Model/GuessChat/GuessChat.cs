@@ -47,10 +47,8 @@ public class GuessChat
     public void Guess(string word)
     {
         var guess = new Guess(word, game.CurrentPlayerId);
-        guesses.Enqueue(guess);
 
         synchronizer.Guess(guess);
-        OnNewGuessArrived(guess);
     }
 
     private void Synchronizer_NewGuessArrived(Guess guess)

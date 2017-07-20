@@ -19,7 +19,7 @@ public class PhotonGuessChatSynchronizer : Photon.MonoBehaviour, IGuessChatSynch
     {
         var data = JsonSerializer.SerializeGuess(guess);
 
-        photonView.RPC("RPC_SendGuess", PhotonTargets.OthersBuffered, data);
+        photonView.RPC("RPC_SendGuess", PhotonTargets.AllBuffered, data);
     }
 
     [PunRPC]
