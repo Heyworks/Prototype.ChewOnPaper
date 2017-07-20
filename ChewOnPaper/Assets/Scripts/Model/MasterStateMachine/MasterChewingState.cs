@@ -63,10 +63,10 @@ public class MasterChewingState : MasterState
             Game.ProcessSessionEnd(senderId, GetPrevChewerId());
             ContextBehaviour.StopCoroutine(coroutine);
             NetworkSessionSynchronizer.FinishSession(Game.ConverToDto());
-            SwitchToState(initState);
+            ContextBehaviour.StartCoroutine(SwitchToInitState());
         }
     }
-
+    
     private int GetPrevChewerId()
     {
         var prevIndex = chewerIndex - 1;
@@ -76,6 +76,13 @@ public class MasterChewingState : MasterState
         }
 
         return chewerIds[prevIndex];
+    }
+
+    private IEnumerator SwitchToInitState()
+    {
+        yield return new WaitForSeconds(10);
+
+        SwitchToState(initState);
     }
 
     private IEnumerator ChewingCoroutine()
