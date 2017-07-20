@@ -12,28 +12,9 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     private Game game;
 
     /// <summary>
-    /// Occurs when session has been initialized.
-    /// </summary>
-    public event Action<SessionInitDTO> SessionInitialized;
-
-    /// <summary>
-    /// Occurs when game dto has been received.
-    /// </summary>
-    public event Action<GameDTO> GameDTOReceived;
-
-    /// <summary>
     /// Occurs when player joined game room.
     /// </summary>
     public event Action PlayerJoined;
-
-    /// <summary>
-    /// Initialize a new session.
-    /// </summary>
-    /// <param name="sessionData">The session.</param>
-    public void InitializeSession(InitSessionData sessionData)
-    {
-        SendInitSessionData(sessionData);
-    }
 
     /// <summary>
     /// Initializes the game.
@@ -46,22 +27,41 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     }
 
     /// <summary>
+    /// Initialize a new session.
+    /// </summary>
+    /// <param name="sessionData">The session.</param>
+    public void InitializeSession(InitSessionData sessionData)
+    {
+        SendInitSessionData(sessionData);
+    }
+
+    /// <summary>
     /// Starts the chewing.
     /// </summary>
-    /// <param name="chewerIndex">Index of the chewer.</param>
-    public void StartChewing(int chewerIndex)
+    /// <param name="chewerId">Index of the chewer.</param>
+    public void StartChewing(int chewerId)
     {
-        photonView.RPC("RPC_NotifyStartChewing", PhotonTargets.All, chewerIndex);
+        photonView.RPC("RPC_NotifyStartChewing", PhotonTargets.All, chewerId);
     }
 
-    public void FinishChewing(int chewerIndex)
+    /// <summary>
+    /// Finishes the chewing.
+    /// </summary>
+    /// <param name="chewerId">The chewer identifier.</param>
+    public void FinishChewing(int chewerId)
     {
-        photonView.RPC("RPC_NotifyFinishChewing", PhotonTargets.All, chewerIndex);
+        photonView.RPC("RPC_NotifyFinishChewing", PhotonTargets.All, chewerId);
     }
 
-    public void FinishSession(int winnerId, string answer)
+    /// <summary>
+    /// Finishes the session.
+    /// </summary>
+    /// <param name="gameDto">The game dto.</param>
+    public void FinishSession(GameDTO gameDto)
     {
-        photonView.RPC("RPC_NotifyFinishSession", PhotonTargets.All, winnerId, answer);
+        var serializedData = JsonSerializer.SerializeGameDto(gameDto);
+
+        photonView.RPC("RPC_NotifyFinishSession", PhotonTargets.All, serializedData);
     }
 
     private void SendInitSessionData(InitSessionData sessionData)
@@ -85,37 +85,47 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     }
 
     [PunRPC]
-    private void RPC_NotifyFinishSession(int winnerId, string answer)
+    private void RPC_NotifyGameInitialized(string serializedGame)
     {
-        Debug.Log("RPC_NotifyFinishSession");
+        Debug.Log("RPC_NotifyGameInitialized");
+
+        var data = JsonSerializer.DeserializeGameDto(serializedGame);
+        game.InitializeGame(data);
+    }
+
+    [PunRPC]
+    private void RPC_NotifySessionInitialized(string serializedSession)
+    {
+        Debug.Log("RPC_NotifySessionInitialized");
+
+        var sessionData = JsonSerializer.DeserializeSessionInitDto(serializedSession);
+        var session = new Session(sessionData.CurrentPlayerRole, sessionData.GuessedWord, game);
+        game.StartNewSession(session);
     }
 
     [PunRPC]
     private void RPC_NotifyStartChewing(int chewerId)
     {
         Debug.Log("RPC_NotifyStartChewing");
+
+        game.StartChewing(chewerId);
     }
 
     [PunRPC]
     private void RPC_NotifyFinishChewing(int chewerId)
     {
         Debug.Log("RPC_NotifyFinishChewing");
+
+        game.FinishChewing(chewerId);
     }
 
     [PunRPC]
-    private void RPC_NotifySessionInitialized(string serializedSession)
+    private void RPC_NotifyFinishSession(string serializedGame)
     {
-        OnSessionCreated(JsonSerializer.DeserializeSessionInitDto(serializedSession));
+        Debug.Log("RPC_NotifyFinishSession");
 
-        game.ChangeState(new StateParameters(typeof(ChewState)));
-    }
-
-    [PunRPC]
-    private void RPC_NotifyGameInitialized(string serializedGame)
-    {
-        OnGameDtoReceived(JsonSerializer.DeserializeGameDto(serializedGame));
-
-        game.ChangeState(new StateParameters(typeof(StartState)));
+        var data = JsonSerializer.DeserializeGameDto(serializedGame);
+        game.FinishSession(data);
     }
 
     /// <summary>
@@ -139,20 +149,5 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         {
             handler();
         }
-    }
-
-    private void OnGameDtoReceived(GameDTO dto)
-    {
-        var handler = GameDTOReceived;
-        if (handler != null)
-        {
-            handler(dto);
-        }
-    }
-
-    private void OnSessionCreated(SessionInitDTO initSessionData)
-    {
-        var handler = SessionInitialized;
-        if (handler != null) handler(initSessionData);
     }
 }

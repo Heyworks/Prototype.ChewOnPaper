@@ -62,7 +62,7 @@ public class MasterChewingState : MasterState
         {
             Game.ProcessSessionEnd(senderId, GetPrevChewerId());
             ContextBehaviour.StopCoroutine(coroutine);
-            NetworkSessionSynchronizer.FinishSession(senderId, answer);
+            NetworkSessionSynchronizer.FinishSession(Game.ConverToDto());
             SwitchToState(initState);
         }
     }

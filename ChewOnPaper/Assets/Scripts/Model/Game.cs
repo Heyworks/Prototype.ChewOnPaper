@@ -20,6 +20,15 @@ public class Game
     }
 
     /// <summary>
+    /// Gets the current session.
+    /// </summary>
+    public Session CurrentSession
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
     /// Gets the current player identifier.
     /// </summary>
     public int CurrentPlayerId
@@ -58,12 +67,67 @@ public class Game
     }
 
     /// <summary>
-    /// Changes the state.
+    /// Updates the game data.
     /// </summary>
-    public void ChangeState(StateParameters parameters)
+    /// <param name="gameDto">The game dto.</param>
+    public void InitializeGame(GameDTO gameDto)
     {
-        CurrentState = stateFactory.Create(parameters);
-        CurrentState.Initialize();
+        UpdateGameData(gameDto.PreviousSessionWinner, gameDto.Players);
+    }
+
+    /// <summary>
+    /// Starts the new session.
+    /// </summary>
+    /// <param name="session">The session.</param>
+    public void StartNewSession(Session session)
+    {
+        CurrentSession = session;
+
+        ChangeState(new StateParameters(typeof(StartState)));
+    }
+
+    /// <summary>
+    /// Starts the chewing.
+    /// </summary>
+    /// <param name="chewerId">The chewer identifier.</param>
+    public void StartChewing(int chewerId)
+    {
+        if (CurrentSession.CurrentPlayerRole == PlayerRole.Guesser)
+        {
+            ChangeState(new StateParameters(typeof(GuessState)));
+        }
+        else if (chewerId == CurrentPlayerId)
+        {
+            ChangeState(new StateParameters(typeof(ChewState)));
+        }
+        else
+        {
+            ChangeState(new StateParameters(typeof(WaitState)));
+        }
+    }
+
+    /// <summary>
+    /// Starts the chewing.
+    /// </summary>
+    /// <param name="chewerId">The chewer identifier.</param>
+    public void FinishChewing(int chewerId)
+    {
+        // TODO: use polymorphism instead?
+        if (CurrentSession.CurrentPlayerRole == PlayerRole.Chewer && chewerId == CurrentPlayerId)
+        {
+            ((ChewState)CurrentState).Chew();
+        }
+    }
+
+    /// <summary>
+    /// Finishes the session.
+    /// </summary>
+    /// <param name="gameDto">The game dto.</param>
+    public void FinishSession(GameDTO gameDto)
+    {
+        UpdateGameData(gameDto.PreviousSessionWinner, gameDto.Players);
+
+        ChangeState(new StateParameters(typeof(FinishState)));
     }
 
     /// <summary>
@@ -75,16 +139,6 @@ public class Game
     {
         Players = players;
         PreviousSessionWinner = previousSessionWinner;
-    }
-
-    /// <summary>
-    /// Updates the game data.
-    /// </summary>
-    /// <param name="gameDto">The game dto.</param>
-    public void UpdateGameData(GameDTO gameDto)
-    {
-        Players = gameDto.Players;
-        PreviousSessionWinner = gameDto.PreviousSessionWinner;
     }
 
     /// <summary>
@@ -105,11 +159,18 @@ public class Game
     /// </summary>
     /// <param name="winnerId">The winner identifier.</param>
     /// <param name="lastChewerId">The last chewer identifier.</param>
+    // TODO: Move to state class.
     public void ProcessSessionEnd(int winnerId, int lastChewerId)
     {
         GetPlayer(winnerId).AddScore(GameRoomSettings.RightAnswerScore);
         GetPlayer(lastChewerId).AddScore(GameRoomSettings.LastTurnScore);
         PreviousSessionWinner = winnerId;
+    }
+
+    private void ChangeState(StateParameters parameters)
+    {
+        CurrentState = stateFactory.Create(parameters);
+        CurrentState.Initialize();
     }
 
     private RoomSettings CreateRoomSettings()
@@ -122,5 +183,5 @@ public class Game
     {
         return Players.FirstOrDefault(item => item.Id == playerId);
     }
-   
+
 }

@@ -46,6 +46,7 @@ public class MasterPendingState : MasterState
         if (PhotonNetwork.room.PlayerCount == Game.GameRoomSettings.MaxPlayers)
         {
             var players = CreatePlayers();
+            // TODO: use broadcast to all clients instead this call.
             Game.UpdateGameData(null, players);
             NetworkSessionSynchronizer.InitializeGame(Game.ConverToDto());
             SwitchToState(NextState);
