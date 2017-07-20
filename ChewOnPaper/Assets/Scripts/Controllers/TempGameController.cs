@@ -7,13 +7,13 @@ using Zenject;
 public class TempGameController : MonoBehaviour
 {
     [Inject]
-    private Game game;
+    private GameStateController controller;
 
     /// <summary>
     /// Chews this instance.
     /// </summary>
     public void Chew()
     {
-        ((ChewState)game.CurrentState).Chew();
+        controller.GetCurrentState<ChewState>().Chew();
     }
 }

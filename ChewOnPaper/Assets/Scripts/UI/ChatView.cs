@@ -10,6 +10,8 @@ public class ChatView : MonoBehaviour
     [Inject]
     private GuessChat chat;
     [Inject]
+    private GameStateController gameStateController;
+    [Inject]
     private Game game;
 
     [SerializeField]
@@ -20,7 +22,7 @@ public class ChatView : MonoBehaviour
     private Button guessButton;
     [SerializeField]
     private ScrollRect scrollRect;
-    
+
     private void Start()
     {
         chat.NewGuessArrived += Chat_NewGuessArrived;
@@ -40,7 +42,7 @@ public class ChatView : MonoBehaviour
     /// </summary>
     public void GuessButtonClicked()
     {
-        chat.Guess(guessInputField.text);
+        gameStateController.GetCurrentState<GuessState>().Guess(guessInputField.text);
         guessInputField.text = string.Empty;
     }
 

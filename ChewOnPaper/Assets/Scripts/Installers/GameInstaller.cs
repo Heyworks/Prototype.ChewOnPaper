@@ -11,5 +11,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<MasterStateMachine>().AsSingle();
         Container.Bind<GuessChat>().AsSingle();
         Container.Bind<Game>().AsSingle();
+        Container.Bind<GameStateController>().AsSingle();
     }
 }

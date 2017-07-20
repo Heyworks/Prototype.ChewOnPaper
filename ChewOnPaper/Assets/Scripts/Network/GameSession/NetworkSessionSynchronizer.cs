@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +8,7 @@ using Zenject;
 public class NetworkSessionSynchronizer : Photon.PunBehaviour
 {
     [Inject]
-    private Game game;
+    private GameStateController gameStateController;
 
     /// <summary>
     /// Occurs when player joined game room.
@@ -90,7 +89,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         Debug.Log("RPC_NotifyGameInitialized");
 
         var data = JsonSerializer.DeserializeGameDto(serializedGame);
-        game.InitializeGame(data);
+        gameStateController.InitializeGame(data);
     }
 
     [PunRPC]
@@ -99,8 +98,8 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         Debug.Log("RPC_NotifySessionInitialized");
 
         var sessionData = JsonSerializer.DeserializeSessionInitDto(serializedSession);
-        var session = new Session(sessionData.CurrentPlayerRole, sessionData.GuessedWord, game);
-        game.StartNewSession(session);
+        var session = new Session(sessionData.CurrentPlayerRole, sessionData.GuessedWord);
+        gameStateController.StartNewSession(session);
 
         Debug.Log("WORD: " + sessionData.GuessedWord);
     }
@@ -110,7 +109,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     {
         Debug.Log("RPC_NotifyStartChewing");
 
-        game.StartChewing(chewerId);
+        gameStateController.StartChewing(chewerId);
     }
 
     [PunRPC]
@@ -118,7 +117,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     {
         Debug.Log("RPC_NotifyFinishChewing");
 
-        game.FinishChewing(chewerId);
+        gameStateController.FinishChewing(chewerId);
     }
 
     [PunRPC]
@@ -127,7 +126,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         Debug.Log("RPC_NotifyFinishSession");
 
         var data = JsonSerializer.DeserializeGameDto(serializedGame);
-        game.FinishSession(data);
+        gameStateController.FinishSession(data);
     }
 
     /// <summary>
