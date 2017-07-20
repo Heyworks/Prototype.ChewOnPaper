@@ -11,6 +11,8 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
 
     [SerializeField]
     private int id;
+    [SerializeField]
+    private VisualSettings settings;
 
     private Vector2 initialSize;
     private RectTransform rectTransform;
@@ -47,7 +49,7 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
     /// </summary>
     public void AnimateChewing()
     {
-        gameObject.ColorTo(Color.black, ChewAnimationTime, 0);
+        gameObject.ColorTo(settings.backgroundColor, ChewAnimationTime, 0);
     }
 
     /// <summary>
