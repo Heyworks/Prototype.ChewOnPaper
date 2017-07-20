@@ -87,7 +87,7 @@ public class MasterChewingState : MasterState
 
     private void FinishChewing()
     {
-        NetworkSessionSynchronizer.FinishChewing(chewerIndex);
+        NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
         SwitchToState(NextState);
     }
 }
