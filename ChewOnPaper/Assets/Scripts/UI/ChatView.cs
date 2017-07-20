@@ -11,14 +11,16 @@ public class ChatView : MonoBehaviour
     private GuessChat chat;
     [Inject]
     private Game game;
-    
+
     [SerializeField]
     private InputField guessInputField;
     [SerializeField]
     private Text messagesText;
     [SerializeField]
     private Button guessButton;
-
+    [SerializeField]
+    private ScrollRect scrollRect;
+    
     private void Start()
     {
         chat.NewGuessArrived += Chat_NewGuessArrived;
@@ -45,6 +47,11 @@ public class ChatView : MonoBehaviour
     private void Chat_NewGuessArrived(Guess guess)
     {
         messagesText.text = CreateNewGuessText(guess) + messagesText.text;
+        Canvas.ForceUpdateCanvases();
+
+        scrollRect.verticalNormalizedPosition = 1f;
+
+        Canvas.ForceUpdateCanvases();
     }
 
     private string CreateNewGuessText(Guess guess)
