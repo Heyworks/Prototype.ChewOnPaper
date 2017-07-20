@@ -48,4 +48,5 @@ MonoBehaviour:
   - RPC_NotifyFinishChewing
   - RPC_NotifyFinishSession
   - RPC_NotifyStartChewing
+  - RPC_SendGuess
   DisableAutoOpenWizard: 1
