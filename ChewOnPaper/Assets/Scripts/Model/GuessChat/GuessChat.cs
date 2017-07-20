@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Represents guess chat.
@@ -53,6 +54,8 @@ public class GuessChat
 
     private void Synchronizer_NewGuessArrived(Guess guess)
     {
+        Debug.Log("New guess: " + guess.Word + " id " + guess.PlayerId);
+
         guesses.Enqueue(guess);
 
         OnNewGuessArrived(guess);
