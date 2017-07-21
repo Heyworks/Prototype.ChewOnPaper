@@ -28,6 +28,17 @@ public class Game
     }
 
     /// <summary>
+    /// Gets the current player identifier.
+    /// </summary>
+    public string CurrentPlayerName
+    {
+        get
+        {
+            return PhotonNetwork.player.NickName;
+        }
+    }
+
+    /// <summary>
     /// Gets the game room settings.
     /// </summary>
     public RoomSettings GameRoomSettings { get; private set; }

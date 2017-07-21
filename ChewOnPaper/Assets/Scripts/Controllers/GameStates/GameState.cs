@@ -3,6 +3,7 @@
 /// <summary>
 /// Base class for all session states.
 /// </summary>
+//TODO: Inject Game here(in base class).
 public abstract class GameState
 {
     /// <summary>
