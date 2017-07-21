@@ -11,6 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 5f4462a07d2f15e48bfe35d61142f493
-  - enabled: 1
+  - enabled: 0
     path: Assets/Photon Unity Networking/Demos/DemoChat/DemoChat-Scene.unity
     guid: ec07267f6a28fb044ac89845274e79af

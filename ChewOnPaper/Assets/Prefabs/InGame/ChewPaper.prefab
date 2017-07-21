@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9176471, g: 0.909804, b: 0.7254902, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stencilCollection: {fileID: 114419801620795798}
   paletteOffset: {x: 40, y: 0, z: 0}
-  initialPositionInPallete: {x: 800, y: 0, z: 0}
+  initialPositionInPallete: {x: 940, y: -10, z: 0}
   numberOfStencilesInPalette: 1
   stencilHeight: 80
 --- !u!114 &114884682530664696
@@ -188,8 +188,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -230}
-  m_SizeDelta: {x: 800, y: 460}
+  m_AnchoredPosition: {x: -523, y: -212}
+  m_SizeDelta: {x: 924, y: 468}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224668935354059794
 RectTransform:
@@ -206,8 +206,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -400, y: -230}
-  m_SizeDelta: {x: 800, y: 460}
+  m_AnchoredPosition: {x: -523, y: -212}
+  m_SizeDelta: {x: 924, y: 468}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224769045420607714
 RectTransform:
