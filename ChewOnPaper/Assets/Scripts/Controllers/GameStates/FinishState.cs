@@ -35,6 +35,6 @@ public class FinishState: GameState
         tolbox.Hide();
         chatView.SetInteractable(false);
         leaderboardView.UpdateLeaderboard(game.Players);
-        hud.ShowFinish(game.GetPlayer(game.PreviousSessionWinner.Value).Name);
+        hud.ShowFinish(game.GetPlayer(game.PreviousSessionWinner.Value).Name, game.CurrentSession.GuessedWord);
     }
 }
