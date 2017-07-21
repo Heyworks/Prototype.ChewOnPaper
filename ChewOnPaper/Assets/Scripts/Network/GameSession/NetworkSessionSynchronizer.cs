@@ -90,6 +90,8 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
 
         var data = JsonSerializer.DeserializeGameDto(serializedGame);
         gameStateController.InitializeGame(data);
+
+        Debug.Log("PreviousSessionWinner" + data.PreviousSessionWinner);
     }
 
     [PunRPC]
@@ -101,13 +103,15 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         var session = new Session(sessionData.CurrentPlayerRole, sessionData.GuessedWord);
         gameStateController.StartNewSession(session);
 
-        Debug.Log("WORD: " + sessionData.GuessedWord);
+        Debug.Log("Word: " + sessionData.GuessedWord);
+        Debug.Log("Role: " + sessionData.CurrentPlayerRole);
+        Debug.Log("Is you turn: " + sessionData.IsYourTurnFirst);
     }
 
     [PunRPC]
     private void RPC_NotifyStartChewing(int chewerId)
     {
-        Debug.Log("RPC_NotifyStartChewing");
+        Debug.Log("RPC_NotifyStartChewing. Chewer Id: " + chewerId);
 
         gameStateController.StartChewing(chewerId);
     }
@@ -115,7 +119,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     [PunRPC]
     private void RPC_NotifyFinishChewing(int chewerId)
     {
-        Debug.Log("RPC_NotifyFinishChewing");
+        Debug.Log("RPC_NotifyFinishChewing. Chewer Id: " + chewerId);
 
         gameStateController.FinishChewing(chewerId);
     }

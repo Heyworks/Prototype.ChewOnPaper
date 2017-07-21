@@ -44,6 +44,8 @@ public class GameStateController
     public void InitializeGame(GameDTO gameDto)
     {
         game.UpdateGameData(gameDto.PreviousSessionWinner, gameDto.Players);
+
+        Debug.Log("Initialize game. My id " + game.CurrentPlayerId);
     }
 
     /// <summary>
