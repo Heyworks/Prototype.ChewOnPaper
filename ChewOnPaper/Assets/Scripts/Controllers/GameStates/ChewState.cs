@@ -5,16 +5,19 @@ public class ChewState : GameState
 {
     private readonly Paper paper;
     private readonly Toolbox tolbox;
+    private readonly ChatView chatView;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChewState"/> class.
+    /// Initializes a new instance of the <see cref="ChewState" /> class.
     /// </summary>
     /// <param name="paper">The paper.</param>
     /// <param name="tolbox">The tolbox.</param>
-    public ChewState(Paper paper, Toolbox tolbox)
+    /// <param name="chatView">The chat view.</param>
+    public ChewState(Paper paper, Toolbox tolbox, ChatView chatView)
     {
         this.paper = paper;
         this.tolbox = tolbox;
+        this.chatView = chatView;
     }
 
     /// <summary>
@@ -22,7 +25,8 @@ public class ChewState : GameState
     /// </summary>
     public override void Initialize()
     {
-        tolbox.gameObject.SetActive(true);
+        tolbox.Show();
+        chatView.SetInteractable(false);
     }
 
     /// <summary>

@@ -38,8 +38,11 @@ public class Paper : MonoBehaviour
     /// </summary>
     public void Clear()
     {
-        // TODO:
-        // throw new NotImplementedException();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var t = transform.GetChild(i);
+            Destroy(t.gameObject);
+        }
     }
 
     private void OnChewed(ChewEventArgs args)

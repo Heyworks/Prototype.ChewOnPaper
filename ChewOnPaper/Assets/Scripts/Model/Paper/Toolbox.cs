@@ -17,7 +17,7 @@ public class Toolbox: MonoBehaviour
     [SerializeField]
     private float stencilHeight = 80;
 
-    private readonly Queue<Stencil> palette =  new Queue<Stencil>();
+    private readonly Queue<Stencil> stencils =  new Queue<Stencil>();
 
     /// <summary>
     /// Gets the current stencil.
@@ -26,7 +26,7 @@ public class Toolbox: MonoBehaviour
     {
         get
         {
-            return palette.Peek();
+            return stencils.Peek();
         }
     }
 
@@ -35,14 +35,18 @@ public class Toolbox: MonoBehaviour
     /// </summary>
     public void FillPalette()
     {
-        palette.Clear();
+        foreach (var stencil in stencils)
+        {
+            Destroy(stencil.gameObject);
+        }
+        stencils.Clear();
 
         for (int i= 0; i < numberOfStencilesInPalette; i++)
         {
             LoadRandomStencilInPalette();
         }
 
-        palette.Peek().IsActive = true;
+        stencils.Peek().IsActive = true;
 
         AlignStencils();
     }
@@ -52,9 +56,9 @@ public class Toolbox: MonoBehaviour
     /// </summary>
     public void NextStencil()
     {
-        palette.Dequeue();
+        stencils.Dequeue();
         LoadRandomStencilInPalette();
-        palette.Peek().IsActive = true;
+        stencils.Peek().IsActive = true;
 
         AlignStencils();
     }
@@ -73,19 +77,41 @@ public class Toolbox: MonoBehaviour
         return stencil;
     }
 
+    /// <summary>
+    /// Hides toolbox.
+    /// </summary>
+    public void Hide()
+    {
+        foreach (var stencil in stencils)
+        {
+            stencil.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Shows toolbox.
+    /// </summary>
+    public void Show()
+    {
+        foreach (var stencil in stencils)
+        {
+            stencil.gameObject.SetActive(true);
+        }
+    }
+
     private void LoadRandomStencilInPalette()
     {
         var stencil = stencilCollection.InstantiateRandomStencil();
         stencil.FitHeight(stencilHeight);
-        palette.Enqueue(stencil);
+        stencils.Enqueue(stencil);
     }
 
     private void AlignStencils()
     {
         var offset = initialPositionInPallete;
-        int siblingIndex = palette.Count;
+        int siblingIndex = stencils.Count;
 
-        foreach (var stencil in palette)
+        foreach (var stencil in stencils)
         {
             stencil.transform.SetSiblingIndex(--siblingIndex);
             stencil.transform.localPosition = offset;

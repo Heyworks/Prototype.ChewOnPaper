@@ -4,13 +4,19 @@
 public class GuessState : GameState
 {
     private readonly GuessChat guessChat;
+    private readonly Toolbox tolbox;
+    private readonly ChatView chatView;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GuessState"/> class.
+    /// Initializes a new instance of the <see cref="GuessState" /> class.
     /// </summary>
     /// <param name="guessChat">The guess chat.</param>
-    public GuessState(GuessChat guessChat)
+    /// <param name="tolbox">The tolbox.</param>
+    /// <param name="chatView">The chat view.</param>
+    public GuessState(GuessChat guessChat, Toolbox tolbox, ChatView chatView)
     {
+        this.tolbox = tolbox;
+        this.chatView = chatView;
         this.guessChat = guessChat;
     }
 
@@ -20,7 +26,8 @@ public class GuessState : GameState
     /// <exception cref="System.NotImplementedException"></exception>
     public override void Initialize()
     {
-        //throw new System.NotImplementedException();
+        tolbox.Hide();
+        chatView.SetInteractable(true);
     }
 
     /// <summary>

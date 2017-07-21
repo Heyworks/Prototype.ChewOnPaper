@@ -4,14 +4,17 @@
 public class WaitState : GameState
 {
     private readonly Toolbox tolbox;
+    private readonly ChatView chatView;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="WaitState"/> class.
+    /// Initializes a new instance of the <see cref="WaitState" /> class.
     /// </summary>
     /// <param name="tolbox">The tolbox.</param>
-    public WaitState(Toolbox tolbox)
+    /// <param name="chatView">The chat view.</param>
+    public WaitState(Toolbox tolbox, ChatView chatView)
     {
         this.tolbox = tolbox;
+        this.chatView = chatView;
     }
 
     /// <summary>
@@ -19,6 +22,7 @@ public class WaitState : GameState
     /// </summary>
     public override void Initialize()
     {
-        tolbox.gameObject.SetActive(false);
+        tolbox.Hide();
+        chatView.SetInteractable(false);
     }
 }

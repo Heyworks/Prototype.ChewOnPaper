@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 114552183360829536}
   - component: {fileID: 222479689378095886}
   - component: {fileID: 114924776673125956}
+  - component: {fileID: 114895629169106742}
   m_Layer: 5
   m_Name: Leaderboard
   m_TagString: Untagged
@@ -141,6 +142,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leaderboardText: {fileID: 114046013450681688}
+--- !u!114 &114895629169106742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340515896817426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 114552183360829536}
+  _identifier: 
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!114 &114924776673125956
 MonoBehaviour:
   m_ObjectHideFlags: 1
