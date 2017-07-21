@@ -46,6 +46,14 @@ public class ChatView : MonoBehaviour
         guessInputField.text = string.Empty;
     }
 
+    /// <summary>
+    /// Clears chat messages.
+    /// </summary>
+    public void Clear()
+    {
+        messagesText.text = string.Empty;
+    }
+
     private void Chat_NewGuessArrived(Guess guess)
     {
         messagesText.text = CreateNewGuessText(guess) + messagesText.text;

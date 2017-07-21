@@ -34,6 +34,7 @@ public class FinishState: GameState
     {
         tolbox.Hide();
         chatView.SetInteractable(false);
+        chatView.Clear();
         leaderboardView.UpdateLeaderboard(game.Players);
         hud.ShowFinish(game.GetPlayer(game.PreviousSessionWinner.Value).Name, game.CurrentSession.GuessedWord);
     }
