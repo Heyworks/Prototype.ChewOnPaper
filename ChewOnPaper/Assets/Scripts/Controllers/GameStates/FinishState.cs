@@ -7,6 +7,7 @@ public class FinishState: GameState
     private readonly ChatView chatView;
     private readonly Game game;
     private readonly LeaderboardView leaderboardView;
+    private readonly HUD hud;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FinishState" /> class.
@@ -15,11 +16,13 @@ public class FinishState: GameState
     /// <param name="chatView">The chat view.</param>
     /// <param name="game">The game.</param>
     /// <param name="leaderboardView">The leaderboard view.</param>
-    public FinishState(Toolbox tolbox, ChatView chatView, Game game, LeaderboardView leaderboardView)
+    /// <param name="hud">The hud.</param>
+    public FinishState(Toolbox tolbox, ChatView chatView, Game game, LeaderboardView leaderboardView, HUD hud)
     {
         this.tolbox = tolbox;
         this.chatView = chatView;
         this.game = game;
+        this.hud = hud;
         this.leaderboardView = leaderboardView;
     }
 
@@ -32,5 +35,6 @@ public class FinishState: GameState
         tolbox.Hide();
         chatView.SetInteractable(false);
         leaderboardView.UpdateLeaderboard(game.Players);
+        hud.ShowFinish(game.GetPlayer(game.PreviousSessionWinner.Value).Name);
     }
 }

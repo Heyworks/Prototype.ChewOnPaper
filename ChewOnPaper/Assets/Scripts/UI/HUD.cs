@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -11,6 +12,8 @@ public class HUD : MonoBehaviour
     private Text secretWordText;
     [SerializeField]
     private GameObject secretWordRoot;
+    [SerializeField]
+    private Text winnerText;
 
     private float secondsLeft;
     private string currentChewerName;
@@ -60,7 +63,28 @@ public class HUD : MonoBehaviour
         if (secondsLeft > 0)
         {
             secondsLeft -= Time.deltaTime;
-            stateText.text = string.Format("{0} chews {1} seconds.", currentChewerName, (int) secondsLeft);
+            stateText.text = string.Format("{0} chews {1} seconds.", currentChewerName, (int)secondsLeft);
         }
+    }
+
+    /// <summary>
+    /// Shows the finish.
+    /// </summary>
+    /// <param name="winnerName">Name of the winner.</param>
+    public void ShowFinish(string winnerName)
+    {
+        secondsLeft = 0;
+        stateText.text = "Finish";
+        StartCoroutine(WinnerCoroutine(winnerName));
+    }
+
+    private IEnumerator WinnerCoroutine(string winnerName)
+    {
+        winnerText.gameObject.SetActive(true);
+        winnerText.text = string.Format("FINISH!!! The winner is {0}", winnerName);
+
+        yield return new WaitForSeconds(9);
+        
+        winnerText.gameObject.SetActive(false);
     }
 }
