@@ -6,6 +6,8 @@ public class GameStateController
     private readonly Game game;
     private readonly GameState.GameStateFactory stateFactory;
 
+    private GameState currentState;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="GameStateController"/> class.
     /// </summary>
@@ -19,21 +21,12 @@ public class GameStateController
     }
 
     /// <summary>
-    /// Gets the state of the current session.
-    /// </summary>
-    private GameState CurrentState
-    {
-        get;
-        set;
-    }
-
-    /// <summary>
     /// Gets the state of the current.
     /// </summary>
     /// <typeparam name="T">Type of state.</typeparam>
     public T GetCurrentState<T>() where T : GameState
     {
-        var state = CurrentState as T;
+        var state = currentState as T;
         if (state != null)
         {
             return state;
@@ -41,7 +34,7 @@ public class GameStateController
 
         throw new InvalidOperationException(
             String.Format("Current game state is not valid. Current state type {0}. Required state type {1}",
-                CurrentState.GetType(), typeof(T)));
+                currentState.GetType(), typeof(T)));
     }
 
     /// <summary>
@@ -94,7 +87,7 @@ public class GameStateController
     {
         if (game.CurrentSession.CurrentPlayerRole == PlayerRole.Chewer && chewerId == game.CurrentPlayerId)
         {
-            ((ChewState)CurrentState).Chew();
+            GetCurrentState<ChewState>().Chew();
         }
     }
 
@@ -113,9 +106,9 @@ public class GameStateController
     // TODO: a.dezhurko move to GameStateController
     private void ChangeState(StateParameters parameters)
     {
-        CurrentState = stateFactory.Create(parameters);
-        CurrentState.Initialize();
+        currentState = stateFactory.Create(parameters);
+        currentState.Initialize();
 
-        Debug.Log("Changing state to " + CurrentState.GetType());
+        Debug.Log("Changing state to " + currentState.GetType());
     }
 }
