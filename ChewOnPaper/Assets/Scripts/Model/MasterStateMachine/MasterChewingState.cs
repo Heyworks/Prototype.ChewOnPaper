@@ -10,6 +10,7 @@ public class MasterChewingState : MasterState
     private readonly int chewerIndex;
     private readonly MasterState initState;
     private readonly GuessChat chat;    
+    private Coroutine coroutine;
     private int[] chewerIds;
 
     /// <summary>
@@ -38,7 +39,7 @@ public class MasterChewingState : MasterState
         chewerIds = StateMachineContext.SessionData.PlayerRoles.Where(item => item.Value == PlayerRole.Chewer).Select(item => item.Key).ToArray();
         NetworkSessionSynchronizer.StartChewing(chewerIds[chewerIndex]);
         chat.NewGuessArrived += Chat_NewGuessArrived;
-        ContextBehaviour.StartCoroutine("ChewingCoroutine");
+        coroutine = ContextBehaviour.StartCoroutine(ChewingCoroutine());
     }
 
     /// <summary>
@@ -59,8 +60,8 @@ public class MasterChewingState : MasterState
     {
         if (string.Equals(answer.Trim().ToUpper(), StateMachineContext.SessionData.GuessedWord.Trim().ToUpper()))
         {
+            ContextBehaviour.StopCoroutine(coroutine);
             Game.ProcessSessionEnd(senderId, GetPrevChewerId());
-            ContextBehaviour.StopCoroutine("ChewingCoroutine");
             NetworkSessionSynchronizer.FinishSession(Game.ConverToDto());
             ContextBehaviour.StartCoroutine(SwitchToInitState());
         }
@@ -88,7 +89,14 @@ public class MasterChewingState : MasterState
     {
         yield return new WaitForSeconds(Game.GameRoomSettings.TurnTime);
 
-        FinishChewing();
+        if (IsActive)
+        {
+            FinishChewing();
+        }
+        else
+        {
+            Debug.LogWarning("ChewingCoroutine is not stopped.");
+        }
     }
 
     private void FinishChewing()
