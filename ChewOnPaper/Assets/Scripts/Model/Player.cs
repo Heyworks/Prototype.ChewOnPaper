@@ -19,15 +19,16 @@ public class Player
     public int Score { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Player"/> class.
+    /// Initializes a new instance of the <see cref="Player" /> class.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <param name="name">The name.</param>
-    public Player(int id, string name)
+    /// <param name="score">The score.</param>
+    public Player(int id, string name, int score)
     {
         Id = id;
         Name = name;
-        Score = 0;
+        Score = score;
     }
 
     /// <summary>
