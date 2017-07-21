@@ -71,6 +71,7 @@ public class GameStateController
     /// <param name="chewerId">The chewer identifier.</param>
     public void StartChewing(int chewerId)
     {
+        game.CurrentSession.CurrentChewerId = chewerId;
         if (game.CurrentSession.CurrentPlayerRole == PlayerRole.Guesser)
         {
             ChangeState(new StateParameters(typeof(GuessState)));

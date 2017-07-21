@@ -23,5 +23,10 @@ public class Session
     /// Gets the guessed word.
     /// </summary>
     public string GuessedWord { get; private set; }
+
+    /// <summary>
+    /// Gets or sets the current chewer identifier.
+    /// </summary>
+    public int CurrentChewerId { get; set; }
 }
 
