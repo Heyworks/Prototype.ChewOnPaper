@@ -9,7 +9,7 @@ public class MasterChewingState : MasterState
 {
     private readonly int chewerIndex;
     private readonly MasterState initState;
-    private readonly GuessChat chat;    
+    private readonly GuessChat chat;
     private Coroutine coroutine;
     private int[] chewerIds;
 
@@ -55,7 +55,7 @@ public class MasterChewingState : MasterState
     {
         CheckAnswer(guess.PlayerId, guess.Word);
     }
-    
+
     private void CheckAnswer(int senderId, string answer)
     {
         if (string.Equals(answer.Trim().ToUpper(), StateMachineContext.SessionData.GuessedWord.Trim().ToUpper()))
@@ -66,7 +66,7 @@ public class MasterChewingState : MasterState
             ContextBehaviour.StartCoroutine(SwitchToInitState());
         }
     }
-    
+
     private int GetPrevChewerId()
     {
         var prevIndex = chewerIndex - 1;
@@ -88,15 +88,7 @@ public class MasterChewingState : MasterState
     private IEnumerator ChewingCoroutine()
     {
         yield return new WaitForSeconds(Game.GameRoomSettings.TurnTime);
-
-        if (IsActive)
-        {
-            FinishChewing();
-        }
-        else
-        {
-            Debug.LogWarning("ChewingCoroutine is not stopped.");
-        }
+        FinishChewing();
     }
 
     private void FinishChewing()

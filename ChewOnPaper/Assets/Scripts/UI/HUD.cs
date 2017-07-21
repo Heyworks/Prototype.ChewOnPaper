@@ -82,10 +82,12 @@ public class HUD : MonoBehaviour
     private IEnumerator WinnerCoroutine(string winnerName, string word)
     {
         winnerText.gameObject.SetActive(true);
-        winnerText.text = string.Format("FINISH!!! The winner is {0}. Word: {1}", winnerName, word);
+        for (int timeLeft = 9; timeLeft > 0; timeLeft--)
+        {
+            winnerText.text = string.Format("FINISH!!! The winner is {0}. Word: {1}\n{2}", winnerName, word, timeLeft);
+            yield return new WaitForSeconds(1);
+        }
 
-        yield return new WaitForSeconds(9);
-        
         winnerText.gameObject.SetActive(false);
     }
 }
