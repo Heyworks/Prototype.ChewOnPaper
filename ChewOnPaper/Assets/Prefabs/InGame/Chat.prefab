@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 224330374134682114}
   - component: {fileID: 222116501218735968}
   - component: {fileID: 114686717850121532}
-  - component: {fileID: 114881640037543802}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -385,7 +384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -448,9 +447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Guess
-
-'
+  m_Text: Guess
 --- !u!114 &114668549672050702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -490,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -510,7 +507,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\u0421\u0430\u0448\u0430: \u043A\u043E\u0432\u0440\u043E\u0432\u0430\n\u041F\u0435\u0442\u044F
+    : \u0436\u0443\u043A\n\u0414\u0430\u0448\u0430: \u043F\u0435\u0442\u0443\u0445\n\u0421\u0430\u0448\u0430:
+    \u043A\u043E\u0432\u0440\u043E\u0432\u0430\n\u041F\u0435\u0442\u044F : \u0436\u0443\u043A\n\u0414\u0430\u0448\u0430:
+    \u043F\u0435\u0442\u0443\u0445\n\u0421\u0430\u0448\u0430: \u043A\u043E\u0432\u0440\u043E\u0432\u0430\n\u041F\u0435\u0442\u044F
+    : \u0436\u0443\u043A\n\u0414\u0430\u0448\u0430: \u043F\u0435\u0442\u0443\u0445"
 --- !u!114 &114698606354382036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -523,19 +524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &114881640037543802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1209991723087858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
 --- !u!114 &114940141952869570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -637,15 +625,15 @@ RectTransform:
   m_GameObject: {fileID: 1209991723087858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0607405, y: 1.0607405, z: 1.0607405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224540643720597216}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 8.449997, y: -28.821102}
-  m_SizeDelta: {x: 436.3, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_SizeDelta: {x: 0, y: 72.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224331033608763630
 RectTransform:
@@ -684,8 +672,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -226.6, y: 83.3}
-  m_SizeDelta: {x: 453.2, y: 57.9}
+  m_AnchoredPosition: {x: -519, y: 83.3}
+  m_SizeDelta: {x: 925, y: 71.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224756899968768270
 RectTransform:
@@ -703,8 +691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -160, y: 30}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -157, y: 47}
+  m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224933448904549352
 RectTransform:
@@ -714,7 +702,7 @@ RectTransform:
   m_GameObject: {fileID: 1454331363737070}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8.101656}
-  m_LocalScale: {x: 0.9427382, y: 0.9427382, z: 0.9427382}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224951118547483678}
   - {fileID: 224319109050690550}
@@ -723,8 +711,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 15}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 487, y: 72}
+  m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224951118547483678
 RectTransform:
@@ -757,8 +745,8 @@ RectTransform:
   m_Father: {fileID: 224756899968768270}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 136, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
