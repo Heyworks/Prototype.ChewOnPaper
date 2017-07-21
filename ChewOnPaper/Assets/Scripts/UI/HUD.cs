@@ -71,17 +71,18 @@ public class HUD : MonoBehaviour
     /// Shows the finish.
     /// </summary>
     /// <param name="winnerName">Name of the winner.</param>
-    public void ShowFinish(string winnerName)
+    /// <param name="word">The word.</param>
+    public void ShowFinish(string winnerName, string word)
     {
         secondsLeft = 0;
         stateText.text = "Finish";
-        StartCoroutine(WinnerCoroutine(winnerName));
+        StartCoroutine(WinnerCoroutine(winnerName, word));
     }
 
-    private IEnumerator WinnerCoroutine(string winnerName)
+    private IEnumerator WinnerCoroutine(string winnerName, string word)
     {
         winnerText.gameObject.SetActive(true);
-        winnerText.text = string.Format("FINISH!!! The winner is {0}", winnerName);
+        winnerText.text = string.Format("FINISH!!! The winner is {0}. Word: {1}", winnerName, word);
 
         yield return new WaitForSeconds(9);
         

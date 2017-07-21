@@ -57,7 +57,8 @@ public class MasterPendingState : MasterState
     {
         //TODO: Move Photon communication to another place.
         var photonPlayers = PhotonNetwork.playerList;
-        var players = photonPlayers.Select(photonPlayer => new Player(photonPlayer.ID, photonPlayer.NickName)).ToList();
+        var players = photonPlayers.Select(photonPlayer => new Player(photonPlayer.ID, photonPlayer.NickName, 0)).ToList();
+
         return players;
     }
 }
