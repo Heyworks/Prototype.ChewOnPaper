@@ -30,7 +30,11 @@ public class ChewState : GameState
     /// </summary>
     public void Chew()
     {
-        paper.Chew(tolbox.CurrentStencil);
-        tolbox.NextStencil();
+        var currentStencil = tolbox.CurrentStencil;
+        if (currentStencil.IsExtruded)
+        {
+            paper.Chew(tolbox.CurrentStencil);
+            tolbox.NextStencil();
+        }
     }
 }

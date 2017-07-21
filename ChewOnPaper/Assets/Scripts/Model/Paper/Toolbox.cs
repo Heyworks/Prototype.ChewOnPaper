@@ -13,7 +13,7 @@ public class Toolbox: MonoBehaviour
     [SerializeField]
     private Vector3 initialPositionInPallete;
     [SerializeField]
-    private int numberOfStencilesInPalette = 3;
+    private int numberOfStencilesInPalette = 1;
     [SerializeField]
     private float stencilHeight = 80;
 

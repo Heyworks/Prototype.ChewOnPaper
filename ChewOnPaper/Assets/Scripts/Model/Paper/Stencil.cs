@@ -38,6 +38,12 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
         set;
     }
 
+    public bool IsExtruded
+    {
+        get;
+        private set;
+    }
+
     private void Awake()
     {
         rectTransform = (RectTransform)transform;
@@ -121,12 +127,18 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
                iT.ValueTo.to, initialSize,
                iT.ValueTo.time, ResetSizeTime,
                iT.ValueTo.easetype, iTween.EaseType.linear,
-               iT.ValueTo.onupdate, "SetSizeDelta"));
+               iT.ValueTo.onupdate, "SetSizeDelta",
+               iT.ValueTo.oncomplete, "SetIsExtruded"));
     }
 
     private void SetSizeDelta(Vector2 sizeDelta)
     {
         rectTransform.sizeDelta = sizeDelta;
+    }
+
+    private void SetIsExtruded()
+    {
+        IsExtruded = true;
     }
 
     #region Tests
