@@ -96,8 +96,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u0430\u0441\u044F 40\n\u041F\u0435\u0442\u044F 30\n\u041C\u0438\u0448\u0430
-    10\n\u0421\u0430\u0448\u0430 10"
+  m_Text: 'Hero 40
+
+'
 --- !u!114 &114054643593078112
 MonoBehaviour:
   m_ObjectHideFlags: 1
