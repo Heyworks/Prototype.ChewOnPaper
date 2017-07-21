@@ -45,8 +45,8 @@ public class MasterStateMachine
         currentState.Deactivate();
         if (nextState != null)
         {
-            nextState.Acticate();
             currentState = nextState;
+            nextState.Acticate();
         }
     }
 
