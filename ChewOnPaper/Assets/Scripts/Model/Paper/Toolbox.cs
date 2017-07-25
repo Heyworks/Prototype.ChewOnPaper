@@ -119,7 +119,7 @@ public class Toolbox : MonoBehaviour
             stencil.gameObject.SetActive(false);
         }
 
-        chewButton.gameObject.SetActive(true);
+        chewButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ public class Toolbox : MonoBehaviour
             stencil.gameObject.SetActive(true);
         }
 
-        chewButton.gameObject.SetActive(false);
+        chewButton.gameObject.SetActive(true);
     }
 
     /// <summary>

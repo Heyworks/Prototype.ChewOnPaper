@@ -268,7 +268,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114800565475423576}
         m_MethodName: ChewButtonClick
         m_Mode: 1
         m_Arguments:
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.91764706, g: 0.9098039, b: 0.7254902, a: 1}
+  m_Color: {r: 0.2784314, g: 0.2784314, b: 0.2784314, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2794118, g: 0.2794118, b: 0.2794118, a: 1}
+  m_Color: {r: 0.9176471, g: 0.909804, b: 0.7254902, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -429,7 +429,7 @@ MonoBehaviour:
   initialPositionInPallete: {x: 940, y: -10, z: 0}
   numberOfStencilesInPalette: 1
   stencilHeight: 80
-  chewButton: {fileID: 0}
+  chewButton: {fileID: 114097782547913162}
 --- !u!114 &114884682530664696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -725,8 +725,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 217.99994, y: 490}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 1008, y: -78.2}
+  m_SizeDelta: {x: 150, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224872125878567940
 RectTransform:
