@@ -10,6 +10,7 @@ public class MasterChewingState : MasterState
     private readonly int chewerIndex;
     private readonly MasterState initState;
     private readonly GuessChat chat;
+    private readonly Paper paper;    
     private Coroutine coroutine;
     private int[] chewerIds;
 
@@ -21,13 +22,15 @@ public class MasterChewingState : MasterState
     /// <param name="masterStateMachine">The master state machine.</param>
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
-    /// <param name="chat"></param>
-    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat)
+    /// <param name="chat">The chat.</param>
+    /// <param name="paper">The paper.</param>
+    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat, Paper paper)
         : base(masterStateMachine, networkSessionSynchronizer, game)
     {
         this.chewerIndex = chewerIndex;
         this.initState = initState;
         this.chat = chat;
+        this.paper = paper;
     }
 
     /// <summary>
@@ -39,6 +42,7 @@ public class MasterChewingState : MasterState
         chewerIds = StateMachineContext.SessionData.PlayerRoles.Where(item => item.Value == PlayerRole.Chewer).Select(item => item.Key).ToArray();
         NetworkSessionSynchronizer.StartChewing(chewerIds[chewerIndex]);
         chat.NewGuessArrived += Chat_NewGuessArrived;
+        paper.Chewed += Paper_Chewed;
         coroutine = ContextBehaviour.StartCoroutine(ChewingCoroutine());
     }
 
@@ -48,12 +52,18 @@ public class MasterChewingState : MasterState
     public override void Deactivate()
     {
         base.Deactivate();
+        paper.Chewed -= Paper_Chewed;
         chat.NewGuessArrived -= Chat_NewGuessArrived;
     }
 
     private void Chat_NewGuessArrived(Guess guess)
     {
         CheckAnswer(guess.PlayerId, guess.Word);
+    }
+
+    private void Paper_Chewed(ChewEventArgs args)
+    {
+        FinishChewing();
     }
 
     private void CheckAnswer(int senderId, string answer)
@@ -93,7 +103,7 @@ public class MasterChewingState : MasterState
 
     private void FinishChewing()
     {
-        NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
         SwitchToState(NextState);
+        NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
     }
 }

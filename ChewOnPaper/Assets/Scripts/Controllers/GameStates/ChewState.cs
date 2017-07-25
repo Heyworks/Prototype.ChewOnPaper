@@ -24,6 +24,7 @@ public class ChewState : GameState
         this.chatView = chatView;
         this.hud = hud;
         this.game = game;
+        hud.ChewButtonClicked += Hud_ChewButtonClicked;
     }
 
     /// <summary>
@@ -35,7 +36,7 @@ public class ChewState : GameState
         chatView.SetInteractable(false);
         var session = game.CurrentSession;
         hud.ShowSecretWord(session.GuessedWord);
-        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime);
+        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime, true);
     }
 
     /// <summary>
@@ -49,5 +50,10 @@ public class ChewState : GameState
             paper.Chew(tolbox.CurrentStencil);
             tolbox.NextStencil();
         }
+    }
+    
+    private void Hud_ChewButtonClicked()
+    {
+        Chew();
     }
 }

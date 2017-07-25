@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,16 @@ public class HUD : MonoBehaviour
     private GameObject secretWordRoot;
     [SerializeField]
     private Text winnerText;
+    [SerializeField]
+    private Button chewButton;
 
     private float secondsLeft;
     private string currentChewerName;
+
+    /// <summary>
+    /// Occurs when chew button has been clicked.
+    /// </summary>
+    public event Action ChewButtonClicked;
 
     /// <summary>
     /// Shows the pending state.
@@ -27,6 +35,7 @@ public class HUD : MonoBehaviour
         playerNameText.text = playerName;
         stateText.text = "Pending...";
         secretWordRoot.SetActive(false);
+        chewButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -38,7 +47,7 @@ public class HUD : MonoBehaviour
         secretWordRoot.SetActive(true);
         secretWordText.text = word;
     }
-
+    
     /// <summary>
     /// Hides the secret word.
     /// </summary>
@@ -52,19 +61,12 @@ public class HUD : MonoBehaviour
     /// </summary>
     /// <param name="chewerName">Name of the chewer.</param>
     /// <param name="turnTime">The turn time.</param>
-    public void ShowChewing(string chewerName, int turnTime)
+    /// <param name="showChewButton">Indicating whether chew button is visible.</param>    
+    public void ShowChewing(string chewerName, int turnTime, bool showChewButton)
     {
         secondsLeft = turnTime;
         currentChewerName = chewerName;
-    }
-
-    private void Update()
-    {
-        if (secondsLeft > 0)
-        {
-            secondsLeft -= Time.deltaTime;
-            stateText.text = string.Format("{0} chews {1} seconds.", currentChewerName, (int)secondsLeft);
-        }
+        chewButton.gameObject.SetActive(showChewButton);
     }
 
     /// <summary>
@@ -79,6 +81,23 @@ public class HUD : MonoBehaviour
         StartCoroutine(WinnerCoroutine(winnerName, word));
     }
 
+    /// <summary>
+    /// Calls when chews the button has been clicked.
+    /// </summary>
+    public void ChewButtonClick()
+    {
+        OnChewButtonClicked();
+    }
+
+    private void Update()
+    {
+        if (secondsLeft > 0)
+        {
+            secondsLeft -= Time.deltaTime;
+            stateText.text = string.Format("{0} chews {1} seconds.", currentChewerName, (int)secondsLeft);
+        }
+    }
+
     private IEnumerator WinnerCoroutine(string winnerName, string word)
     {
         winnerText.gameObject.SetActive(true);
@@ -89,5 +108,14 @@ public class HUD : MonoBehaviour
         }
 
         winnerText.gameObject.SetActive(false);
+    }
+
+    private void OnChewButtonClicked()
+    {
+        var handler = ChewButtonClicked;
+        if (handler != null)
+        {
+            handler();
+        }
     }
 }
