@@ -9,4 +9,8 @@ public class VisualSettings : ScriptableObject
     /// The background color
     /// </summary>
     public Color backgroundColor = Color.black;
+    /// <summary>
+    /// The background color
+    /// </summary>
+    public Color paperColor = Color.white;
 }
