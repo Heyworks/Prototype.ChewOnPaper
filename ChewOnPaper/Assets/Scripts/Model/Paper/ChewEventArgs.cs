@@ -12,12 +12,14 @@ public class ChewEventArgs : EventArgs
     /// <param name="stencilId">The stencil identifier.</param>
     /// <param name="position">The position.</param>
     /// <param name="rotation">The rotation.</param>
+    /// <param name="chewMode">The chew mode.</param>
     /// <param name="shouldBeSynchronized">Indicating whether chew should be synchronized with other clients.</param>
-    public ChewEventArgs(int stencilId, Vector3 position, float rotation, bool shouldBeSynchronized)
+    public ChewEventArgs(int stencilId, Vector3 position, float rotation, ChewMode chewMode, bool shouldBeSynchronized)
     {
         StencilId = stencilId;
         Position = position;
         Rotation = rotation;
+        ChewMode = chewMode;
         ShouldBeSynchronized = shouldBeSynchronized;
     }
 
@@ -42,6 +44,15 @@ public class ChewEventArgs : EventArgs
     /// Gets the rotation.
     /// </summary>
     public float Rotation
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
+    /// Gets the chew mode.
+    /// </summary>
+    public ChewMode ChewMode
     {
         get;
         private set;

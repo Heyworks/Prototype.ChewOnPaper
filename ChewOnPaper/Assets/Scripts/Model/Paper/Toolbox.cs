@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Represents toolbox for stencils.
 /// </summary>
-public class Toolbox: MonoBehaviour
+public class Toolbox : MonoBehaviour
 {
     [SerializeField]
     private StencilCollection stencilCollection;
@@ -17,7 +17,8 @@ public class Toolbox: MonoBehaviour
     [SerializeField]
     private float stencilHeight = 80;
 
-    private readonly Queue<Stencil> stencils =  new Queue<Stencil>();
+    private readonly Queue<Stencil> stencils = new Queue<Stencil>();
+    private ChewMode currentMode = ChewMode.Chew;
 
     /// <summary>
     /// Gets the current stencil.
@@ -27,6 +28,20 @@ public class Toolbox: MonoBehaviour
         get
         {
             return stencils.Peek();
+        }
+    }
+
+    /// <summary>
+    /// Gets the current mode.
+    /// </summary>
+    /// <value>
+    /// The current mode.
+    /// </value>
+    public ChewMode CurrentMode
+    {
+        get
+        {
+            return currentMode;
         }
     }
 
@@ -41,7 +56,7 @@ public class Toolbox: MonoBehaviour
         }
         stencils.Clear();
 
-        for (int i= 0; i < numberOfStencilesInPalette; i++)
+        for (int i = 0; i < numberOfStencilesInPalette; i++)
         {
             LoadRandomStencilInPalette();
         }
@@ -97,6 +112,14 @@ public class Toolbox: MonoBehaviour
         {
             stencil.gameObject.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// Changes the chew mode.
+    /// </summary>
+    public void ChangeChewMode()
+    {
+        currentMode = (ChewMode)(((int)currentMode + 1) % 2);
     }
 
     private void LoadRandomStencilInPalette()
