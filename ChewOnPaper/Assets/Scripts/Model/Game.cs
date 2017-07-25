@@ -46,7 +46,7 @@ public class Game
     /// <summary>
     /// Gets the previous session winner.
     /// </summary>
-    public int? PreviousSessionWinner { get; private set; }
+    public int? PreviousSessionWinner { get; set; }
 
     /// <summary>
     /// Gets the players.
@@ -85,20 +85,7 @@ public class Game
 
         return dto;
     }
-
-    /// <summary>
-    /// Processes the session end.
-    /// </summary>
-    /// <param name="winnerId">The winner identifier.</param>
-    /// <param name="lastChewerId">The last chewer identifier.</param>
-    // TODO: Move to state class.
-    public void ProcessSessionEnd(int winnerId, int lastChewerId)
-    {
-        GetPlayer(winnerId).AddScore(GameRoomSettings.RightAnswerScore);
-        GetPlayer(lastChewerId).AddScore(GameRoomSettings.LastTurnScore);
-        PreviousSessionWinner = winnerId;
-    }
-
+    
     /// <summary>
     /// Gets the player.
     /// </summary>

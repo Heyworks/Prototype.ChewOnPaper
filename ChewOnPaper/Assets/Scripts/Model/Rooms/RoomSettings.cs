@@ -24,9 +24,14 @@ public class RoomSettings
     public int RightAnswerScore { get; set; }
 
     /// <summary>
-    /// Gets or sets score bonus for last turn. 
+    /// Gets or sets base score for chewers. 
     /// </summary>
-    public int LastTurnScore { get; set; }
+    public int ChewerBaseScore { get; set; }
+
+    /// <summary>
+    /// Gets or sets the max session time.
+    /// </summary>
+    public int MaxSessionTime { get; set; }
 
     /// <summary>
     /// Gets a value indicating whether this room settings are valid.
@@ -49,13 +54,14 @@ public class RoomSettings
         roomSettings.MaxPlayers = photonRoom.MaxPlayers;
         roomSettings.Name = photonRoom.Name;
         object hashTableOut;
-        photonRoom.CustomProperties.TryGetValue("LastTurnScore", out hashTableOut);
-        roomSettings.LastTurnScore = (int) hashTableOut;
+        photonRoom.CustomProperties.TryGetValue("ChewerBaseScore", out hashTableOut);
+        roomSettings.ChewerBaseScore = (int) hashTableOut;
         photonRoom.CustomProperties.TryGetValue("RightAnswerScore", out hashTableOut);
         roomSettings.RightAnswerScore = (int)hashTableOut;
         photonRoom.CustomProperties.TryGetValue("TurnTime", out hashTableOut);
         roomSettings.TurnTime = (int)hashTableOut;
-
+        photonRoom.CustomProperties.TryGetValue("MaxSessionTime", out hashTableOut);
+        roomSettings.MaxSessionTime = (int)hashTableOut;
         return roomSettings;
     }
 }

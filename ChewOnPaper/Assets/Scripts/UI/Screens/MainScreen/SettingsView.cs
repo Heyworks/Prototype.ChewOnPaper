@@ -13,7 +13,9 @@ public class SettingsView : MonoBehaviour
     [SerializeField]
     private Text rightAnswerScoreText;
     [SerializeField]
-    private Text lastTurnScoreText;
+    private Text chewerBaseScore;
+    [SerializeField]
+    private Text maxSessionTime;
     [SerializeField]
     private Text roomName;
 
@@ -25,7 +27,8 @@ public class SettingsView : MonoBehaviour
         maxPlayersText.text = settings.MaxPlayers.ToString();
         turnTimeText.text = settings.TurnTime.ToString();
         rightAnswerScoreText.text = settings.RightAnswerScore.ToString();
-        lastTurnScoreText.text = settings.LastTurnScore.ToString();
+        chewerBaseScore.text = settings.ChewerBaseScore.ToString();
+        maxSessionTime.text = settings.MaxSessionTime.ToString();
         roomName.text = settings.Name;
     }
 
@@ -37,11 +40,12 @@ public class SettingsView : MonoBehaviour
     {
         var settings = new RoomSettings();
         settings.MaxPlayers = int.Parse(maxPlayersText.text);
-        settings.LastTurnScore = int.Parse(lastTurnScoreText.text);
+        settings.ChewerBaseScore = int.Parse(chewerBaseScore.text);
         settings.Name = roomName.text;
         settings.RightAnswerScore = int.Parse(rightAnswerScoreText.text);
         settings.TurnTime = int.Parse(turnTimeText.text);
-
+        settings.MaxSessionTime = int.Parse(maxSessionTime.text);
+        
         return settings;
     }
 

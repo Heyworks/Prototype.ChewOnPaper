@@ -34,9 +34,10 @@ public class PhotonRoomsProvider : MonoBehaviour, IRoomsProvider
     public void CreateRoom(RoomSettings settings)
     {
         var customOptions = new Hashtable();
-        customOptions.Add("LastTurnScore", settings.LastTurnScore);
+        customOptions.Add("ChewerBaseScore", settings.ChewerBaseScore);
         customOptions.Add("RightAnswerScore", settings.RightAnswerScore);
         customOptions.Add("TurnTime", settings.TurnTime);
+        customOptions.Add("MaxSessionTime", settings.MaxSessionTime);
         PhotonNetwork.CreateRoom(settings.Name, new RoomOptions() { MaxPlayers = (byte)settings.MaxPlayers, CustomRoomProperties = customOptions }, null);
     }
 

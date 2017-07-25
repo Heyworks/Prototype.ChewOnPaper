@@ -36,6 +36,12 @@ public class FinishState: GameState
         chatView.SetInteractable(false);
         chatView.Clear();
         leaderboardView.UpdateLeaderboard(game.Players);
-        hud.ShowFinish(game.GetPlayer(game.PreviousSessionWinner.Value).Name, game.CurrentSession.GuessedWord);
+        var winnerName = "NONE";
+        if (game.PreviousSessionWinner.HasValue)
+        {
+            winnerName = game.GetPlayer(game.PreviousSessionWinner.Value).Name;
+        }
+
+        hud.ShowFinish(winnerName, game.CurrentSession.GuessedWord);
     }
 }
