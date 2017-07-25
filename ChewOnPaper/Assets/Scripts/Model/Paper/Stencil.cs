@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Represents stencil object.
 /// </summary>
 public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDownHandler
 {
-    private const float ChewAnimationTime = 1.0f;
+    private const float AnimationTime = 1.0f;
     private const float ResetSizeTime = 0.1f;
 
     [SerializeField]
@@ -17,6 +18,7 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
     private Vector2 initialSize;
     private RectTransform rectTransform;
     private bool isInitialSize = true;
+    private Image myImage;
 
     /// <summary>
     /// Gets the identifier.
@@ -48,6 +50,7 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
     {
         rectTransform = (RectTransform)transform;
         initialSize = rectTransform.sizeDelta;
+        myImage = GetComponent<Image>();
     }
 
     /// <summary>
@@ -55,7 +58,15 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
     /// </summary>
     public void AnimateChewing()
     {
-        gameObject.ColorTo(settings.backgroundColor, ChewAnimationTime, 0);
+        FadeColorTo(settings.backgroundColor);
+    }
+
+    /// <summary>
+    /// Animates chewing the paper.
+    /// </summary>
+    public void AnimateRefit()
+    {
+        FadeColorTo(settings.paperColor);
     }
 
     /// <summary>
@@ -116,6 +127,13 @@ public class Stencil : MonoBehaviour, IDragHandler, IRotationHandler, IPointerDo
         {
             ResetSize();
         }
+    }
+
+    private void FadeColorTo(Color color)
+    {
+        myImage.material = settings.fadeOutMaterial;
+
+        gameObject.ColorTo(color, AnimationTime, 0);
     }
 
     private void ResetSize()

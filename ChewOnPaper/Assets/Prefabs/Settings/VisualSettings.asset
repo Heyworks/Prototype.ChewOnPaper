@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   paperColor: {r: 0.91764706, g: 0.9098039, b: 0.7254902, a: 1}
+  fadeOutMaterial: {fileID: 2100000, guid: e84ba0d5d90e4b74092bd5471d06c111, type: 2}
