@@ -26,8 +26,11 @@ public class Paper : MonoBehaviour
         stencil.IsActive = false;
         stencil.enabled = false;
 
-        var args = new ChewEventArgs(stencil.Id, position, rotation, !silent);
-        OnChewed(args);
+        if (!silent)
+        {
+            var args = new ChewEventArgs(stencil.Id, position, rotation);
+            OnChewed(args);
+        }
     }
 
     /// <summary>

@@ -10,10 +10,23 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     [Inject]
     private GameStateController gameStateController;
 
+    [Inject]
+    private HUD hud;
+
     /// <summary>
     /// Occurs when player joined game room.
     /// </summary>
     public event Action PlayerJoined;
+
+    /// <summary>
+    /// Occurs when chew action applied by player before countdown finish.
+    /// </summary>
+    public event Action ChewForceApplied;
+
+    private void Start()
+    {
+        hud.ChewButtonClicked += Hud_ChewButtonClicked;
+    }
 
     /// <summary>
     /// Initializes the game.
@@ -133,6 +146,13 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         gameStateController.FinishSession(data);
     }
 
+    [PunRPC]
+    private void RPC_NotifyChewForceApplied()
+    {
+        Debug.Log("RPC_NotifyChewForceApplied");
+        OnChewForceApplied();
+    }
+
     /// <summary>
     /// Called when a remote player entered the room. This PhotonPlayer is already added to the playerlist at this time.
     /// </summary>
@@ -154,5 +174,19 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
         {
             handler();
         }
+    }
+
+    private void OnChewForceApplied()
+    {
+        var handler = ChewForceApplied;
+        if (handler != null)
+        {
+            handler();
+        }
+    }
+
+    private void Hud_ChewButtonClicked()
+    {
+        photonView.RPC("RPC_NotifyChewForceApplied", PhotonTargets.MasterClient);
     }
 }

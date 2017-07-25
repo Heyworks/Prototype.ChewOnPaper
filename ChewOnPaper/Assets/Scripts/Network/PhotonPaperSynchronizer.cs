@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 /// <summary>
@@ -28,11 +27,9 @@ public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour
         var stencil = toolbox.CreateStencil(stencilId, position, rotation);
         paper.Chew(stencil, true);
     }
+
     private void Paper_Chewed(ChewEventArgs args)
     {
-        if (args.ShouldBeSynchronized)
-        {
-            photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation);
-        }
+        photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation);
     }
 }

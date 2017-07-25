@@ -6,7 +6,6 @@ public class MasterStateMachine
     private readonly NetworkSessionSynchronizer networkSessionSynchronizer;
     private readonly Game game;
     private readonly GuessChat chat;
-    private readonly Paper paper;
     private MasterState currentState;
    
     /// <summary>
@@ -20,13 +19,11 @@ public class MasterStateMachine
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     /// <param name="chat">The chat.</param>
-    /// <param name="paper">The paper.</param>
-    public MasterStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat, Paper paper)
+    public MasterStateMachine(NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat)
     {
         this.networkSessionSynchronizer = networkSessionSynchronizer;
         this.game = game;
         this.chat = chat;
-        this.paper = paper;
         Context = new MasterStateMachineContext();
     }
 
@@ -57,8 +54,8 @@ public class MasterStateMachine
     private void CreateStates()
     {
         var initState = new MasterInitState(this, networkSessionSynchronizer, game);
-        var chewer0State = new MasterChewingState(0, initState, this, networkSessionSynchronizer, game, chat, paper);
-        var chewer1State = new MasterChewingState(1, initState, this, networkSessionSynchronizer, game, chat, paper);
+        var chewer0State = new MasterChewingState(0, initState, this, networkSessionSynchronizer, game, chat);
+        var chewer1State = new MasterChewingState(1, initState, this, networkSessionSynchronizer, game, chat);
         chewer0State.SetNextState(chewer1State);
         chewer1State.SetNextState(chewer0State);
         initState.SetNextState(chewer0State);

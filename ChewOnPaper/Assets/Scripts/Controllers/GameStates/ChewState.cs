@@ -24,7 +24,6 @@ public class ChewState : GameState
         this.chatView = chatView;
         this.hud = hud;
         this.game = game;
-        hud.ChewButtonClicked += Hud_ChewButtonClicked;
     }
 
     /// <summary>
@@ -50,10 +49,5 @@ public class ChewState : GameState
             paper.Chew(tolbox.CurrentStencil);
             tolbox.NextStencil();
         }
-    }
-    
-    private void Hud_ChewButtonClicked()
-    {
-        Chew();
     }
 }

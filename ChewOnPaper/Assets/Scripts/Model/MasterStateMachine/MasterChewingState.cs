@@ -11,7 +11,6 @@ public class MasterChewingState : MasterState
     private readonly int chewerIndex;
     private readonly MasterState initState;
     private readonly GuessChat chat;
-    private readonly Paper paper;    
     private Coroutine coroutine;
     private int[] chewerIds;
 
@@ -32,14 +31,12 @@ public class MasterChewingState : MasterState
     /// <param name="networkSessionSynchronizer">The network session synchronizer.</param>
     /// <param name="game">The game.</param>
     /// <param name="chat">The chat.</param>
-    /// <param name="paper">The paper.</param>
-    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat, Paper paper)
+    public MasterChewingState(int chewerIndex, MasterState initState, MasterStateMachine masterStateMachine, NetworkSessionSynchronizer networkSessionSynchronizer, Game game, GuessChat chat)
         : base(masterStateMachine, networkSessionSynchronizer, game)
     {
         this.chewerIndex = chewerIndex;
         this.initState = initState;
         this.chat = chat;
-        this.paper = paper;
     }
 
     /// <summary>
@@ -51,7 +48,7 @@ public class MasterChewingState : MasterState
         chewerIds = StateMachineContext.SessionData.PlayerRoles.Where(item => item.Value == PlayerRole.Chewer).Select(item => item.Key).ToArray();
         NetworkSessionSynchronizer.StartChewing(chewerIds[chewerIndex]);
         chat.NewGuessArrived += Chat_NewGuessArrived;
-        paper.Chewed += Paper_Chewed;
+        NetworkSessionSynchronizer.ChewForceApplied += NetworkSessionSynchronizer_ChewForceApplied;
         coroutine = ContextBehaviour.StartCoroutine(ChewingCoroutine());
     }
 
@@ -61,7 +58,7 @@ public class MasterChewingState : MasterState
     public override void Deactivate()
     {
         base.Deactivate();
-        paper.Chewed -= Paper_Chewed;
+        NetworkSessionSynchronizer.ChewForceApplied -= NetworkSessionSynchronizer_ChewForceApplied;
         chat.NewGuessArrived -= Chat_NewGuessArrived;
     }
 
@@ -70,7 +67,7 @@ public class MasterChewingState : MasterState
         CheckAnswer(guess.PlayerId, guess.Word);
     }
 
-    private void Paper_Chewed(ChewEventArgs args)
+    private void NetworkSessionSynchronizer_ChewForceApplied()
     {
         FinishChewing();
     }
@@ -124,8 +121,8 @@ public class MasterChewingState : MasterState
         }
         else
         {
-            SwitchToState(NextState);
             NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
+            SwitchToState(NextState);
         }
     }
     
