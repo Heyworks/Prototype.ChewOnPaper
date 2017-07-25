@@ -24,7 +24,7 @@ public class ChewState : GameState
         this.chatView = chatView;
         this.hud = hud;
         this.game = game;
-        hud.ChewButtonClicked += Hud_ChewButtonClicked;
+        tolbox.ChewButtonClicked += Toolbox_ChewButtonClicked;
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ public class ChewState : GameState
         }
     }
     
-    private void Hud_ChewButtonClicked()
+    private void Toolbox_ChewButtonClicked()
     {
         Chew();
     }

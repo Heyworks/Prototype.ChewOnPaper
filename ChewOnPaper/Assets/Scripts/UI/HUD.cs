@@ -15,16 +15,9 @@ public class HUD : MonoBehaviour
     private GameObject secretWordRoot;
     [SerializeField]
     private Text winnerText;
-    [SerializeField]
-    private Button chewButton;
 
     private float secondsLeft;
     private string currentChewerName;
-
-    /// <summary>
-    /// Occurs when chew button has been clicked.
-    /// </summary>
-    public event Action ChewButtonClicked;
 
     /// <summary>
     /// Shows the pending state.
@@ -35,7 +28,6 @@ public class HUD : MonoBehaviour
         playerNameText.text = playerName;
         stateText.text = "Pending...";
         secretWordRoot.SetActive(false);
-        chewButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -66,7 +58,6 @@ public class HUD : MonoBehaviour
     {
         secondsLeft = turnTime;
         currentChewerName = chewerName;
-        chewButton.gameObject.SetActive(showChewButton);
     }
 
     /// <summary>
@@ -79,14 +70,6 @@ public class HUD : MonoBehaviour
         secondsLeft = 0;
         stateText.text = "Finish";
         StartCoroutine(WinnerCoroutine(winnerName, word));
-    }
-
-    /// <summary>
-    /// Calls when chews the button has been clicked.
-    /// </summary>
-    public void ChewButtonClick()
-    {
-        OnChewButtonClicked();
     }
 
     private void Update()
@@ -108,14 +91,5 @@ public class HUD : MonoBehaviour
         }
 
         winnerText.gameObject.SetActive(false);
-    }
-
-    private void OnChewButtonClicked()
-    {
-        var handler = ChewButtonClicked;
-        if (handler != null)
-        {
-            handler();
-        }
     }
 }

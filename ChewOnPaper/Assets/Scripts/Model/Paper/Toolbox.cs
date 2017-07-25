@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Represents toolbox for stencils.
@@ -16,9 +18,16 @@ public class Toolbox : MonoBehaviour
     private int numberOfStencilesInPalette = 1;
     [SerializeField]
     private float stencilHeight = 80;
+    [SerializeField]
+    private Button chewButton;
 
     private readonly Queue<Stencil> stencils = new Queue<Stencil>();
     private ChewMode currentMode = ChewMode.Chew;
+
+    /// <summary>
+    /// Occurs when chew button has been clicked.
+    /// </summary>
+    public event Action ChewButtonClicked;
 
     /// <summary>
     /// Gets the current stencil.
@@ -43,6 +52,14 @@ public class Toolbox : MonoBehaviour
         {
             return currentMode;
         }
+    }
+
+    /// <summary>
+    /// Calls when chews the button has been clicked.
+    /// </summary>
+    public void ChewButtonClick()
+    {
+        OnChewButtonClicked();
     }
 
     /// <summary>
@@ -101,6 +118,8 @@ public class Toolbox : MonoBehaviour
         {
             stencil.gameObject.SetActive(false);
         }
+
+        chewButton.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -112,6 +131,8 @@ public class Toolbox : MonoBehaviour
         {
             stencil.gameObject.SetActive(true);
         }
+
+        chewButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -120,6 +141,15 @@ public class Toolbox : MonoBehaviour
     public void ChangeChewMode()
     {
         currentMode = (ChewMode)(((int)currentMode + 1) % 2);
+    }
+
+    private void OnChewButtonClicked()
+    {
+        var handler = ChewButtonClicked;
+        if (handler != null)
+        {
+            handler();
+        }
     }
 
     private void LoadRandomStencilInPalette()
