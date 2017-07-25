@@ -11,7 +11,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
     private GameStateController gameStateController;
 
     [Inject]
-    private HUD hud;
+    private Toolbox toolbox;
 
     /// <summary>
     /// Occurs when player joined game room.
@@ -25,7 +25,7 @@ public class NetworkSessionSynchronizer : Photon.PunBehaviour
 
     private void Start()
     {
-        hud.ChewButtonClicked += Hud_ChewButtonClicked;
+        toolbox.ChewButtonClicked += Hud_ChewButtonClicked;
     }
 
     /// <summary>
