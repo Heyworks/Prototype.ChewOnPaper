@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using UnityEngine;
+
+/// <summary>
 /// Represents init state of game state machine.
 /// </summary>
 public class MasterInitState : MasterState
@@ -27,6 +29,8 @@ public class MasterInitState : MasterState
         var sessionData = sessionInitializer.InitializeSession(Game);
         NetworkSessionSynchronizer.InitializeSession(sessionData);
         StateMachineContext.SessionData = sessionData;
+        StateMachineContext.StartSessionTime = Time.time;
+
         SwitchToState(NextState);
     }
 }

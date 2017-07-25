@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +14,14 @@ public class MasterChewingState : MasterState
     private readonly Paper paper;    
     private Coroutine coroutine;
     private int[] chewerIds;
+
+    private float SessionTime
+    {
+        get
+        {
+            return Time.time - StateMachineContext.StartSessionTime;
+        }
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MasterChewingState" /> class.
@@ -70,22 +79,27 @@ public class MasterChewingState : MasterState
     {
         if (string.Equals(answer.Trim().ToUpper(), StateMachineContext.SessionData.GuessedWord.Trim().ToUpper()))
         {
-            ContextBehaviour.StopCoroutine(coroutine);
-            Game.ProcessSessionEnd(senderId, GetPrevChewerId());
-            NetworkSessionSynchronizer.FinishSession(Game.ConverToDto());
-            ContextBehaviour.StartCoroutine(SwitchToInitState());
+            ProcessSessionFinish(senderId);
         }
     }
 
-    private int GetPrevChewerId()
+    private void ProcessSessionFinish(int? winnerId)
     {
-        var prevIndex = chewerIndex - 1;
-        if (prevIndex < 0)
+        ContextBehaviour.StopCoroutine(coroutine);
+        UpdatePlayersScore(winnerId);
+        NetworkSessionSynchronizer.FinishSession(Game.ConverToDto());
+        ContextBehaviour.StartCoroutine(SwitchToInitState());
+    }
+    
+    private void UpdatePlayersScore(int? winnerId)
+    {
+        if (winnerId.HasValue)
         {
-            prevIndex = chewerIds.Length - 1;
+            Game.GetPlayer(winnerId.Value).AddScore(Game.GameRoomSettings.RightAnswerScore);
         }
 
-        return chewerIds[prevIndex];
+        UpdateChewersScore(SessionTime, chewerIds);
+        Game.PreviousSessionWinner = winnerId;
     }
 
     private IEnumerator SwitchToInitState()
@@ -98,12 +112,31 @@ public class MasterChewingState : MasterState
     private IEnumerator ChewingCoroutine()
     {
         yield return new WaitForSeconds(Game.GameRoomSettings.TurnTime);
+
         FinishChewing();
     }
 
     private void FinishChewing()
     {
-        SwitchToState(NextState);
-        NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
+        if ( SessionTime > Game.GameRoomSettings.MaxSessionTime)
+        {
+            ProcessSessionFinish(null);
+        }
+        else
+        {
+            SwitchToState(NextState);
+            NetworkSessionSynchronizer.FinishChewing(chewerIds[chewerIndex]);
+        }
+    }
+    
+    private void UpdateChewersScore(float sessionTime, int[] chewerIds)
+    {
+        var score = (int)(Game.GameRoomSettings.ChewerBaseScore * (1 - sessionTime / Game.GameRoomSettings.MaxSessionTime));
+        score = Math.Max(0, score);
+        foreach (var chewerId in chewerIds)
+        {
+            var chewer = Game.GetPlayer(chewerId);
+            chewer.AddScore(score);
+        }
     }
 }
