@@ -7,16 +7,18 @@ using UnityEngine;
 public class ChewEventArgs : EventArgs
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChewEventArgs"/> class.
+    /// Initializes a new instance of the <see cref="ChewEventArgs" /> class.
     /// </summary>
     /// <param name="stencilId">The stencil identifier.</param>
     /// <param name="position">The position.</param>
     /// <param name="rotation">The rotation.</param>
-    public ChewEventArgs(int stencilId, Vector3 position, float rotation)
+    /// <param name="shouldBeSynchronized">Indicating whether chew should be synchronized with other clients.</param>
+    public ChewEventArgs(int stencilId, Vector3 position, float rotation, bool shouldBeSynchronized)
     {
         StencilId = stencilId;
         Position = position;
         Rotation = rotation;
+        ShouldBeSynchronized = shouldBeSynchronized;
     }
 
     /// <summary>
@@ -40,6 +42,15 @@ public class ChewEventArgs : EventArgs
     /// Gets the rotation.
     /// </summary>
     public float Rotation
+    {
+        get;
+        private set;
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether chew should be synchronized with other clients.
+    /// </summary>
+    public bool ShouldBeSynchronized
     {
         get;
         private set;

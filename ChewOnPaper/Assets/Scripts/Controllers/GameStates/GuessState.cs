@@ -36,7 +36,7 @@ public class GuessState : GameState
         chatView.SetInteractable(true);
         hud.HideSecretWord();
         var session = game.CurrentSession;
-        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime);
+        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime, false);
     }
 
     /// <summary>

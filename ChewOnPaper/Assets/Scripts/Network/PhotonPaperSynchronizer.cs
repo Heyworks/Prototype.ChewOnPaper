@@ -30,6 +30,9 @@ public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour
     }
     private void Paper_Chewed(ChewEventArgs args)
     {
-        photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation);
+        if (args.ShouldBeSynchronized)
+        {
+            photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation);
+        }
     }
 }

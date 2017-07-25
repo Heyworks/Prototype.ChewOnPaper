@@ -32,6 +32,6 @@ public class WaitState : GameState
         chatView.SetInteractable(false);
         var session = game.CurrentSession;
         hud.ShowSecretWord(session.GuessedWord);
-        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime);
+        hud.ShowChewing(game.GetPlayer(session.CurrentChewerId).Name, game.GameRoomSettings.TurnTime, false);
     }
 }
