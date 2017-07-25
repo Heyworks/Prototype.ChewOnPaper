@@ -17,8 +17,8 @@ public class Paper : MonoBehaviour
     /// </summary>
     /// <param name="stencil">The stencil.</param>
     /// <param name="chewMode">The chew mode.</param>
-    /// <param name="shouldBeSynchronized">if set to <c>true</c> the chew should be synchronized.</param>
-    public void Chew(Stencil stencil, ChewMode chewMode, bool shouldBeSynchronized = true)
+    /// <param name="silent">if set to <c>true</c> do not rise event.</param>
+    public void Chew(Stencil stencil, ChewMode chewMode, bool silent = false)
     {
         var position = stencil.transform.localPosition;
         var rotation = stencil.transform.localRotation.eulerAngles.z;
@@ -40,8 +40,11 @@ public class Paper : MonoBehaviour
         stencil.IsActive = false;
         stencil.enabled = false;
 
-        var args = new ChewEventArgs(stencil.Id, position, rotation, chewMode, shouldBeSynchronized);
-        OnChewed(args);
+        if (!silent)
+        {
+            var args = new ChewEventArgs(stencil.Id, position, rotation, chewMode);
+            OnChewed(args);
+        }
     }
 
     /// <summary>

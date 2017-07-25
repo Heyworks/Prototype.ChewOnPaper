@@ -26,13 +26,10 @@ public sealed class PhotonPaperSynchronizer : Photon.MonoBehaviour
     private void ChewPaper(int stencilId, Vector3 position, float rotation, ChewMode chewMode)
     {
         var stencil = toolbox.CreateStencil(stencilId, position, rotation);
-        paper.Chew(stencil, chewMode, false);
+        paper.Chew(stencil, chewMode, true);
     }
     private void Paper_Chewed(ChewEventArgs args)
     {
-        if (args.ShouldBeSynchronized)
-        {
-            photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation, args.ChewMode);
-        }
+        photonView.RPC("RPC_NotifyAboutPaperChewed", PhotonTargets.OthersBuffered, args.StencilId, args.Position, args.Rotation, args.ChewMode);
     }
 }
