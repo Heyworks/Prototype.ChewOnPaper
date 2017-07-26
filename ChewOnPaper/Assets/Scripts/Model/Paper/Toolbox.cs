@@ -20,6 +20,8 @@ public class Toolbox : MonoBehaviour
     private float stencilHeight = 80;
     [SerializeField]
     private Button chewButton;
+    [SerializeField]
+    private Button nextButton;
 
     private readonly Queue<Stencil> stencils = new Queue<Stencil>();
     private ChewMode currentMode = ChewMode.Chew;
@@ -120,6 +122,7 @@ public class Toolbox : MonoBehaviour
         }
 
         chewButton.gameObject.SetActive(false);
+        nextButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -133,6 +136,7 @@ public class Toolbox : MonoBehaviour
         }
 
         chewButton.gameObject.SetActive(true);
+        nextButton.gameObject.SetActive(true);
     }
 
     /// <summary>

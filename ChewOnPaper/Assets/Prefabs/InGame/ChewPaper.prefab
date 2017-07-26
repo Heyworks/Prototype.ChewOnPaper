@@ -337,7 +337,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114800565475423576}
-        m_MethodName: ChewButtonClick
+        m_MethodName: FillPalette
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -616,6 +616,7 @@ MonoBehaviour:
   numberOfStencilesInPalette: 1
   stencilHeight: 80
   chewButton: {fileID: 114523530620983992}
+  nextButton: {fileID: 114097782547913162}
 --- !u!114 &114884682530664696
 MonoBehaviour:
   m_ObjectHideFlags: 1
