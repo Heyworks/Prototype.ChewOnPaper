@@ -43,17 +43,22 @@ public class SessionInitializer
 
     private void FillChewers(Game game, Dictionary<int, PlayerRole> playerRoles, int chewersCount)
     {
+        var sortedPlayers = game.Players.OrderBy(item => item.Score).ToArray();
+
         if (game.PreviousSessionWinner.HasValue)
         {
             playerRoles.Add(game.PreviousSessionWinner.Value, PlayerRole.Chewer);
         }
 
-        var sortedPlayers = game.Players.OrderBy(item => item.Score).ToArray();
         var index = 0;
         while (playerRoles.Count < chewersCount && index < sortedPlayers.Length)
         {
             var player = sortedPlayers[index];
-            playerRoles.Add(player.Id, PlayerRole.Chewer);
+            if (!playerRoles.ContainsKey(player.Id))
+            {
+                playerRoles.Add(player.Id, PlayerRole.Chewer);
+            }
+
             index++;
         }
     }
