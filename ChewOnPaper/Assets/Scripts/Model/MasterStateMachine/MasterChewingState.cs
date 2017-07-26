@@ -69,6 +69,7 @@ public class MasterChewingState : MasterState
 
     private void NetworkSessionSynchronizer_ChewForceApplied()
     {
+        ContextBehaviour.StopCoroutine(coroutine);
         FinishChewing();
     }
 
