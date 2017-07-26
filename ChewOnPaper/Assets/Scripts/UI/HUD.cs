@@ -15,6 +15,8 @@ public class HUD : MonoBehaviour
     private GameObject secretWordRoot;
     [SerializeField]
     private Text winnerText;
+    [SerializeField]
+    private Text sessionCountdownText;
 
     private float secondsLeft;
     private string currentChewerName;
@@ -28,6 +30,7 @@ public class HUD : MonoBehaviour
         playerNameText.text = playerName;
         stateText.text = "Pending...";
         secretWordRoot.SetActive(false);
+        sessionCountdownText.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -69,7 +72,18 @@ public class HUD : MonoBehaviour
     {
         secondsLeft = 0;
         stateText.text = "Finish";
+        StopAllCoroutines();
         StartCoroutine(WinnerCoroutine(winnerName, word));
+    }
+
+    /// <summary>
+    /// Shows the session countdown.
+    /// </summary>
+    /// <param name="maxSessionTime">The maximum session time.</param>
+    public void ShowSessionCountdown(int maxSessionTime)
+    {
+        sessionCountdownText.gameObject.SetActive(true);
+        StartCoroutine(SessionCowntdownCoroutine(maxSessionTime));
     }
 
     private void Update()
@@ -79,6 +93,21 @@ public class HUD : MonoBehaviour
             secondsLeft -= Time.deltaTime;
             stateText.text = string.Format("{0} chews {1} seconds.", currentChewerName, (int)secondsLeft);
         }
+    }
+
+    private IEnumerator SessionCowntdownCoroutine(int maxSessionTime)
+    {
+        float startSessionTime = Time.time;
+        var sessionTime = 0f;
+        while (sessionTime < maxSessionTime)
+        {
+            sessionTime = Time.time - startSessionTime;
+            sessionCountdownText.text = string.Format("Session countdown: {0}", (int) (maxSessionTime - sessionTime));
+            
+            yield return new WaitForSeconds(1);
+        }
+
+        sessionCountdownText.gameObject.SetActive(false);
     }
 
     private IEnumerator WinnerCoroutine(string winnerName, string word)
