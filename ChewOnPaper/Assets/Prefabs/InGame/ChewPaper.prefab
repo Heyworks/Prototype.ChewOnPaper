@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e84ba0d5d90e4b74092bd5471d06c111, type: 2}
   m_Color: {r: 0.9176471, g: 0.909804, b: 0.7254902, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -368,7 +368,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ac7a1760108511d44b03a8dc4ec446ff, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -388,51 +388,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stencils:
-  - {fileID: 114166644730934974, guid: ea6c19075c41ab9488aa88e2ab32ca06, type: 2}
-  - {fileID: 114419980527845902, guid: ef34b76bc1988a54a9a59fb3d15c09ab, type: 2}
-  - {fileID: 114376974672703678, guid: 19dfb7e261916804e825b0d715ae0b30, type: 2}
-  - {fileID: 114478126371141282, guid: 45f052d50c228634ea8505eef134c5a1, type: 2}
-  - {fileID: 114765453226237196, guid: ef91a151bf1a54e4a8f0adef5674c35a, type: 2}
-  - {fileID: 114701309952639504, guid: bfa4c1cf275784947906607f0f086e7f, type: 2}
-  - {fileID: 114328279710795762, guid: 520b9b3d0d11e5947ab1599ffa3c6663, type: 2}
-  - {fileID: 114984667768511498, guid: 6d1f6d3c6cbf69c4788c5b914b95ebd4, type: 2}
-  - {fileID: 114700206599157390, guid: 027e678c5b34d5443ae5ef229c991a89, type: 2}
-  - {fileID: 114573686569502218, guid: a642933ea01dac44ba12c98980ff2830, type: 2}
-  - {fileID: 114789107148997308, guid: d9470236040e0de4692a17ecba97fcd4, type: 2}
-  - {fileID: 114858458549279472, guid: 6bd3d94bc07d369429eb6d8c03ea489a, type: 2}
-  - {fileID: 114932374534290492, guid: f0a63b4d6ac87c84db174ef9d9136455, type: 2}
-  - {fileID: 114091058462909850, guid: e587b21bc8a4ed648ba332b340967680, type: 2}
-  - {fileID: 114027172000857904, guid: 95125f4ab3fa2824c85938e5cfcd2238, type: 2}
-  - {fileID: 114238615414946856, guid: 13d1d803f003a34448779441f764e121, type: 2}
-  - {fileID: 114612971666160698, guid: b16b8bab8ed1f0c4caac3cc46c1f8a34, type: 2}
-  - {fileID: 114271444962364706, guid: f14918770c0ecaf46b112c4fcc9bb8c9, type: 2}
-  - {fileID: 114940234520963988, guid: b9a6417bfdd708741a8193c23519890e, type: 2}
-  - {fileID: 114750312976698228, guid: 79aead62329c2664e8d74038532c2077, type: 2}
-  - {fileID: 114684694740750462, guid: 70673b8c01f5b5c48a539184c2cb9253, type: 2}
-  - {fileID: 114778249023496536, guid: cf5945a37bb11214c97c620458849603, type: 2}
-  - {fileID: 114477679293378428, guid: 7dc8899cf29f9e24fa47af3cce06b29d, type: 2}
-  - {fileID: 114497721366212416, guid: de3b8116929293446a0744b5aeba1ea6, type: 2}
-  - {fileID: 114539817649207162, guid: 217cf813ca7617f42bf2c30d366d3d18, type: 2}
-  - {fileID: 114149113997425974, guid: be9d8f8e90cc3f44e9fb2f4b601cdaf3, type: 2}
-  - {fileID: 114592026290177128, guid: 6685844c0d93d794ca0e0ccff376c635, type: 2}
-  - {fileID: 114038625171757080, guid: 3bc55c9246754194db41b06b65232127, type: 2}
-  - {fileID: 114195972594680950, guid: 7d4a6cf352bdb184fad7b1c112d33e71, type: 2}
-  - {fileID: 114620898236476094, guid: 6a422b5bf5a3d264fa83b2809d36be3a, type: 2}
-  - {fileID: 114177835784328544, guid: 65d52078e58a28648bc0efa7ee61acb3, type: 2}
-  - {fileID: 114459022076517280, guid: 5b1941849fda8d84c84dec7234132d20, type: 2}
-  - {fileID: 114820754774157450, guid: 4a1d4da723cb953488e08a9ff2c9174f, type: 2}
-  - {fileID: 114975683187164278, guid: 1b71250835292554f8bd21d3a4249f4e, type: 2}
   - {fileID: 114982885545616910, guid: e5e6fcadac5e9ad4e9245c89359ab6b2, type: 2}
   - {fileID: 114626784872278994, guid: 332efe98a99ef564f84b34aad8829ef2, type: 2}
   - {fileID: 114299936802766164, guid: 2bdb3a74f68b7764da5e64a62c4b7d5f, type: 2}
   - {fileID: 114414826322101476, guid: 0160f0513695e0641b8686d178fb46c4, type: 2}
   - {fileID: 114452919079905170, guid: 17dd29efc4468f34685be40d5d043b44, type: 2}
   - {fileID: 114371894543839172, guid: 95ca3dea7995a7a42978f40a1284415a, type: 2}
-  - {fileID: 114980203546574570, guid: 19c9c74536af25b47ad7fb50f1d155a8, type: 2}
-  - {fileID: 114284455770245210, guid: f63d34e723182714b9ec5a8afc263a41, type: 2}
-  - {fileID: 114994404965894864, guid: 2d33da5e50332bf4b9284c553d8c0fdb, type: 2}
-  - {fileID: 114204142900833004, guid: 4defa3e2583df9845b9a886d1795364b, type: 2}
-  - {fileID: 114023813171487176, guid: d82fb50eaeef2c644b58381bfe430044, type: 2}
 --- !u!114 &114486500508394778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -612,7 +573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stencilCollection: {fileID: 114419801620795798}
   paletteOffset: {x: 40, y: 0, z: 0}
-  initialPositionInPallete: {x: 980, y: 20, z: 0}
+  initialPositionInPallete: {x: 985, y: 30, z: 0}
   numberOfStencilesInPalette: 1
   stencilHeight: 80
   chewButton: {fileID: 114523530620983992}
@@ -904,8 +865,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -65, y: 19}
+  m_SizeDelta: {x: -161, y: -141}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224743194241155896
 RectTransform:
